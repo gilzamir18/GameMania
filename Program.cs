@@ -1,8 +1,10 @@
 ﻿List<string> jogos = new List<string>();
 int opcao;
 do{
+    Console.WriteLine("**************************************************");
+    Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
+    Console.WriteLine("**************************************************");
 
-    Console.WriteLine("-------------------- GAMEMANIA --------------------");
     Console.WriteLine("1 - Cadastrar novo Jogo");
     Console.WriteLine("2 - Exibir jogos cadastrados ");
     Console.WriteLine("3 - Mostrar detalhes dos jogos");
@@ -32,10 +34,10 @@ do{
             Console.WriteLine("Avaliação do jogo selecionado!");
             break;
         case 5:
-            Console.WriteLine("Saindo...");
+            Console.WriteLine("Volte sempre...");
             break;
         default:
-            Console.WriteLine("Volte sempre!");
+            Console.WriteLine("Opção inválida: tente outra opção!");
             break;
     }
 
