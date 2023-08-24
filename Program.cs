@@ -50,11 +50,26 @@ void ExibirJogosCadastrados()
     foreach (var jogo in jogosRegistrados.Keys)
     {
         var notas = jogosRegistrados[jogo];
-        Console.WriteLine($"Título: {jogo}, Nota Média: {notas.Average()}");
+        Console.WriteLine($"Título: {jogo}");
     }
     RodapeVoltarParaPrincipal();
 }
 
+void ExibirDetalhesDoJogo()
+{
+    ExibirTituloDaOpcao("Exibindo Detalhes do Jogo");
+    Console.Write("Informe o título do jogo: ");
+    string titulo = Console.ReadLine();
+    if (jogosRegistrados.ContainsKey(titulo))
+    {
+        var notas = jogosRegistrados[titulo];
+        Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+    }
+    else
+    {
+        Console.WriteLine($"Não existe um jogo com o título {titulo}");
+    }
+}
 
 void MenuPrincipal()
 {
@@ -77,7 +92,7 @@ void MenuPrincipal()
             ExibirJogosCadastrados();
             break;
         case 3:
-            Console.WriteLine("Detalhes do jogo selecionado!");
+            ExibirDetalhesDoJogo();
             break;
         case 4:
             Console.WriteLine("Avaliação do jogo selecionado!");
