@@ -1,10 +1,62 @@
-﻿List<string> jogos = new List<string>();
-int opcao;
-do{
+﻿List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
+
+
+void ExibirMensagemBoasVindas()
+{
     Console.WriteLine("**************************************************");
+    Console.WriteLine(@"
+░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
+██╔════╝░██╔══██╗████╗░████║██╔════╝████╗░████║██╔══██╗████╗░██║██║██╔══██╗
+██║░░██╗░███████║██╔████╔██║█████╗░░██╔████╔██║███████║██╔██╗██║██║███████║
+██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
+╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
+░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
     Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
     Console.WriteLine("**************************************************");
+}
 
+void RodapeVoltarParaPrincipal()
+{
+    Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
+    Console.ReadKey();
+    //Thread.Sleep(1000);
+    Console.Clear();
+    MenuPrincipal();
+}
+
+void CadastrarNovoJogo()
+{
+
+    ExibirTituloDaOpcao("Cadastrar um novo Jogo");
+    var nomeDoJogo = Console.ReadLine();
+    jogos.Add(nomeDoJogo);
+    Console.WriteLine("Jogo Adicionado com sucesso");
+    RodapeVoltarParaPrincipal();
+}
+
+void ExibirTituloDaOpcao(string titulo)
+{
+    Console.Clear();
+    Console.WriteLine("**********************************************");
+    Console.WriteLine(titulo);
+    Console.WriteLine("**********************************************");
+}
+
+void ExibirJogosCadastrados()
+{
+    ExibirTituloDaOpcao("Exibindo Jogos Cadastrados");
+    foreach (var jogo in jogos)
+    {
+        Console.WriteLine(jogo);
+    }
+    RodapeVoltarParaPrincipal();
+}
+
+
+void MenuPrincipal()
+{
+    int opcao;
+    ExibirMensagemBoasVindas();
     Console.WriteLine("1 - Cadastrar novo Jogo");
     Console.WriteLine("2 - Exibir jogos cadastrados ");
     Console.WriteLine("3 - Mostrar detalhes dos jogos");
@@ -16,16 +68,10 @@ do{
 
     switch (opcao){
         case 1:
-            Console.WriteLine("Informe o nome do jogo");
-            var nomeDoJogo = Console.ReadLine();
-            jogos.Add(nomeDoJogo);
-            Console.WriteLine("Jogo Adicionado com sucesso");
+            CadastrarNovoJogo();
             break;
         case 2:
-            Console.WriteLine("Exibindo jogos cadastrados");
-            foreach (var jogo in jogos){
-                Console.WriteLine(jogo);
-            }
+            ExibirJogosCadastrados();
             break;
         case 3:
             Console.WriteLine("Detalhes do jogo selecionado!");
@@ -40,6 +86,6 @@ do{
             Console.WriteLine("Opção inválida: tente outra opção!");
             break;
     }
+}
 
-
-} while (opcao != 5);
+MenuPrincipal();
