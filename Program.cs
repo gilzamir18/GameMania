@@ -1,9 +1,16 @@
-﻿List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
+﻿Jogo jogo = new Jogo();
+jogo.Titulo = "FarCry";
 
+
+//List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
+/*
+Dictionary< string, List<int> > jogosRegistrados = new();
+jogosRegistrados["Forza"] = new List<int>(){10, 7, 8};
+jogosRegistrados["Valorant"] = new List<int>(){10, 5, 7}; 
+jogosRegistrados["FarCry"] = new List<int>{10, 10, 10};
 
 void ExibirMensagemBoasVindas()
 {
-    Console.WriteLine("**************************************************");
     Console.WriteLine(@"
 ░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
 ██╔════╝░██╔══██╗████╗░████║██╔════╝████╗░████║██╔══██╗████╗░██║██║██╔══██╗
@@ -12,7 +19,6 @@ void ExibirMensagemBoasVindas()
 ╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
     Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
-    Console.WriteLine("**************************************************");
 }
 
 void RodapeVoltarParaPrincipal()
@@ -29,29 +35,46 @@ void CadastrarNovoJogo()
 
     ExibirTituloDaOpcao("Cadastrar um novo Jogo");
     var nomeDoJogo = Console.ReadLine();
-    jogos.Add(nomeDoJogo);
+    jogosRegistrados.Add(nomeDoJogo, new List<int>());
     Console.WriteLine("Jogo Adicionado com sucesso");
     RodapeVoltarParaPrincipal();
 }
 
-void ExibirTituloDaOpcao(string titulo)
+void ExibirTituloDaOpcao(string titulo, char preencher='*')
 {
     Console.Clear();
-    Console.WriteLine("**********************************************");
+    var barra = string.Empty.PadLeft(titulo.Length, preencher);
+    Console.WriteLine(barra);
     Console.WriteLine(titulo);
-    Console.WriteLine("**********************************************");
+    Console.WriteLine(barra);
 }
 
 void ExibirJogosCadastrados()
 {
-    ExibirTituloDaOpcao("Exibindo Jogos Cadastrados");
-    foreach (var jogo in jogos)
+    ExibirTituloDaOpcao("Exibindo Jogos");
+    foreach (var jogo in jogosRegistrados.Keys)
     {
-        Console.WriteLine(jogo);
+        var notas = jogosRegistrados[jogo];
+        Console.WriteLine($"Título: {jogo}");
     }
     RodapeVoltarParaPrincipal();
 }
 
+void ExibirDetalhesDoJogo()
+{
+    ExibirTituloDaOpcao("Exibindo Detalhes do Jogo");
+    Console.Write("Informe o título do jogo: ");
+    string titulo = Console.ReadLine();
+    if (jogosRegistrados.ContainsKey(titulo))
+    {
+        var notas = jogosRegistrados[titulo];
+        Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+    }
+    else
+    {
+        Console.WriteLine($"Não existe um jogo com o título {titulo}");
+    }
+}
 
 void MenuPrincipal()
 {
@@ -74,7 +97,7 @@ void MenuPrincipal()
             ExibirJogosCadastrados();
             break;
         case 3:
-            Console.WriteLine("Detalhes do jogo selecionado!");
+            ExibirDetalhesDoJogo();
             break;
         case 4:
             Console.WriteLine("Avaliação do jogo selecionado!");
@@ -88,4 +111,4 @@ void MenuPrincipal()
     }
 }
 
-MenuPrincipal();
+MenuPrincipal();*/
