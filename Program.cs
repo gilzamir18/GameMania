@@ -1,4 +1,9 @@
-﻿//List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
+﻿Jogo jogo = new Jogo();
+jogo.Titulo = "FarCry";
+
+
+//List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
+/*
 Dictionary< string, List<int> > jogosRegistrados = new();
 jogosRegistrados["Forza"] = new List<int>(){10, 7, 8};
 jogosRegistrados["Valorant"] = new List<int>(){10, 5, 7}; 
@@ -106,4 +111,4 @@ void MenuPrincipal()
     }
 }
 
-MenuPrincipal();
+MenuPrincipal();*/
