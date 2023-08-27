@@ -1,13 +1,4 @@
-﻿// Jogo jogo = new Jogo();
-// jogo.Titulo = "FarCry";
-
-//List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
-
-Dictionary< string, List<int> > jogosRegistrados = new();
-
-jogosRegistrados["Forza"] = new List<int> {10, 7, 8};
-jogosRegistrados["Valorant"] = new List<int> {10, 5, 7}; 
-jogosRegistrados["FarCry"] = new List<int> {10, 10, 10};
+﻿Dictionary< string, Jogo > jogosRegistrados = new();
 
 void RodapeVoltarParaPrincipal(){
   Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
@@ -18,8 +9,23 @@ void RodapeVoltarParaPrincipal(){
 
 void CadastrarNovoJogo(){
   ExibirTituloDaOpcao("Cadastrar um novo Jogo");
+
+  Console.Write("Informe o título do jogo: ");
   var nomeDoJogo = Console.ReadLine()!;
-  jogosRegistrados.Add(nomeDoJogo, new List<int>());
+
+  Console.Write("Informe o genero do jogo: ");
+  var generoDoJogo = Console.ReadLine()!;
+
+  Console.Write("Informe o studio do jogo: ");
+  var studioDoJogo = Console.ReadLine()!;
+
+  Console.Write("Informe a edição do jogo: ");
+  var edicaoDoJogo = Console.ReadLine()!;
+
+  Console.Write("Informe as plataformas do jogo: ");
+  var plataformasDoJogo = Console.ReadLine()!;
+
+  jogosRegistrados.Add(nomeDoJogo, new Jogo(nomeDoJogo, generoDoJogo, studioDoJogo, edicaoDoJogo, plataformasDoJogo));
   Console.WriteLine("Jogo adicionado com sucesso!");
   RodapeVoltarParaPrincipal();
 }
@@ -58,11 +64,8 @@ void ExibirDetalhesDoJogo(){
   Console.Write("Informe o título do jogo: ");
   string titulo = Console.ReadLine()!;
   if(jogosRegistrados.ContainsKey(titulo)){
-    var notas = jogosRegistrados[titulo];
-    if(notas.Count != 0)
-      Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
-    else
-      Console.WriteLine($"O jogo {titulo} ainda não possui avaliação");
+    var jogo = jogosRegistrados[titulo];
+    jogo.ExibirFichaTecnica();
   }
   else
     Console.WriteLine($"Não existe um jogo com o título {titulo}");
@@ -70,17 +73,16 @@ void ExibirDetalhesDoJogo(){
 }
 
 void AvaliarJogoCadastrado(){
-  Console.Clear();
   ExibirTituloDaOpcao("Avaliar jogo");
   Console.Write("Digite o nome do jogo que deseja avaliar: ");
   string nomeDoJogo = Console.ReadLine()!;
-  if(jogosRegistrados.ContainsKey(nomeDoJogo)){
+  if(jogosRegistrados.ContainsKey(nomeDoJogo) && jogosRegistrados[nomeDoJogo].GetDisponibilidade()){
     Console.Write($"Qual a nota que o jogo {nomeDoJogo} merece: ");
     int nota = int.Parse(Console.ReadLine()!);
-    jogosRegistrados[nomeDoJogo].Add(nota);
+    jogosRegistrados[nomeDoJogo].notas.Add(nota);
     Console.WriteLine("Jogo avaliado com sucesso!");
   }else
-    Console.WriteLine($"A jogo {nomeDoJogo} não foi encontrado!");
+    Console.WriteLine($"A jogo {nomeDoJogo} não foi encontrado ou não disponivel para avaliação!");
   RodapeVoltarParaPrincipal();
 }
 
