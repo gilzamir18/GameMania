@@ -59,10 +59,14 @@ void ExibirDetalhesDoJogo(){
   string titulo = Console.ReadLine()!;
   if(jogosRegistrados.ContainsKey(titulo)){
     var notas = jogosRegistrados[titulo];
-    Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+    if(notas.Count != 0)
+      Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+    else
+      Console.WriteLine($"O jogo {titulo} ainda não possui avaliação");
   }
   else
     Console.WriteLine($"Não existe um jogo com o título {titulo}");
+  RodapeVoltarParaPrincipal();
 }
 
 void AvaliarJogoCadastrado(){
@@ -71,7 +75,7 @@ void AvaliarJogoCadastrado(){
   Console.Write("Digite o nome do jogo que deseja avaliar: ");
   string nomeDoJogo = Console.ReadLine()!;
   if(jogosRegistrados.ContainsKey(nomeDoJogo)){
-    Console.Write($"Qual a nota que o jogo `{nomeDoJogo} merece: ");
+    Console.Write($"Qual a nota que o jogo {nomeDoJogo} merece: ");
     int nota = int.Parse(Console.ReadLine()!);
     jogosRegistrados[nomeDoJogo].Add(nota);
     Console.WriteLine("Jogo avaliado com sucesso!");
