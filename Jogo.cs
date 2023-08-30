@@ -76,7 +76,7 @@ class Jogo {
         this.descricao = descricao;
         Disponibilidade = disponibilidade;
         Plataformas = plataformas;
-        Notas = notas ?? new List<float>();
+        Notas = notas ?? new List<float>(){};
     }
 
     public float AvaliacaoMedia {

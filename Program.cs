@@ -1,8 +1,10 @@
 ﻿
 
 List<Jogo> listaJogos = new(){
-    new Jogo("FarCry","Acao/Aventura","Ubisoft","3","3edicao",true,"AllPlatform",notas:new List<float>{10,9,8}),
-    new Jogo("GTA","Acao/Aventura","RockStar","5","5edicao",true,"AllPlatform",notas:new List<float>{8,9,8})
+    new Jogo("FarCry","Acao/Aventura","Ubisoft","3","3edicao",true,"AllPlatform",notas:new List<float>{9,8,8}),
+    new Jogo("GTA","Acao/Aventura","RockStar","5","5edicao",true,"AllPlatform",notas:new List<float>{9,8,9}),
+    new Jogo("Skyrim","RPG","Bethesda","5","5edicao",false,"AllPlatform",notas:new List<float>{10,10,10}),
+    new Jogo("Valorant","FPS","Riot","1","1edicao",false,"AllPlatform",notas:new List<float>{0,0,0})
     };
 
 void ExibirMensagemBoasVindas(){
@@ -151,43 +153,41 @@ void ExibirDetalhesDoJogo(){
             Console.WriteLine("");
         }             
     }
-    MenuPrincipal();
+    RodapeVoltarParaPrincipal();
 }
 
-string? JogoInvalidoOuEncontrado(string? aux){
-    while ((string.IsNullOrEmpty(aux) || EncontraJogo(aux) == null) && aux !="-1") {
-        Console.Write("Nome inválido ou não cadastrado. Tente Novamente: ");
-        aux = Console.ReadLine();
-    }
-    return aux;
-}
 void AvaliarJogoCadastrado(){
     ExibirTituloDaOpcao("Qual Jogo Deseja Avaliar? | Digite -1 Para Cancelar: ");
     Console.Write("Insira o Titulo do Jogo a Ser Avaliado: ");
-    string? aux = Console.ReadLine();
-    aux = JogoInvalidoOuEncontrado(aux);
 
-    if(aux == "-1"){
-        RodapeVoltarParaPrincipal();
-    }
+    string? aux = Console.ReadLine();
     Jogo? jogo = EncontraJogo(aux);
-    if(jogo ==
-     null){//Apenas para tirar o warning
-        RodapeVoltarParaPrincipal();
-        jogo = (jogo == null) ? new() : jogo;
-    }
-    Console.WriteLine("Insira Notas - Digite -1 Para Cancelar");
-    float n = 0;
-    jogo.Notas = jogo.Notas == null ? new List<float>{0} : jogo.Notas; //Apenas para tirar o warning
-    while(n >= 0){
-        aux = Console.ReadLine();
-        n = ForcedValidationFloat(aux);
-        if(n>=0){   
-            jogo.Notas.Add(n);
+
+    while(string.IsNullOrEmpty(aux) || aux!=jogo.Titulo || !string.IsNullOrEmpty(jogo.Titulo) && jogo.Disponibilidade==false && aux != "-1"){
+        if(!string.IsNullOrEmpty(jogo.Titulo)){
+            Console.Write("Jogo Indisponvel Para Avaliacao. Tente Novamente: ");
         }else{
-            n=-1;
+            Console.Write("Nome Invalido Ou Nao Cadastrado. Tente Novamente: ");
         }
-    }        
+        aux = Console.ReadLine();
+        jogo = EncontraJogo(aux);
+    }
+    
+    if(aux != "-1"){
+        Console.WriteLine("Insira Notas | Digite -1 Para Cancelar: ");
+        float n = 0;
+        jogo.Notas = jogo.Notas == null ? new List<float>{} : jogo.Notas; //Apenas para tirar o warning
+        while(n >= 0){
+            aux = Console.ReadLine();
+            n = ForcedValidationFloat(aux);
+            if(n>=0){   
+                jogo.Notas.Add(n);
+            }else{
+                n=-1;
+            }
+        }        
+           
+    }
     
     RodapeVoltarParaPrincipal();
 }
