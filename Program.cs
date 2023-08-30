@@ -1,9 +1,7 @@
-﻿Jogo jogo = new Jogo();
-jogo.Titulo = "FarCry";
-
+﻿
 
 //List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
-/*
+
 Dictionary< string, List<int> > jogosRegistrados = new();
 jogosRegistrados["Forza"] = new List<int>(){10, 7, 8};
 jogosRegistrados["Valorant"] = new List<int>(){10, 5, 7}; 
@@ -29,6 +27,15 @@ void RodapeVoltarParaPrincipal()
     Console.Clear();
     MenuPrincipal();
 }
+void ExibirTituloDaOpcao(string titulo, char preencher = '*')
+{
+    Console.Clear();
+    var barra = string.Empty.PadLeft(titulo.Length, preencher);
+    Console.WriteLine(barra);
+    Console.WriteLine(titulo);
+    Console.WriteLine(barra);
+}
+
 
 void CadastrarNovoJogo()
 {
@@ -40,14 +47,6 @@ void CadastrarNovoJogo()
     RodapeVoltarParaPrincipal();
 }
 
-void ExibirTituloDaOpcao(string titulo, char preencher='*')
-{
-    Console.Clear();
-    var barra = string.Empty.PadLeft(titulo.Length, preencher);
-    Console.WriteLine(barra);
-    Console.WriteLine(titulo);
-    Console.WriteLine(barra);
-}
 
 void ExibirJogosCadastrados()
 {
@@ -60,6 +59,30 @@ void ExibirJogosCadastrados()
     RodapeVoltarParaPrincipal();
 }
 
+void AvaliarJogo()
+{
+    ExibirTituloDaOpcao("Avaliar jogo");
+    Console.Write("Digite o nome do jogo: ");
+    string titulo = Console.ReadLine();
+    if (jogosRegistrados.ContainsKey(titulo))
+    {
+        Console.Write("Digite a nota: ");
+        var notaString = Console.ReadLine();
+        int nota = int.Parse(notaString);
+        if((nota >= 0) && (nota <= 10))
+        {
+            jogosRegistrados[titulo].Add(nota);
+        }
+        else
+        {
+            Console.WriteLine("Nota fora dos padrões");
+        }
+        
+    }
+
+    RodapeVoltarParaPrincipal();
+}
+
 void ExibirDetalhesDoJogo()
 {
     ExibirTituloDaOpcao("Exibindo Detalhes do Jogo");
@@ -68,12 +91,21 @@ void ExibirDetalhesDoJogo()
     if (jogosRegistrados.ContainsKey(titulo))
     {
         var notas = jogosRegistrados[titulo];
-        Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+        if(notas.Count == 0) 
+        {
+            Console.WriteLine($"A média de avaliação do jogo {titulo} é: 0");
+        }
+        else
+        {
+            Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
+        }
+       
     }
     else
     {
         Console.WriteLine($"Não existe um jogo com o título {titulo}");
     }
+    RodapeVoltarParaPrincipal();
 }
 
 void MenuPrincipal()
@@ -100,7 +132,7 @@ void MenuPrincipal()
             ExibirDetalhesDoJogo();
             break;
         case 4:
-            Console.WriteLine("Avaliação do jogo selecionado!");
+            AvaliarJogo();
             break;
         case 5:
             Console.WriteLine("Volte sempre...");
@@ -111,4 +143,4 @@ void MenuPrincipal()
     }
 }
 
-MenuPrincipal();*/
+MenuPrincipal();

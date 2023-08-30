@@ -1,6 +1,6 @@
 class Jogo
 {
-    private string Titulo {get; set;}
+    public string titulo {get; set;}
     string genero;
     string studio;
     string edicao;
@@ -10,6 +10,7 @@ class Jogo
 
     public Jogo(string descricao)
     {
+        
         this.Descricao = descricao;
     }
 
