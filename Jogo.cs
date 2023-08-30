@@ -59,13 +59,13 @@ class Jogo {
             plataformas = string.IsNullOrEmpty(value)?"":value;
         }
     }
-    private List<float>? notas = new();
+    private List<float> notas = new();
     public List<float>? Notas {
         get{ 
-            return notas==null ? new List<float>{0}:notas;
+            return notas==null ? new List<float>{}:notas;
         } 
         set{ 
-            notas = value==null ? new List<float>{0}:value;
+            notas = value==null ? new List<float>{}:value;
         }
     }
     public Jogo(string? titulo="", string? genero="", string? studio="", string? edicao="", string? descricao="", bool disponibilidade=false, string? plataformas="", List<float>? notas = null){
