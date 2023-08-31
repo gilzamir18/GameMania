@@ -30,8 +30,6 @@ void RodapeVoltarParaPrincipal()
 {
     Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
     Console.ReadKey();
-    //Thread.Sleep(1000);
-    //Console.Clear();
     MenuPrincipal();
 }
 
@@ -52,7 +50,7 @@ void CadastrarNovoJogo()
     RodapeVoltarParaPrincipal();
 }
 
-void ExibirJogosCadastrados()
+void ExibirTituloDaOpcao(string titulo, char preencher='*')
 {
     Console.Clear();
     ExibirTituloDaOpcao("Exibindo Jogos");
@@ -125,13 +123,7 @@ void MenuPrincipal()
     Console.WriteLine("5 - Sair");
 
     int opcao;   
-    if (!EntradaDeInteiro(out opcao))
-    {
-        Console.WriteLine("Entrada inválida. Tente um valor inteiro entre 1 e 5!");
-        Console.WriteLine("Pressione qualquer tecla para tentar novamente!");
-        Console.ReadKey();
-        MenuPrincipal();
-    }
+    EntradaDeInteiro(out opcao);
 
     switch (opcao){
         case 1:
@@ -151,36 +143,35 @@ void MenuPrincipal()
             break;
         default:
             Console.WriteLine("Opção inválida: tente outra opção!");
+            RodapeVoltarParaPrincipal();
             break;
     }
 }
 
-void ExibirTituloDaOpcao(string titulo, char preencher='*')
+void ExibirJogosCadastrados()
 {
-    var barra = string.Empty.PadLeft(titulo.Length, preencher);
-    Console.WriteLine(barra);
-    Console.WriteLine(titulo);
-    Console.WriteLine(barra);
+    ExibirTituloDaOpcao("Exibindo Jogos");
+    foreach (var jogo in jogosRegistrados.Keys)
+    {
+        var notas = jogosRegistrados[jogo];
+        Console.WriteLine($"Título: {jogo}");
+    }
+    RodapeVoltarParaPrincipal();
 }
 
 
 bool EntradaDeInteiro(out int valor)
 {
-
-    while (true)
-    {  
-        var valorLido = Console.ReadLine();
-        try
-        {
-            valor = int.Parse(valorLido);
-            return true;
-        }
-        catch(FormatException e)
-        {
-            valor = 0;
-            return false;
-        }
-    }
+    try
+    {
+        valor = int.Parse(Console.ReadLine());
+        return true;
+    }   
+    catch(FormatException e)
+    {
+        valor = 0;
+        return false;
+    } 
 }
 
 MenuPrincipal();
