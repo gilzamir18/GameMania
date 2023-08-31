@@ -1,4 +1,6 @@
-class Jogo
+namespace GameMania.Modelos;
+
+internal class Jogo
 {
     public string Titulo {get; set;}
     public string Genero {get; set;}
@@ -8,7 +10,7 @@ class Jogo
     public bool Disponibilidade {get;}
     
     private List<string> plataformas;
-    private List<int> notas;
+    private List<Avaliacao> notas;
 
     public float NotaMedia
     {
@@ -16,7 +18,7 @@ class Jogo
         {
             if (notas.Count > 0)
             {
-                return (float)notas.Average();
+                return (float)notas.Average( a => a.Nota );
             }
             else
             {
@@ -59,7 +61,7 @@ class Jogo
         }
     }
 
-    public void AdicionarNota(int nota)
+    public void AdicionarNota(Avaliacao nota)
     {
         notas.Add(nota);
     }
