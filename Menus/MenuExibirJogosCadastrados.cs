@@ -10,4 +10,5 @@ internal class MenuExibirJogosCadastrados: Menu{
             Console.WriteLine($"{jogo.Titulo}");
         }
     }
+    }
 }

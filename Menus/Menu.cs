@@ -1,45 +1,46 @@
-namespace GameMania.Menus;
 using GameMania.Modelos;
-internal class Menu {
-    public string Titulo {get;set;}
-    public Menu(string titulo){
+
+namespace GameMania.Menus;
+
+internal class Menu 
+{
+
+    public string Titulo {get;}
+
+    public Menu(string titulo)
+    {
         Titulo = titulo;
     }
-    public void ExecutarMenu(Dictionary<string, Jogo> jogosRegistrados){
-        ExibirTituloDaOpcao(Titulo);
-        ExecutarOpcao(jogosRegistrados);
-        Rodape();
+
+    public bool Executar(Dictionary<string, Jogo> jogosRegistrados)
+    {
+            ExibirTituloDaOpcao("Cadastrar novo Jogo");
+            bool sair = MostrarOpcao(jogosRegistrados);
+            if (!sair)
+            {
+                Rodape();
+            }
+            return sair;
     }
-    public virtual void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
-        
-    }    
-    void Rodape(){
+
+    void Rodape()
+    {
         Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
-    void ExibirTituloDaOpcao(string titulo, char preencher='*'){
+
+    public virtual bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
+    {
+        return false;
+    }
+
+    void ExibirTituloDaOpcao(string titulo, char preencher='*')
+    {
         Console.Clear();
         var barra = string.Empty.PadLeft(titulo.Length, preencher);
         Console.WriteLine(barra);
         Console.WriteLine(titulo);
         Console.WriteLine(barra);
-    }
-
-    public string ForcedValidationString(string? aux){
-        while(string.IsNullOrEmpty(aux)) {
-            Console.Write("Tente Novamente: ");
-            aux = Console.ReadLine();
-        }
-        return aux;
-    }
-
-    public float ForcedValidationFloat(string? aux) {
-        float value;
-        while (!float.TryParse(aux, out value)) {
-            Console.Write("Tente Novamente: ");
-            aux = Console.ReadLine();
-        }
-        return value;
     }
 
 }
