@@ -1,4 +1,9 @@
 ﻿Dictionary< string, Jogo > jogosRegistrados = new();
+jogosRegistrados["Minecraft"] = new Jogo("Minecraft", "Sandbox", "Mojang", "1");
+jogosRegistrados["Minecraft"].AdicionarPlataforma("PC");
+jogosRegistrados["Minecraft"].AdicionarPlataforma("PS4");
+jogosRegistrados["Minecraft"].AdicionarPlataforma("XBox360");
+
 jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
 jogosRegistrados["Forza"].AdicionarNota(10);
 jogosRegistrados["Forza"].AdicionarNota(5);
@@ -12,6 +17,8 @@ jogosRegistrados["Valorant"].AdicionarNota(9);
 jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
 jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
 jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
+
+char preencher = '*';
 
 void ExibirMensagemBoasVindas()
 {
@@ -50,23 +57,30 @@ void CadastrarNovoJogo()
     RodapeVoltarParaPrincipal();
 }
 
-void ExibirTituloDaOpcao(string titulo, char preencher='*')
+void ModificarExibirTituloDaOpcao()
 {
-    Console.Clear();
-    ExibirTituloDaOpcao("Exibindo Jogos");
-    if (jogosRegistrados.Count > 0)
+    Console.WriteLine($"O caractere atual é {preencher}")
+    Console.WriteLine("Insira a seguir o caractere que será utilizado ou digite 1 para cancelar.");
+    char novo = Console.ReadLine();
+    if (novo == '1')
     {
-        foreach (var jogo in jogosRegistrados.Values)
-        {
-            ExibirTituloDaOpcao($"Ficha Técnica do Jogo {jogo.Titulo}");
-            jogo.ExibirFichaTecnica();
-        }
+        Console.WriteLine($"Operação cancelada. O caractere atual permanece {preencher}")
     }
     else
     {
-        Console.WriteLine("Nenhum jogo registrado!");
+        preencher = novo;
+        Console.WriteLine($"O novo caractere de destaque é {preencher}");
     }
     RodapeVoltarParaPrincipal();
+}
+
+void ExibirTituloDaOpcao(string titulo)
+{
+    Console.Clear();
+    var barra = string.Empty.PadLeft(titulo.Length, preencher);
+    Console.WriteLine(barra);
+    Console.WriteLine(titulo);
+    Console.WriteLine(barra);
 }
 
 void ExibirDetalhesDoJogo()
@@ -77,8 +91,17 @@ void ExibirDetalhesDoJogo()
     string titulo = Console.ReadLine();
     if (jogosRegistrados.ContainsKey(titulo))
     {
-        var jogo = jogosRegistrados[titulo];
-        Console.WriteLine($"A média de avaliação do jogo {titulo} é: {jogo.NotaMedia}");
+        if (jogo.NotaMedia == 0)
+        {
+            var jogo = jogosRegistrados[titulo];
+            Console.WriteLine($"O jogo {titulo} não possui avaliações o suficiente.");
+            Console.WriteLine($"A média de avaliação é: {jogo.NotaMedia}");
+        }
+        else
+        {
+            var jogo = jogosRegistrados[titulo];
+            Console.WriteLine($"A média de avaliação do jogo {titulo} é: {jogo.NotaMedia}");
+        }
     }
     else
     {
@@ -120,7 +143,8 @@ void MenuPrincipal()
     Console.WriteLine("2 - Exibir jogos cadastrados ");
     Console.WriteLine("3 - Mostrar detalhes dos jogos");
     Console.WriteLine("4 - Avaliar jogo");
-    Console.WriteLine("5 - Sair");
+    Console.WriteLine("5 - Modificar Caractere de Destaque");
+    Console.WriteLine("6 - Sair");
 
     int opcao;   
     EntradaDeInteiro(out opcao);
@@ -139,6 +163,9 @@ void MenuPrincipal()
             AvaliarJogoCadastrado();
             break;
         case 5:
+            ModificarExibirTituloDaOpcao();
+            break;
+        case 6:
             Console.WriteLine("Volte sempre...");
             break;
         default:
@@ -148,15 +175,22 @@ void MenuPrincipal()
     }
 }
 
-void ExibirJogosCadastrados()
+void ExibirJogosRegistrados()
 {
-    ExibirTituloDaOpcao("Exibindo Jogos");
-    foreach (var jogo in jogosRegistrados.Keys)
+    if (jogosRegistrados.Count > 0)
     {
-        var notas = jogosRegistrados[jogo];
-        Console.WriteLine($"Título: {jogo}");
+        ExibirTituloDaOpcao("Exibindo Jogos");
+        foreach (var jogo in jogosRegistrados.Keys)
+        {
+            var notas = jogosRegistrados[jogo];
+            Console.WriteLine($"Título: {jogo}");
+        }
+        RodapeVoltarParaPrincipal();
     }
-    RodapeVoltarParaPrincipal();
+    else
+    {
+        Console.WriteLine("Nenhum Jogo Cadastrado!");
+    }
 }
 
 
