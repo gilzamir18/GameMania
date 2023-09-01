@@ -1,6 +1,12 @@
-﻿Jogo jogo = new Jogo();
-jogo.Titulo = "FarCry";
+﻿using GameMania.Menus;
+using GameMania.Modelos;
 
+Dictionary< string, Jogo > jogosRegistrados = new();
+jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
+jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
+jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
+jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
+jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
 
 //List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
 /*
@@ -9,8 +15,16 @@ jogosRegistrados["Forza"] = new List<int>(){10, 7, 8};
 jogosRegistrados["Valorant"] = new List<int>(){10, 5, 7}; 
 jogosRegistrados["FarCry"] = new List<int>{10, 10, 10};
 
-void ExibirMensagemBoasVindas()
-{
+
+Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
+opcoes["1"] = new MenuCadastrarNovoJogo();
+opcoes["2"] = new MenuExibirJogosCadastrados();
+opcoes["3"] = new MenuExibirDetalhesDoJogo();
+opcoes["4"] = new MenuAvaliarJogosCadastrados();
+opcoes["0"] = new MenuSair();
+
+void ExibirMensagemBoasVindas() {
+    Console.Clear();
     Console.WriteLine(@"
 ░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
 ██╔════╝░██╔══██╗████╗░████║██╔════╝████╗░████║██╔══██╗████╗░██║██║██╔══██╗
@@ -21,94 +35,30 @@ void ExibirMensagemBoasVindas()
     Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
 }
 
-void RodapeVoltarParaPrincipal()
-{
-    Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
-    Console.ReadKey();
-    //Thread.Sleep(1000);
-    Console.Clear();
-    MenuPrincipal();
-}
 
-void CadastrarNovoJogo()
-{
+void MenuPrincipal() {
 
-    ExibirTituloDaOpcao("Cadastrar um novo Jogo");
-    var nomeDoJogo = Console.ReadLine();
-    jogosRegistrados.Add(nomeDoJogo, new List<int>());
-    Console.WriteLine("Jogo Adicionado com sucesso");
-    RodapeVoltarParaPrincipal();
-}
+    while (true) {
+        ExibirMensagemBoasVindas();
+        Console.WriteLine("1 - Cadastrar novo Jogo");
+        Console.WriteLine("2 - Exibir jogos cadastrados ");
+        Console.WriteLine("3 - Exibir detalhes dos jogos");
+        Console.WriteLine("4 - Avaliar jogo");
+        Console.WriteLine("0 - Sair");
+        string opcao = Console.ReadLine();
 
-void ExibirTituloDaOpcao(string titulo, char preencher='*')
-{
-    Console.Clear();
-    var barra = string.Empty.PadLeft(titulo.Length, preencher);
-    Console.WriteLine(barra);
-    Console.WriteLine(titulo);
-    Console.WriteLine(barra);
-}
+        if (opcoes.ContainsKey(opcao)) {   
+            bool sair = opcoes[opcao].Executar(jogosRegistrados);
 
-void ExibirJogosCadastrados()
-{
-    ExibirTituloDaOpcao("Exibindo Jogos");
-    foreach (var jogo in jogosRegistrados.Keys)
-    {
-        var notas = jogosRegistrados[jogo];
-        Console.WriteLine($"Título: {jogo}");
-    }
-    RodapeVoltarParaPrincipal();
-}
-
-void ExibirDetalhesDoJogo()
-{
-    ExibirTituloDaOpcao("Exibindo Detalhes do Jogo");
-    Console.Write("Informe o título do jogo: ");
-    string titulo = Console.ReadLine();
-    if (jogosRegistrados.ContainsKey(titulo))
-    {
-        var notas = jogosRegistrados[titulo];
-        Console.WriteLine($"A média de avaliação do jogo {titulo} é: {notas.Average()}");
-    }
-    else
-    {
-        Console.WriteLine($"Não existe um jogo com o título {titulo}");
+            if (sair)
+                break;
+                
+        } else {
+            Console.WriteLine("Opcao Inválida!. Tente novamente. Pressione qualquer tecla para continuar.");
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 }
 
-void MenuPrincipal()
-{
-    int opcao;
-    ExibirMensagemBoasVindas();
-    Console.WriteLine("1 - Cadastrar novo Jogo");
-    Console.WriteLine("2 - Exibir jogos cadastrados ");
-    Console.WriteLine("3 - Mostrar detalhes dos jogos");
-    Console.WriteLine("4 - Avaliar jogo");
-    Console.WriteLine("5 - Sair");
-
-    var input = Console.ReadLine();
-    opcao = int.Parse(input);
-
-    switch (opcao){
-        case 1:
-            CadastrarNovoJogo();
-            break;
-        case 2:
-            ExibirJogosCadastrados();
-            break;
-        case 3:
-            ExibirDetalhesDoJogo();
-            break;
-        case 4:
-            Console.WriteLine("Avaliação do jogo selecionado!");
-            break;
-        case 5:
-            Console.WriteLine("Volte sempre...");
-            break;
-        default:
-            Console.WriteLine("Opção inválida: tente outra opção!");
-            break;
-    }
-}
-
-MenuPrincipal();*/
+MenuPrincipal();
