@@ -8,12 +8,13 @@ jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
 jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
 jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
 
-//List<string> jogos = new() {"GTA", "Valorant", "CounterStrike", "NeedForSpeed"} ;
-/*
-Dictionary< string, List<int> > jogosRegistrados = new();
-jogosRegistrados["Forza"] = new List<int>(){10, 7, 8};
-jogosRegistrados["Valorant"] = new List<int>(){10, 5, 7}; 
-jogosRegistrados["FarCry"] = new List<int>{10, 10, 10};
+jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games", "6");
+jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(10));
+jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(8));
+jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(9));
+jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
+jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
+jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
 
 
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
