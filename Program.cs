@@ -1,11 +1,11 @@
 ﻿
+Dictionary<string, Jogo> listaJogos = new(){
+    ["FarCry"] = new Jogo("FarCry", "Acao/Aventura", "Ubisoft", "3", "3edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 8 }),
+    ["GTA"] = new Jogo("GTA", "Acao/Aventura", "RockStar", "5", "5edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 9 }),
+    ["Skyrim"] = new Jogo("Skyrim", "RPG", "Bethesda", "5", "5edicao", false, "AllPlatform", notas: new List<float> { 10, 10, 10 }),
+    ["Valorant"] = new Jogo("Valorant", "FPS", "Riot", "1", "1edicao", false, "AllPlatform", notas: new List<float> { 0, 0, 0 })
+};
 
-List<Jogo> listaJogos = new(){
-    new Jogo("FarCry","Acao/Aventura","Ubisoft","3","3edicao",true,"AllPlatform",notas:new List<float>{9,8,8}),
-    new Jogo("GTA","Acao/Aventura","RockStar","5","5edicao",true,"AllPlatform",notas:new List<float>{9,8,9}),
-    new Jogo("Skyrim","RPG","Bethesda","5","5edicao",false,"AllPlatform",notas:new List<float>{10,10,10}),
-    new Jogo("Valorant","FPS","Riot","1","1edicao",false,"AllPlatform",notas:new List<float>{0,0,0})
-    };
 
 void ExibirMensagemBoasVindas(){
     Console.WriteLine(@"
@@ -33,16 +33,12 @@ void ExibirTituloDaOpcao(string titulo, char preencher='*'){
 }
 
 Jogo EncontraJogo(string? aux) {
-    if (string.IsNullOrEmpty(aux)) {
-        return new();
+    aux = string.IsNullOrEmpty(aux)?"":aux;
+    if(listaJogos.ContainsKey(aux)){
+        return listaJogos[aux];    
     }else{
-        foreach (Jogo jogo in listaJogos) {
-            if (jogo.Titulo == aux) {
-                return jogo;
-            }
-        }
+        return new();
     }
-    return new();
 }
 
 string ForcedValidationString(string? aux){
@@ -67,7 +63,7 @@ void CadastrarNovoJogo(){
     Console.Write("Insira o Titulo do Jogo: ");
 
     string? aux = Console.ReadLine();
-    Jogo? jogo = EncontraJogo(aux);
+    Jogo jogo = EncontraJogo(aux);
 
     while(aux==jogo.Titulo && aux != "-1"){
         Console.Write("Nome Invalido Ou Ja Cadastrado. Tente Novamente: ");
@@ -94,13 +90,19 @@ void CadastrarNovoJogo(){
         // aux = Console.ReadLine();
         // jogo.Descricao = ForcedValidationString(aux);
 
-        Console.WriteLine("Disponivel Para Avaliacao? (1 = Sim | 0 - Nao)");
-        aux = Console.ReadLine();
-        while( aux != "1" || aux != "0" || string.IsNullOrEmpty(aux)){
-            Console.Write("Tente Novamente: ");
+        Console.WriteLine("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
+        while (true){
             aux = Console.ReadLine();
+            if (aux == "1" || aux == "Sim"){
+                jogo.Disponibilidade=true;
+                break;
+            }else if (aux == "0" || aux == "Nao"){
+                jogo.Disponibilidade=false;
+                break;
+            }else{
+                Console.Write("Tente Novamente: ");
+            }
         }
-        jogo.Disponibilidade = (aux == "1")?true:false;
 
         Console.WriteLine("Insira Plataformas: ");
         aux = Console.ReadLine();
@@ -118,8 +120,8 @@ void CadastrarNovoJogo(){
                 n=-1;
             }
         }
-
-        listaJogos.Add(jogo);
+        aux = string.IsNullOrEmpty(aux)?"":aux;
+        listaJogos.Add(aux,jogo);
         Console.WriteLine("Jogo Adicionado Com Sucesso");        
     }else{
         Console.WriteLine("Cadastro Cancelado");
@@ -132,8 +134,8 @@ void ExibirJogosCadastrados(){
     if(listaJogos.Count == 0){
         Console.WriteLine("Nenhum Jogo Cadastrado!");
     }else{
-        foreach (Jogo jogo in listaJogos){
-            Console.WriteLine(jogo.Titulo);
+        foreach (Jogo jogo in listaJogos.Values){
+            Console.WriteLine($"{jogo.Titulo}");
         }
     }
     RodapeVoltarParaPrincipal();
@@ -145,7 +147,10 @@ void ExibirDetalhesDoJogo(){
     while(aux != "-1"){
         Console.Write("Informe o Título Do Jogo | Digite -1 Para Cancelar: ");
         aux = Console.ReadLine();
-        Jogo? jogo = EncontraJogo(aux);
+        if(aux == "-1"){
+            break;
+        }
+        Jogo jogo = EncontraJogo(aux);
         if(string.IsNullOrEmpty(jogo.Titulo)){
             Console.WriteLine("Titulo Nao Encontrado");
         }else{
@@ -161,7 +166,7 @@ void AvaliarJogoCadastrado(){
     Console.Write("Insira o Titulo do Jogo a Ser Avaliado: ");
 
     string? aux = Console.ReadLine();
-    Jogo? jogo = EncontraJogo(aux);
+    Jogo jogo = EncontraJogo(aux);
 
     while(string.IsNullOrEmpty(aux) || aux!=jogo.Titulo || !string.IsNullOrEmpty(jogo.Titulo) && jogo.Disponibilidade==false && aux != "-1"){
         if(!string.IsNullOrEmpty(jogo.Titulo)){
@@ -196,18 +201,17 @@ void MenuPrincipal(){
     Console.Clear();
     string? input;
     ExibirMensagemBoasVindas();
-    Console.WriteLine("0 - Sair");
-    Console.WriteLine("1 - Cadastrar Novo Jogo");
-    Console.WriteLine("2 - Exibir Jogos Cadastrados ");
-    Console.WriteLine("3 - Mostrar Detalhes Dos Jogos");
-    Console.WriteLine("4 - Avaliar Jogo");
+    Console.WriteLine("-1 - Sair");
+    Console.WriteLine(" 1 - Cadastrar Novo Jogo");
+    Console.WriteLine(" 2 - Exibir Jogos Cadastrados ");
+    Console.WriteLine(" 3 - Mostrar Detalhes Dos Jogos");
+    Console.WriteLine(" 4 - Avaliar Jogo");
 
     input = Console.ReadLine();
-    input = (!string.IsNullOrWhiteSpace(input))? input: "-1";
     switch (input){
-        case "0":
+        case "-1":
             Console.WriteLine("Volte sempre...");
-            return;
+            break;
         case "1":
             CadastrarNovoJogo();
             break;
@@ -221,7 +225,7 @@ void MenuPrincipal(){
             AvaliarJogoCadastrado();
             break;
         default:
-            Console.WriteLine("Opção inválida: tente outra opção!");
+            Console.WriteLine("Opcao Invalida. Tente Outra Opcao");
             MenuPrincipal();
             break;
     }
