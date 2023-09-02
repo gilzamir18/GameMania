@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< Updated upstream
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameMania", "GameMania.csproj", "{5CAFF17E-7543-4208-9E2D-362F8188D225}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameMania", "GameMania.csproj", "{BFD1F4EB-A033-4F51-960E-6818A82E1FB7}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +15,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< Updated upstream
 		{5CAFF17E-7543-4208-9E2D-362F8188D225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CAFF17E-7543-4208-9E2D-362F8188D225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CAFF17E-7543-4208-9E2D-362F8188D225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CAFF17E-7543-4208-9E2D-362F8188D225}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{BFD1F4EB-A033-4F51-960E-6818A82E1FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD1F4EB-A033-4F51-960E-6818A82E1FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD1F4EB-A033-4F51-960E-6818A82E1FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD1F4EB-A033-4F51-960E-6818A82E1FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< Updated upstream
 		SolutionGuid = {6C28DEE3-CD1A-401A-B153-95DB54870E62}
+=======
+		SolutionGuid = {19EA35A0-6A58-4E5C-8E69-649A94F66516}
+>>>>>>> Stashed changes
 	EndGlobalSection
 EndGlobal
