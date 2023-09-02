@@ -35,8 +35,10 @@ void ExibirTituloDaOpcao(string titulo, char preencher='*'){
 Jogo EncontraJogo(string? aux) {
     aux = string.IsNullOrEmpty(aux)?"":aux;
     if(listaJogos.ContainsKey(aux)){
+        Console.WriteLine("EncontraJogo: True");
         return listaJogos[aux];    
     }else{
+        Console.WriteLine("EncontraJogo: False");
         return new();
     }
 }
@@ -72,9 +74,10 @@ void CadastrarNovoJogo(){
     }
     
     if(aux != "-1"){
-        jogo = new(aux);
+        jogo = new(titulo:aux);
         Console.WriteLine("Insira Genero: ");
         aux = Console.ReadLine();
+        //TryCatch que manda pra um validador?
         jogo.Genero = ForcedValidationString(aux);
 
         Console.WriteLine("Insira Studio: ");
@@ -84,11 +87,6 @@ void CadastrarNovoJogo(){
         Console.WriteLine("Insira Edicao: ");
         aux = Console.ReadLine();
         jogo.Edicao = ForcedValidationString(aux);
-
-        // ReadOnly
-        // Console.WriteLine("Insira Descricao: ");
-        // aux = Console.ReadLine();
-        // jogo.Descricao = ForcedValidationString(aux);
 
         Console.WriteLine("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
         while (true){
@@ -120,8 +118,8 @@ void CadastrarNovoJogo(){
                 n=-1;
             }
         }
-        aux = string.IsNullOrEmpty(aux)?"":aux;
-        listaJogos.Add(aux,jogo);
+        jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
+        listaJogos.Add(jogo.Titulo,jogo);
         Console.WriteLine("Jogo Adicionado Com Sucesso");        
     }else{
         Console.WriteLine("Cadastro Cancelado");
