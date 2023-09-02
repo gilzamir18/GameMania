@@ -1,4 +1,6 @@
-﻿
+﻿using GameMania.Menus;
+using GameMania.Modelos;
+
 Dictionary<string, Jogo> listaJogos = new(){
     ["FarCry"] = new Jogo("FarCry", "Acao/Aventura", "Ubisoft", "3", "3edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 8 }),
     ["GTA"] = new Jogo("GTA", "Acao/Aventura", "RockStar", "5", "5edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 9 }),
@@ -6,8 +8,16 @@ Dictionary<string, Jogo> listaJogos = new(){
     ["Valorant"] = new Jogo("Valorant", "FPS", "Riot", "1", "1edicao", false, "AllPlatform", notas: new List<float> { 0, 0, 0 })
 };
 
+Dictionary<string, Menu> listaOpcoes = new(){
+    ["-1"] = new MenuExibirJogosCadastrados(),
+    ["1"] = new MenuCadastrarNovoJogo(),
+    ["2"] = new MenuExibirJogosCadastrados(),
+    ["3"] = new MenuExibirDetalhesDoJogo(),
+    ["4"] = new MenuAvaliarJogoCadastrado()
+};
 
-void ExibirMensagemBoasVindas(){
+void TextoMenu(){
+    Console.Clear();
     Console.WriteLine(@"
 ░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
 ██╔════╝░██╔══██╗████╗░████║██╔════╝████╗░████║██╔══██╗████╗░██║██║██╔══██╗
@@ -15,219 +25,23 @@ void ExibirMensagemBoasVindas(){
 ██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
 ╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
-}
-
-void RodapeVoltarParaPrincipal(){
-    Console.WriteLine("Pressione Qualquer Tecla Para Voltar ao Menu Principal...");
-    Console.ReadKey();
-    Console.Clear();
-    MenuPrincipal();
-}
-
-void ExibirTituloDaOpcao(string titulo, char preencher='*'){
-    Console.Clear();
-    var barra = string.Empty.PadLeft(titulo.Length, preencher);
-    Console.WriteLine(barra);
-    Console.WriteLine(titulo);
-    Console.WriteLine(barra);
-}
-
-Jogo EncontraJogo(string? aux) {
-    aux = string.IsNullOrEmpty(aux)?"":aux;
-    if(listaJogos.ContainsKey(aux)){
-        Console.WriteLine("EncontraJogo: True");
-        return listaJogos[aux];    
-    }else{
-        Console.WriteLine("EncontraJogo: False");
-        return new();
-    }
-}
-
-string ForcedValidationString(string? aux){
-    while(string.IsNullOrEmpty(aux)) {
-        Console.Write("Tente Novamente: ");
-        aux = Console.ReadLine();
-    }
-    return aux;
-}
-
-float ForcedValidationFloat(string? aux) {
-    float value;
-    while (!float.TryParse(aux, out value)) {
-        Console.Write("Tente Novamente: ");
-        aux = Console.ReadLine();
-    }
-    return value;
-}
-
-void CadastrarNovoJogo(){
-    ExibirTituloDaOpcao("Cadastrar Um Novo Jogo | Digite -1 Para Cancelar: ");
-    Console.Write("Insira o Titulo do Jogo: ");
-
-    string? aux = Console.ReadLine();
-    Jogo jogo = EncontraJogo(aux);
-
-    while(aux==jogo.Titulo && aux != "-1"){
-        Console.Write("Nome Invalido Ou Ja Cadastrado. Tente Novamente: ");
-        aux = Console.ReadLine();
-        jogo = EncontraJogo(aux);
-    }
-    
-    if(aux != "-1"){
-        jogo = new(titulo:aux);
-        Console.WriteLine("Insira Genero: ");
-        aux = Console.ReadLine();
-        //TryCatch que manda pra um validador?
-        jogo.Genero = ForcedValidationString(aux);
-
-        Console.WriteLine("Insira Studio: ");
-        aux = Console.ReadLine();
-        jogo.Studio = ForcedValidationString(aux);        
-
-        Console.WriteLine("Insira Edicao: ");
-        aux = Console.ReadLine();
-        jogo.Edicao = ForcedValidationString(aux);
-
-        Console.WriteLine("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
-        while (true){
-            aux = Console.ReadLine();
-            if (aux == "1" || aux == "Sim"){
-                jogo.Disponibilidade=true;
-                break;
-            }else if (aux == "0" || aux == "Nao"){
-                jogo.Disponibilidade=false;
-                break;
-            }else{
-                Console.Write("Tente Novamente: ");
-            }
-        }
-
-        Console.WriteLine("Insira Plataformas: ");
-        aux = Console.ReadLine();
-        jogo.Plataformas = ForcedValidationString(aux);
-
-        jogo.Notas = new List<float>{};//Evitar Warning
-        Console.WriteLine("Insira Notas - Digite -1 Para Cancelar");
-        float n = 0;
-        while(n >= 0){
-            aux = Console.ReadLine();
-            n = ForcedValidationFloat(aux);
-            if(n>=0){
-                jogo.Notas.Add(n);
-            }else{
-                n=-1;
-            }
-        }
-        jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
-        listaJogos.Add(jogo.Titulo,jogo);
-        Console.WriteLine("Jogo Adicionado Com Sucesso");        
-    }else{
-        Console.WriteLine("Cadastro Cancelado");
-    }
-    RodapeVoltarParaPrincipal();
-}
-
-void ExibirJogosCadastrados(){
-    ExibirTituloDaOpcao("Exibindo Jogos");
-    if(listaJogos.Count == 0){
-        Console.WriteLine("Nenhum Jogo Cadastrado!");
-    }else{
-        foreach (Jogo jogo in listaJogos.Values){
-            Console.WriteLine($"{jogo.Titulo}");
-        }
-    }
-    RodapeVoltarParaPrincipal();
-}
-
-void ExibirDetalhesDoJogo(){
-    ExibirTituloDaOpcao("Exibindo Detalhes do Jogo | Digite -1 Para Cancelar: ");
-    string? aux = "0";
-    while(aux != "-1"){
-        Console.Write("Informe o Título Do Jogo | Digite -1 Para Cancelar: ");
-        aux = Console.ReadLine();
-        if(aux == "-1"){
-            break;
-        }
-        Jogo jogo = EncontraJogo(aux);
-        if(string.IsNullOrEmpty(jogo.Titulo)){
-            Console.WriteLine("Titulo Nao Encontrado");
-        }else{
-            jogo.ExibirFichaTecnica();
-            Console.WriteLine("");
-        }             
-    }
-    RodapeVoltarParaPrincipal();
-}
-
-void AvaliarJogoCadastrado(){
-    ExibirTituloDaOpcao("Qual Jogo Deseja Avaliar? | Digite -1 Para Cancelar: ");
-    Console.Write("Insira o Titulo do Jogo a Ser Avaliado: ");
-
-    string? aux = Console.ReadLine();
-    Jogo jogo = EncontraJogo(aux);
-
-    while(string.IsNullOrEmpty(aux) || aux!=jogo.Titulo || !string.IsNullOrEmpty(jogo.Titulo) && jogo.Disponibilidade==false && aux != "-1"){
-        if(!string.IsNullOrEmpty(jogo.Titulo)){
-            Console.Write("Jogo Indisponvel Para Avaliacao. Tente Novamente: ");
-        }else{
-            Console.Write("Nome Invalido Ou Nao Cadastrado. Tente Novamente: ");
-        }
-        aux = Console.ReadLine();
-        jogo = EncontraJogo(aux);
-    }
-    
-    if(aux != "-1"){
-        Console.WriteLine("Insira Notas | Digite -1 Para Cancelar: ");
-        float n = 0;
-        jogo.Notas = jogo.Notas == null ? new List<float>{} : jogo.Notas; //Apenas para tirar o warning
-        while(n >= 0){
-            aux = Console.ReadLine();
-            n = ForcedValidationFloat(aux);
-            if(n>=0){   
-                jogo.Notas.Add(n);
-            }else{
-                n=-1;
-            }
-        }        
-           
-    }
-    
-    RodapeVoltarParaPrincipal();
-}
-
-void MenuPrincipal(){
-    Console.Clear();
-    string? input;
-    ExibirMensagemBoasVindas();
     Console.WriteLine("-1 - Sair");
     Console.WriteLine(" 1 - Cadastrar Novo Jogo");
     Console.WriteLine(" 2 - Exibir Jogos Cadastrados ");
     Console.WriteLine(" 3 - Mostrar Detalhes Dos Jogos");
     Console.WriteLine(" 4 - Avaliar Jogo");
-
-    input = Console.ReadLine();
-    switch (input){
-        case "-1":
-            Console.WriteLine("Volte sempre...");
-            break;
-        case "1":
-            CadastrarNovoJogo();
-            break;
-        case "2":
-            ExibirJogosCadastrados();
-            break;
-        case "3":
-            ExibirDetalhesDoJogo();
-            break;
-        case "4":
-            AvaliarJogoCadastrado();
-            break;
-        default:
-            Console.WriteLine("Opcao Invalida. Tente Outra Opcao");
-            MenuPrincipal();
-            break;
-    }
-          
+}
+void MenuPrincipal(){
+    string? aux = "";
+    TextoMenu();
+    while(aux != "-1"){
+        TextoMenu();
+        aux = Console.ReadLine();
+        aux = string.IsNullOrEmpty(aux)?"":aux;
+        if(listaOpcoes.ContainsKey(aux) && aux!="-1"){
+            listaOpcoes[aux].ExecutarMenu(listaJogos);
+        }
+    }    
 }
 
 MenuPrincipal();

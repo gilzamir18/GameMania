@@ -1,3 +1,4 @@
+namespace GameMania.Modelos;
 class Jogo {
     private string? titulo;
     public string? Titulo {
