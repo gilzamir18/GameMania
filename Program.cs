@@ -1,32 +1,22 @@
-﻿
-using GameMania.Menus;
+﻿using GameMania.Menus;
 using GameMania.Modelos;
 
-Dictionary< string, Jogo > jogosRegistrados = new();
-jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
-jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
+Dictionary<string, Jogo> listaJogos = new(){
+    ["FarCry"] = new Jogo("FarCry", "Acao/Aventura", "Ubisoft", "3", "3edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 8 }),
+    ["GTA"] = new Jogo("GTA", "Acao/Aventura", "RockStar", "5", "5edicao", true, "AllPlatform", notas: new List<float> { 9, 8, 9 }),
+    ["Skyrim"] = new Jogo("Skyrim", "RPG", "Bethesda", "5", "5edicao", false, "AllPlatform", notas: new List<float> { 10, 10, 10 }),
+    ["Valorant"] = new Jogo("Valorant", "FPS", "Riot", "1", "1edicao", false, "AllPlatform", notas: new List<float> { 0, 0, 0 })
+};
 
-jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games", "6");
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(10));
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(8));
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(9));
-jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
-jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
-jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
+Dictionary<string, Menu> listaOpcoes = new(){
+    ["-1"] = new MenuExibirJogosCadastrados(),
+    ["1"] = new MenuCadastrarNovoJogo(),
+    ["2"] = new MenuExibirJogosCadastrados(),
+    ["3"] = new MenuExibirDetalhesDoJogo(),
+    ["4"] = new MenuAvaliarJogoCadastrado()
+};
 
-
-Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
-opcoes["1"] = new MenuCadastrarNovoJogo();
-opcoes["2"] = new MenuExibirJogosCadastrados();
-opcoes["3"] = new MenuExibirDetalhesDoJogo();
-opcoes["4"] = new MenuAvaliarJogosCadastrados();
-opcoes["0"] = new MenuSair();
-
-void ExibirMensagemBoasVindas()
-{
+void TextoMenu(){
     Console.Clear();
     Console.WriteLine(@"
 ░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
@@ -35,37 +25,23 @@ void ExibirMensagemBoasVindas()
 ██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
 ╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
-    Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
+    Console.WriteLine("-1 - Sair");
+    Console.WriteLine(" 1 - Cadastrar Novo Jogo");
+    Console.WriteLine(" 2 - Exibir Jogos Cadastrados ");
+    Console.WriteLine(" 3 - Mostrar Detalhes Dos Jogos");
+    Console.WriteLine(" 4 - Avaliar Jogo");
 }
-
-
-void MenuPrincipal()
-{
-
-    while (true)
-    {
-        ExibirMensagemBoasVindas();
-        Console.WriteLine("1 - Cadastrar novo Jogo");
-        Console.WriteLine("2 - Exibir jogos cadastrados ");
-        Console.WriteLine("3 - Mostrar detalhes dos jogos");
-        Console.WriteLine("4 - Avaliar jogo");
-        Console.WriteLine("0 - Sair");
-        string opcao = Console.ReadLine();
-        if (opcoes.ContainsKey(opcao))
-        {   
-            bool sair = opcoes[opcao].Executar(jogosRegistrados);
-            if (sair)
-            {
-                break;
-            }
+void MenuPrincipal(){
+    string? aux = "";
+    TextoMenu();
+    while(aux != "-1"){
+        TextoMenu();
+        aux = Console.ReadLine();
+        aux = string.IsNullOrEmpty(aux)?"":aux;
+        if(listaOpcoes.ContainsKey(aux) && aux!="-1"){
+            listaOpcoes[aux].ExecutarMenu(listaJogos);
         }
-        else
-        {
-            Console.WriteLine("Opcao Inválida!. Tente novamente. Pressione qualquer tecla para continuar.");
-            Console.ReadKey();
-            Console.Clear();
-        }
-    }
+    }    
 }
 
 MenuPrincipal();
