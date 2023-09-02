@@ -7,7 +7,7 @@ internal class MenuCadastrarNovoJogo: Menu{
     }    
     public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
         Console.WriteLine("Cadastrar Um Novo Jogo | Digite -1 Para Cancelar: ");
-        Console.WriteLine("Titulo: ");
+        Console.Write("Titulo: ");
         string? aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux) ? "" : aux;
 
@@ -19,20 +19,20 @@ internal class MenuCadastrarNovoJogo: Menu{
         
         if(aux != "-1"){
             Jogo? jogo = new(titulo:aux);
-            Console.WriteLine("Genero: ");
+            Console.Write("Genero: ");
             aux = Console.ReadLine();
             //TryCatch que manda pra um validador?
             jogo.Genero = base.ForcedValidationString(aux);
 
-            Console.WriteLine("Studio: ");
+            Console.Write("Studio: ");
             aux = Console.ReadLine();
             jogo.Studio = ForcedValidationString(aux);        
 
-            Console.WriteLine("Edicao: ");
+            Console.Write("Edicao: ");
             aux = Console.ReadLine();
             jogo.Edicao = ForcedValidationString(aux);
 
-            Console.WriteLine("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
+            Console.Write("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
             while (true){
                 aux = Console.ReadLine();
                 if (aux == "1" || aux == "Sim"){
@@ -46,12 +46,12 @@ internal class MenuCadastrarNovoJogo: Menu{
                 }
             }
 
-            Console.WriteLine("Plataformas: ");
+            Console.Write("Plataformas: ");
             aux = Console.ReadLine();
             jogo.Plataformas = ForcedValidationString(aux);
 
             jogo.Notas = new List<float>{};//Evitar Warning
-            Console.WriteLine("Notas - Digite -1 Para Cancelar");
+            Console.Write("Notas | Digite -1 Para Cancelar: ");
             float n = 0;
             while(n >= 0){
                 aux = Console.ReadLine();
