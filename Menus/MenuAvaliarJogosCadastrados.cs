@@ -5,7 +5,7 @@ using GameMania.Modelos;
 internal class MenuAvaliarJogosCadastrados: Menu
 {
 
-    public MenuAvaliarJogosCadastrados() : base("Avaliar Jogos Cadastrados")
+    public MenuAvaliarJogosCadastrados() : base(titulo:"Avaliar Jogos Cadastrados!")
     {
 
     }
