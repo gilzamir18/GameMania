@@ -13,25 +13,28 @@ Dictionary<string, Menu> listaOpcoes = new(){
     ["1"] = new MenuCadastrarNovoJogo(),
     ["2"] = new MenuExibirJogosCadastrados(),
     ["3"] = new MenuExibirDetalhesDoJogo(),
-    ["4"] = new MenuAvaliarJogoCadastrado()
+    ["4"] = new MenuAvaliarJogoCadastrado(),
+    ["5"] = new MenuPreencherDadosComGPT()
 };
 
 void TextoMenu(){
     Console.Clear();
     Console.WriteLine(@"
-░██████╗░░█████╗░███╗░░░███╗███████╗███╗░░░███╗░█████╗░███╗░░██╗██╗░█████╗░
-██╔════╝░██╔══██╗████╗░████║██╔════╝████╗░████║██╔══██╗████╗░██║██║██╔══██╗
-██║░░██╗░███████║██╔████╔██║█████╗░░██╔████╔██║███████║██╔██╗██║██║███████║
-██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
-╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
-░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
+ ██████╗  █████╗ ███╗   ███╗███████╗███╗   ███╗ █████╗ ███╗  ██╗██╗ █████╗ 
+██╔════╝ ██╔══██╗████╗ ████║██╔════╝████╗ ████║██╔══██╗████╗ ██║██║██╔══██╗
+██║  ██╗ ███████║██╔████╔██║█████╗  ██╔████╔██║███████║██╔██╗██║██║███████║
+██║  ╚██╗██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
+╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║██║  ██║██║ ╚███║██║██║  ██║
+ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚══╝╚═╝╚═╝  ╚═╝");
     Console.WriteLine("-1 - Sair");
     Console.WriteLine(" 1 - Cadastrar Novo Jogo");
     Console.WriteLine(" 2 - Exibir Jogos Cadastrados ");
     Console.WriteLine(" 3 - Mostrar Detalhes Dos Jogos");
     Console.WriteLine(" 4 - Avaliar Jogo");
+    Console.WriteLine(" 5 - Preencher Dados Com GPT");
+    
 }
-void MenuPrincipal(){
+async Task MenuPrincipal(){
     string? aux = "";
     TextoMenu();
     while(aux != "-1"){
@@ -39,9 +42,10 @@ void MenuPrincipal(){
         aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux)?"":aux;
         if(listaOpcoes.ContainsKey(aux) && aux!="-1"){
-            listaOpcoes[aux].ExecutarMenu(listaJogos);
+            await listaOpcoes[aux].ExecutarMenu(listaJogos);
+            
         }
     }    
 }
 
-MenuPrincipal();
+await MenuPrincipal();

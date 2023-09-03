@@ -5,7 +5,7 @@ internal class MenuExibirDetalhesDoJogo: Menu{
     public MenuExibirDetalhesDoJogo():base(titulo:"Exibir Detalhes Do Jogo"){
 
     }    
-    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
         string? aux = "0";
         while(aux != "-1"){
             Console.Write("Informe o Título Do Jogo | Digite -1 Para Cancelar: ");
@@ -21,5 +21,6 @@ internal class MenuExibirDetalhesDoJogo: Menu{
                 Console.WriteLine("");
             }             
         }
+        await Task.Delay(0);//Remover Warning
     }
 }
