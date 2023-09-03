@@ -5,7 +5,7 @@ internal class MenuAvaliarJogoCadastrado: Menu{
     public MenuAvaliarJogoCadastrado():base(titulo:"Avaliar Jogo Cadastrado"){
 
     }    
-    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
         Console.Write("Insira o Titulo do Jogo a Ser Avaliado | Digite -1 Para Cancelar: ");
 
         string? aux = Console.ReadLine();
@@ -32,5 +32,6 @@ internal class MenuAvaliarJogoCadastrado: Menu{
             }        
             
         }
+        await Task.Delay(0);//Remover Warning
     }
 }

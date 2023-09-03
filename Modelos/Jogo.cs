@@ -39,8 +39,11 @@ class Jogo {
     private string? descricao;
     public string? Descricao {
         get{ 
-            return string.IsNullOrEmpty(descricao)?$"{Titulo} - {Studio}":"";
-        } 
+            return string.IsNullOrEmpty(descricao)?$"{Titulo} - {Studio}":descricao;
+        }
+        set{ 
+            descricao = string.IsNullOrEmpty(value)?"":value;
+        }        
     }
     private bool disponibilidade;
     public bool Disponibilidade {
@@ -74,7 +77,7 @@ class Jogo {
         Genero = genero;
         Studio = studio;
         Edicao = edicao;
-        this.descricao = descricao;
+        Descricao = descricao;
         Disponibilidade = disponibilidade;
         Plataformas = plataformas;
         Notas = notas ?? new List<float>(){};
