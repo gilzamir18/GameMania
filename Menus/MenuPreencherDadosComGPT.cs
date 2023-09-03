@@ -27,7 +27,10 @@ internal class MenuPreencherDadosComGPT: Menu{
             await Task.Delay(0);
     }
     public virtual async Task<string> RequisitarAPI(string titulo){
-        var client = new OpenAI_API.OpenAIAPI("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");
+        
+        Console.WriteLine(Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+        var client = new OpenAI_API.OpenAIAPI("");
+        Console.WriteLine("Key aceita");
         var chat = client.Chat.CreateConversation();
         string prompt = $@"Para o jogo ""{titulo}"", preencha os campos adequadamente e retorne apenas o arquivo JSON preenchido. Descricao: Resuma o jogo de forma divertida e breve. Não repita informações de outros campos:
         {{
