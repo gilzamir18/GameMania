@@ -4,7 +4,7 @@ using GameMania.Modelos;
 
 internal class MenuAvaliarJogosCadastrados: Menu {
 
-    public MenuAvaliarJogosCadastrados() : base("Avaliar Jogos Cadastrados") { }
+    public MenuAvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }
 
     public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados) {
         Console.Write("Informe o título do jogo a ser avaliado: ");

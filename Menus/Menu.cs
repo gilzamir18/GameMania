@@ -11,7 +11,7 @@ internal class Menu {
     }
 
     public bool Executar(Dictionary<string, Jogo> jogosRegistrados) {
-        ExibirTituloDaOpcao("Cadastrar novo Jogo");
+        ExibirTituloDaOpcao(Titulo);
         bool sair = MostrarOpcao(jogosRegistrados);
 
         if (!sair)
