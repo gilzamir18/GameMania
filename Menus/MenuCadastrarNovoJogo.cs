@@ -32,7 +32,7 @@ internal class MenuCadastrarNovoJogo: Menu{
             aux = Console.ReadLine();
             jogo.Edicao = ForcedValidationString(aux);
 
-            Console.Write("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao)");
+            Console.Write("Disponivel Para Avaliacao? (1 == Sim | 0 == Nao): ");
             while (true){
                 aux = Console.ReadLine();
                 if (aux == "1" || aux == "Sim"){

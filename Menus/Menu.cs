@@ -12,16 +12,7 @@ internal class Menu {
     }
     public virtual async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
         await Task.Delay(0);//apenas para retirar o warning
-    }       
-    // public async Task ExecutarMenuAsync(Dictionary<string, Jogo> jogosRegistrados){
-    //     ExibirTituloDaOpcao(Titulo);
-    //     await ExecutarOpcaoAsync(jogosRegistrados);
-    //     Rodape();
-    // }    
-
-    // public virtual async Task ExecutarOpcaoAsync(Dictionary<string, Jogo> jogosRegistrados){
-    //     await Task.Delay(0);//apenas para retirar o warning
-    // }        
+    }          
     void Rodape(){
         Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
@@ -48,8 +39,8 @@ internal class Menu {
     }
 
     public float ForcedValidationFloat(string? aux) {
-        float value;
-        while (!float.TryParse(aux, out value)) {
+        float value = 11;
+        while (!float.TryParse(aux, out value) || value>10) {
             Console.Write("Tente Novamente: ");
             aux = Console.ReadLine();
         }
