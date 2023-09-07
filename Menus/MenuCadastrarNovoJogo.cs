@@ -4,6 +4,7 @@ using GameMania.Modelos;
 
 class MenuCadastrarNovoJogo: Menu
 {
+    public MenuCadastrarNovoJogo(): base("Cadatrar um novo jogo"){}
     public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
     {
         Console.Write("Qual o título do jogo? ");
