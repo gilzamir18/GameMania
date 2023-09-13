@@ -1,16 +1,14 @@
 namespace GameMania.Menus;
-
 using GameMania.Modelos;
 
-internal class MenuExibirJogosCadastrados: Menu
-{
-    public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
-    {
-        foreach (var jogo in jogosRegistrados.Keys)
-        {
-            var notas = jogosRegistrados[jogo];
-            Console.WriteLine($"Título: {jogo}");
+internal class MenuExibirJogosCadastrados: Menu{
+    public MenuExibirJogosCadastrados():base(titulo:"Exibir Jogos Cadastrados"){
+
+    }    
+    public override async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+        foreach (Jogo jogo in jogosRegistrados.Values){
+            Console.WriteLine($"{jogo.Titulo}");
         }
-        return false;
+        await Task.Delay(0);//Remover Warning
     }
 }

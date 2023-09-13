@@ -1,46 +1,50 @@
-using GameMania.Modelos;
-
 namespace GameMania.Menus;
-
-internal class Menu 
-{
-
-    public string Titulo {get;}
-
-    public Menu(string titulo)
-    {
+using GameMania.Modelos;
+internal class Menu {
+    public string Titulo {get;set;}
+    public Menu(string titulo = ""){
         Titulo = titulo;
     }
-
-    public bool Executar(Dictionary<string, Jogo> jogosRegistrados)
-    {
-            ExibirTituloDaOpcao("Cadastrar novo Jogo");
-            bool sair = MostrarOpcao(jogosRegistrados);
-            if (!sair)
-            {
-                Rodape();
-            }
-            return sair;
+    public virtual async Task ExecutarMenu(Dictionary<string, Jogo> jogosRegistrados){
+        ExibirTituloDaOpcao(Titulo);
+        await ExecutarOpcao(jogosRegistrados);
+        Rodape();
     }
-
-    void Rodape()
-    {
+    public virtual async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+        await Task.Delay(0);//apenas para retirar o warning
+    }          
+    void Rodape(){
         Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
+    void ExibirTituloDaOpcao(string titulo, char preencher='*'){
+        if(!string.IsNullOrEmpty(titulo)){
+            Console.Clear();
+            var barra = string.Empty.PadLeft(titulo.Length, preencher);
+            Console.WriteLine(barra);
+            Console.WriteLine(titulo);
+            Console.WriteLine(barra);
+        }else{
+            Console.Clear();
+        }
 
-    public virtual bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
-    {
-        return false;
     }
 
-    void ExibirTituloDaOpcao(string titulo, char preencher='*')
-    {
-        Console.Clear();
-        var barra = string.Empty.PadLeft(titulo.Length, preencher);
-        Console.WriteLine(barra);
-        Console.WriteLine(titulo);
-        Console.WriteLine(barra);
+    public string ForcedValidationString(string? aux){
+        while(string.IsNullOrEmpty(aux)) {
+            Console.Write("Tente Novamente: ");
+            aux = Console.ReadLine();
+        }
+        return aux;
+    }
+
+    public float ForcedValidationFloat(string? aux) {
+        float value = 11;
+        while (!float.TryParse(aux, out value) || value>10) {
+            Console.Write("Tente Novamente: ");
+            aux = Console.ReadLine();
+        }
+        return value;
     }
 
 }
