@@ -2,22 +2,6 @@
 using GameMania.Menus;
 using GameMania.Modelos;
 
-Dictionary< string, Jogo > jogosRegistrados = new();
-jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
-jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
-jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
-
-jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games", "6");
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(10));
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(8));
-jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(9));
-jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
-jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
-jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
-
-
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
 opcoes["2"] = new MenuExibirJogosCadastrados();

@@ -1,4 +1,4 @@
-internal class Avaliacao
+public class Avaliacao
 {
     public int Nota {get; set;}
 
