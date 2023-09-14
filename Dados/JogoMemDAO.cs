@@ -14,6 +14,7 @@ public class JogoMemDAO : IJogoDAO
         {
             jogoDAO = new JogoMemDAO();
         }
+        return jogoDAO;
     }
 
     private JogoMemDAO()

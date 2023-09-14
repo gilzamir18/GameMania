@@ -11,7 +11,7 @@ internal class MenuSair : Menu
         
     }
 
-    public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
+    public override bool MostrarOpcao()
     {
         Console.WriteLine("Volte sempre!!!");
         return true;

@@ -10,12 +10,12 @@ internal class MenuExibirJogosCadastrados: Menu
 
     }
 
-    public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
+    public override bool MostrarOpcao()
     {
-        foreach (var jogo in jogosRegistrados.Keys)
+        var jogos = jogoDAO.ObterTodosOsJogos();
+        foreach (var jogo in jogos)
         {
-            var notas = jogosRegistrados[jogo];
-            Console.WriteLine($"Título: {jogo}");
+            jogo.ExibirFichaTecnica();
         }
         return false;
     }

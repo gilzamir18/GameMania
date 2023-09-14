@@ -37,7 +37,7 @@ void MenuPrincipal()
         string opcao = Console.ReadLine();
         if (opcoes.ContainsKey(opcao))
         {   
-            bool sair = opcoes[opcao].Executar(jogosRegistrados);
+            bool sair = opcoes[opcao].Executar();
             if (sair)
             {
                 break;
