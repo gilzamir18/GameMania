@@ -1,0 +1,5 @@
+C:\Users\User\Documents\LP3\GameMania-0.2.0\obj\Debug\net6.0\GameMania.csproj.AssemblyReference.cache
+C:\Users\User\Documents\LP3\GameMania-0.2.0\obj\Debug\net6.0\GameMania.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Documents\LP3\GameMania-0.2.0\obj\Debug\net6.0\GameMania.AssemblyInfoInputs.cache
+C:\Users\User\Documents\LP3\GameMania-0.2.0\obj\Debug\net6.0\GameMania.AssemblyInfo.cs
+C:\Users\User\Documents\LP3\GameMania-0.2.0\obj\Debug\net6.0\GameMania.csproj.CoreCompileInputs.cache
