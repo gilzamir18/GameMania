@@ -4,6 +4,12 @@ using GameMania.Modelos;
 
 internal class MenuExibirDetalhesDoJogo: Menu
 {
+
+    public MenuExibirDetalhesDoJogo() : base("Exibir Detalhe de Jogo")
+    {
+        
+    }
+
     public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
     {
         Console.Write("Informe o título do jogo: ");

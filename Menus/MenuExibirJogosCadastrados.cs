@@ -4,6 +4,12 @@ using GameMania.Modelos;
 
 internal class MenuExibirJogosCadastrados: Menu
 {
+
+    public MenuExibirJogosCadastrados() : base("Exibir Jogos Cadastrados")
+    {
+
+    }
+
     public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados)
     {
         foreach (var jogo in jogosRegistrados.Keys)
