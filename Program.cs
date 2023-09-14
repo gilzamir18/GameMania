@@ -1,5 +1,4 @@
-﻿
-using GameMania.Menus;
+﻿using GameMania.Menus;
 using GameMania.Modelos;
 
 Dictionary< string, Jogo > jogosRegistrados = new();
@@ -37,7 +36,6 @@ void ExibirMensagemBoasVindas()
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
     Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
 }
-
 
 void MenuPrincipal()
 {
