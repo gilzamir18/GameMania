@@ -5,11 +5,11 @@ using GameMania.Modelos;
 internal class MenuExibirJogosCadastrados: Menu {
     public MenuExibirJogosCadastrados() : base("*  Jogos Cadastrados  *") { }
 
-    public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados) {
-        foreach (var jogo in jogosRegistrados.Keys) {
-            var notas = jogosRegistrados[jogo];
-            Console.WriteLine($"Título: {jogo}");
-        }
+    public override bool MostrarOpcao() {
+        var jogos = jogoDAO.ObterTodosOsJogo();
+
+        foreach (var jogo in jogos)
+            jogo.ExibirFichaTecnica();
         
         return false;
     }

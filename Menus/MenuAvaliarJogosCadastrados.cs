@@ -6,17 +6,17 @@ internal class MenuAvaliarJogosCadastrados: Menu {
 
     public MenuAvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }
 
-    public override bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados) {
+    public override bool MostrarOpcao() {
         Console.Write("Informe o título do jogo a ser avaliado: ");
         var titulo = Console.ReadLine();
+        var jogo = jogoDAO.ObterJogoPorTitulo(titulo);
 
-        if (jogosRegistrados.ContainsKey(titulo)) {
+        if (jogo != null) {
             Console.Write($"Qual nota você dá ao jogo {titulo}? ");
             try {
                 Avaliacao nota = Avaliacao.Parse(Console.ReadLine());
-                jogosRegistrados[titulo].AdicionarNota(nota);
-            }
-            catch(FormatException e) {
+                jogo.AdicionarNota(nota);
+            } catch(FormatException e) {
                 Console.WriteLine(e.Message);
             }
         } else {

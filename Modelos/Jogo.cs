@@ -1,11 +1,11 @@
 namespace GameMania.Modelos;
 
-internal class Jogo {
+public class Jogo {
     public string Titulo {get; set;}
     public string Genero {get; set;}
     public string Studio {get; set;}
     public string Edicao {get; set;}
-    public string Descricao => $"Jogo: {Titulo}(Edição {Edicao})\nStudio: {Studio}\n";
+    public string Descricao {get; set;}
     public bool Disponibilidade {get;}
     
     private List<string> plataformas;

@@ -1,4 +1,5 @@
 using GameMania.Modelos;
+using GameMania.Dados;
 
 namespace GameMania.Menus;
 
@@ -6,13 +7,16 @@ internal class Menu {
 
     public string Titulo {get;}
 
+    protected IJogoDAO jogoDAO;
+
     public Menu(string titulo) {
         Titulo = titulo;
+        jogoDAO = JogoMemDAO.GetInstance();
     }
 
-    public bool Executar(Dictionary<string, Jogo> jogosRegistrados) {
+    public bool Executar() {
         ExibirTituloDaOpcao(Titulo);
-        bool sair = MostrarOpcao(jogosRegistrados);
+        bool sair = MostrarOpcao();
 
         if (!sair)
             Rodape();
@@ -25,7 +29,7 @@ internal class Menu {
         Console.ReadKey();
     }
 
-    public virtual bool MostrarOpcao(Dictionary<string, Jogo> jogosRegistrados) {
+    public virtual bool MostrarOpcao() {
         return false;
     }
 
