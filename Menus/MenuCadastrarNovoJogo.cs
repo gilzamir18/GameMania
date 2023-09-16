@@ -5,7 +5,7 @@ internal class MenuCadastrarNovoJogo: Menu{
     public MenuCadastrarNovoJogo():base(titulo:"Cadastrar Novo Jogo"){
 
     }    
-    public override async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
         Console.WriteLine("Cadastrar Um Novo Jogo | Digite -1 Para Cancelar: ");
         Console.Write("Titulo: ");
         string? aux = Console.ReadLine();
@@ -68,6 +68,5 @@ internal class MenuCadastrarNovoJogo: Menu{
         }else{
             Console.WriteLine("Cadastro Cancelado");
         }
-        await Task.Delay(0);//Apenas pelo Warning
     }
 }

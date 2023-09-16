@@ -5,13 +5,13 @@ internal class Menu {
     public Menu(string titulo = ""){
         Titulo = titulo;
     }
-    public virtual async Task ExecutarMenu(Dictionary<string, Jogo> jogosRegistrados){
+    public virtual void ExecutarMenu(Dictionary<string, Jogo> jogosRegistrados){
         ExibirTituloDaOpcao(Titulo);
-        await ExecutarOpcao(jogosRegistrados);
+        ExecutarOpcao(jogosRegistrados);
         Rodape();
     }
-    public virtual async Task ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
-        await Task.Delay(0);//apenas para retirar o warning
+    public virtual void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+        Task.Delay(0);//apenas para retirar o warning
     }          
     void Rodape(){
         Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
