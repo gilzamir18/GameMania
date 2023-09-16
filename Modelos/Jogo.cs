@@ -34,6 +34,7 @@ public class Jogo {
         Console.WriteLine($"Título: {Titulo}");
         Console.WriteLine($"Genero: {Genero}");
         Console.WriteLine($"Edição: {Edicao}");
+        Console.WriteLine($"Descrição: {Descricao}");
         Console.Write("Plataformas Suportadas:\t");
         foreach(var plat in plataformas) {
             Console.Write($"{plat} ");
@@ -44,6 +45,8 @@ public class Jogo {
             Console.WriteLine("Jogo disponível para avaliação.");
         else
             Console.WriteLine("Este jogo não está disponível para avaliação.");
+
+        Console.WriteLine();
     }
 
     public void AdicionarNota(Avaliacao nota) {

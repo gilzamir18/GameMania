@@ -3,9 +3,10 @@ using GameMania.Modelos;
 
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
-opcoes["2"] = new MenuExibirJogosCadastrados();
-opcoes["3"] = new MenuExibirDetalhesDoJogo();
-opcoes["4"] = new MenuAvaliarJogosCadastrados();
+opcoes["2"] = new MenuCadastrarNovoJogoGPT();
+opcoes["3"] = new MenuExibirJogosCadastrados();
+opcoes["4"] = new MenuExibirDetalhesDoJogo();
+opcoes["5"] = new MenuAvaliarJogosCadastrados();
 opcoes["0"] = new MenuSair();
 
 void ExibirMensagemBoasVindas() {

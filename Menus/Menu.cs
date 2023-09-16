@@ -39,5 +39,6 @@ internal class Menu {
         Console.WriteLine(barra);
         Console.WriteLine(titulo);
         Console.WriteLine(barra);
+        Console.WriteLine();
     }
 }
