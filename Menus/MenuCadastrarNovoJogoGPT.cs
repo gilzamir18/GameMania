@@ -18,7 +18,7 @@ class MenuCadastrarNovoJogoGPT: Menu {
         string plataformas = "";
 
         try {
-            var client = new OpenAI_API.OpenAIAPI("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");
+            var client = new OpenAI_API.OpenAIAPI("Token Pessoal");
             var chat = client.Chat.CreateConversation();
             string request = $"Retorne no formato \"titulo:genero:studio:edicao:descricao:plataformas\" os dados do jogo {titulo}, onde titulo é o título do jogo, edicao é a edição do jogo (por exemplo, GTA 5 para o jogo GTA, onde a edição deve conter o último lançamento do jogo), plataformas é o conjunto de plataformas separadas por espaço (por exemplo 'XBoxLive PlayStation') que suportam este jogo e descricão é um breve resumo jogo em uma linguagem descontraída.";
             chat.AppendSystemMessage(request);
