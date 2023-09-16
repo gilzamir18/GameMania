@@ -58,7 +58,7 @@ class MenuCadastrarNovoJogoGPT: Menu {
         }
 
         jogoDAO.SalvarJogo(jogo);
-        Console.WriteLine("Jogo Adicionado com sucesso!!");
+        Console.WriteLine("\nJogo Adicionado com sucesso!!");
         
         return false;
     }

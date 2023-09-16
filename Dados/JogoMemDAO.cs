@@ -20,14 +20,15 @@ public class JogoMemDAO : IJogoDAO {
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
-        jogosRegistrados["Forza"].AdicionarPlataforma("XBoxOne, Xbox Series S e X");
+        jogosRegistrados["Forza"].AdicionarPlataforma("Xbox");
+        jogosRegistrados["Forza"].AdicionarPlataforma("PC");
 
-        jogosRegistrados["GTA"] = new Jogo("GTA", "Ação/Aventura, Mundo Aberto", "Rockstar Games", "5");
+        jogosRegistrados["GTA"] = new Jogo("GTA", "Ação, Aventura", "Rockstar Games", "5");
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(8));
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(9));
-        jogosRegistrados["GTA"].AdicionarPlataforma("PS4, PS5");
-        jogosRegistrados["GTA"].AdicionarPlataforma("XBoxOne, Xbox Series S e X");
+        jogosRegistrados["GTA"].AdicionarPlataforma("Playstation");
+        jogosRegistrados["GTA"].AdicionarPlataforma("Xbox");
         jogosRegistrados["GTA"].AdicionarPlataforma("PC");
     }
 
