@@ -26,10 +26,11 @@ void MenuPrincipal() {
 
     while (true) {
         ExibirMensagemBoasVindas();
-        Console.WriteLine("1 - Cadastrar novo Jogo");
-        Console.WriteLine("2 - Exibir jogos cadastrados ");
-        Console.WriteLine("3 - Exibir detalhes dos jogos");
-        Console.WriteLine("4 - Avaliar jogo");
+        Console.WriteLine("1 - Cadastrar novo Jogo Manualmente");
+        Console.WriteLine("2 - Cadastrar novo Jogo com GPT");
+        Console.WriteLine("3 - Exibir jogos cadastrados ");
+        Console.WriteLine("4 - Exibir detalhes dos jogos");
+        Console.WriteLine("5 - Avaliar jogo");
         Console.WriteLine("0 - Sair");
         string opcao = Console.ReadLine();
 
