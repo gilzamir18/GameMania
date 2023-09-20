@@ -43,15 +43,15 @@ class MenuCadastrarNovoJogoGPT: Menu {
             Console.Write("Você confirma estes dados (pressione S) ou deseja preencher manualmente? (qualquer tecla). ");
             key = Console.ReadKey().KeyChar;
         } catch (Exception e) { 
-            Console.WriteLine($"Infelizmente ocorreu um erro na obtenção dos dados sobre o jogo {titulo}.\nPreencha as informações manualmente!");
+            Console.WriteLine($"Infelizmente ocorreu um erro na obtenção dos dados sobre o jogo {titulo}.\nPreencha as informações manualmente!\n");
         }
 
         if ((jogo == null || key == null) || (key != 'S' && key != 's')) {
-            Console.WriteLine("Qual o genero do jogo? ");
+            Console.Write("Qual o genero do jogo? ");
             genero = Console.ReadLine();
-            Console.WriteLine("Qual studio desenvolveu o jogo? ");
+            Console.Write("Qual studio desenvolveu o jogo? ");
             studio = Console.ReadLine();
-            Console.WriteLine("Qual a edição do jogo? ");
+            Console.Write("Qual a edição do jogo? ");
             edicao = Console.ReadLine();
 
             jogo = new Jogo(titulo, genero, studio, edicao);

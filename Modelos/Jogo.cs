@@ -33,6 +33,7 @@ public class Jogo {
     public void ExibirFichaTecnica() {
         Console.WriteLine($"Título: {Titulo}");
         Console.WriteLine($"Genero: {Genero}");
+        Console.WriteLine($"Studio: {Studio}");
         Console.WriteLine($"Edição: {Edicao}");
         Console.WriteLine($"Descrição: {Descricao}");
         Console.Write("Plataformas Suportadas:\t");
