@@ -1,7 +1,6 @@
 namespace GameMania.Menus;
 
 using GameMania.Modelos;
-//using OpenAI_API;
 
 class MenuCadastrarNovoJogo: Menu {
     public MenuCadastrarNovoJogo() : base("*  Cadastrar Novo Jogo  *") { }

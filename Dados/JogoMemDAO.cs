@@ -11,6 +11,7 @@ public class JogoMemDAO : IJogoDAO {
         if (jogoDAO == null) {
             jogoDAO = new JogoMemDAO();
         }
+        
         return jogoDAO;
     }
 
@@ -39,7 +40,7 @@ public class JogoMemDAO : IJogoDAO {
         jogosRegistrados[jogo.Titulo] = jogo;
     }
 
-    public override List<Jogo> ObterTodosOsJogo() {
+    public override List<Jogo> ObterTodosOsJogos() {
         return jogosRegistrados.Values.ToList();
     }
 
@@ -50,7 +51,7 @@ public class JogoMemDAO : IJogoDAO {
             return null;
     }
 
-    public override List<Jogo> FiltarPorGenero(string genero) {
+    public override List<Jogo> FiltrarPorGenero(string genero) {
         return jogosRegistrados.Values.Where(j => j.Genero == genero).ToList();
     }
 }

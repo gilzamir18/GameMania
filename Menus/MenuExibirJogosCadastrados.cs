@@ -6,7 +6,7 @@ internal class MenuExibirJogosCadastrados: Menu {
     public MenuExibirJogosCadastrados() : base("*  Jogos Cadastrados  *") { }
 
     public override bool MostrarOpcao() {
-        var jogos = jogoDAO.ObterTodosOsJogo();
+        var jogos = jogoDAO.ObterTodosOsJogos();
 
         foreach (var jogo in jogos)
             jogo.ExibirFichaTecnica();

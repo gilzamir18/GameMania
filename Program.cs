@@ -1,13 +1,14 @@
 ﻿using GameMania.Menus;
 using GameMania.Modelos;
 
-Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
-opcoes["1"] = new MenuCadastrarNovoJogo();
-opcoes["2"] = new MenuCadastrarNovoJogoGPT();
-opcoes["3"] = new MenuExibirJogosCadastrados();
-opcoes["4"] = new MenuExibirDetalhesDoJogo();
-opcoes["5"] = new MenuAvaliarJogosCadastrados();
-opcoes["0"] = new MenuSair();
+var opcoes = new Dictionary<string, Menu> {
+    ["1"] = new MenuCadastrarNovoJogo(),
+    ["2"] = new MenuCadastrarNovoJogoGPT(),
+    ["3"] = new MenuExibirJogosCadastrados(),
+    ["4"] = new MenuExibirDetalhesDoJogo(),
+    ["5"] = new MenuAvaliarJogosCadastrados(),
+    ["0"] = new MenuSair()
+};
 
 void ExibirMensagemBoasVindas() {
     Console.Clear();

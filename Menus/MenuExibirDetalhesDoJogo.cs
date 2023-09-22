@@ -6,7 +6,7 @@ internal class MenuExibirDetalhesDoJogo: Menu {
     public MenuExibirDetalhesDoJogo() : base("*  Detalhes do Jogo  *") { }
 
     public override bool MostrarOpcao() {
-        var jogos = jogoDAO.ObterTodosOsJogo();
+        var jogos = jogoDAO.ObterTodosOsJogos();
 
         foreach (var jogo in jogos) {
             jogo.ExibirFichaTecnica();
