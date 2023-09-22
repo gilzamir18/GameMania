@@ -1,7 +1,6 @@
-namespace GameMania.Menus;
-
 using GameMania.Modelos;
 
+namespace GameMania.Menus;
 class MenuCadastrarNovoJogo: Menu {
     public MenuCadastrarNovoJogo() : base("*  Cadastrar Novo Jogo  *") { }
 

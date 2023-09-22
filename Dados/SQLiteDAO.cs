@@ -1,10 +1,7 @@
-namespace GameMania.Dados;
-
 using GameMania.Modelos;
-using System;
 using System.Data.SQLite;
 
-
+namespace GameMania.Dados;
 public class SQLiteDAO : IJogoDAO {
     private readonly string connectionString;
     private static SQLiteDAO? instance;
@@ -16,9 +13,8 @@ public class SQLiteDAO : IJogoDAO {
     }
 
     public static SQLiteDAO GetInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new SQLiteDAO();
-        }
 
         return instance;
     }
@@ -36,9 +32,8 @@ public class SQLiteDAO : IJogoDAO {
                     Disponibilidade INTEGER
                 );";
 
-        using (SQLiteCommand command = new(createTableSql, connection)) {
+        using (SQLiteCommand command = new(createTableSql, connection))
             command.ExecuteNonQuery();
-        }
 
         connection.Close();
     }
@@ -58,35 +53,30 @@ public class SQLiteDAO : IJogoDAO {
             command.Parameters.AddWithValue("@Disponibilidade", jogo.Disponibilidade);
             command.ExecuteNonQuery();
         }
-
         connection.Close();
     }
 
     public override List<Jogo> ObterTodosOsJogos() {
         List<Jogo> jogos = new();
 
-        using (SQLiteConnection connection = new(connectionString)) {
-            connection.Open();
+        using SQLiteConnection connection = new(connectionString);
+        connection.Open();
 
-            string seletSql = "SELECT * FROM Jogos;";
+        string seletSql = "SELECT * FROM Jogos;";
+        using (SQLiteCommand command = new(seletSql, connection)) {
+            using SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read()) {
+                string titulo = reader["Titulo"].ToString();
+                string genero = reader["Genero"].ToString();
+                string studio = reader["Studio"].ToString();
+                string edicao = reader["Edicao"].ToString();
+                bool disponibilidade = Convert.ToInt32(reader["Disponibilidade"]) == 1;
 
-            using (SQLiteCommand command = new(seletSql, connection)) {
-                using SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read()) {
-                    string titulo = reader["Titulo"].ToString();
-                    string genero = reader["Genero"].ToString();
-                    string studio = reader["Studio"].ToString();
-                    string edicao = reader["Edicao"].ToString();
-                    bool disponibilidade = Convert.ToInt32(reader["Disponibilidade"]) == 1;
-
-                    Jogo jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
-                    jogos.Add(jogo);
-                }
+                Jogo jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
+                jogos.Add(jogo);
             }
-
-            connection.Close();
         }
-
+        connection.Close();
         return jogos;
     }
 
@@ -95,27 +85,22 @@ public class SQLiteDAO : IJogoDAO {
         connection.Open();
 
         string seletSql = "SELECT * FROM Jogos WHERE Titulo = @Titulo;";
-
         using (SQLiteCommand command = new SQLiteCommand(seletSql, connection)) {
             command.Parameters.AddWithValue("@Titulo", titulo);
-            
-            using SQLiteDataReader reader = command.ExecuteReader();
 
+            using SQLiteDataReader reader = command.ExecuteReader();
             if (reader.Read()) {
                 string genero = reader["Genero"].ToString();
                 string studio = reader["Studio"].ToString();
                 string edicao = reader["Edicao"].ToString();
                 bool disponibilidade = Convert.ToInt32(reader["Disponibilidade"]) == 1;
-
                 Jogo jogo = new(titulo, genero, studio, edicao, disponibilidade);
 
                 connection.Close();
                 return jogo;
             }
         }
-
         connection.Close();
-
         return null;
     }
 
@@ -126,7 +111,6 @@ public class SQLiteDAO : IJogoDAO {
         connection.Open();
 
         string seletSql = "SELECT * FROM Jogos WHERE Genero = @Genero;";
-
         using (SQLiteCommand command = new(seletSql, connection)) {
             command.Parameters.AddWithValue("@Genero", genero);
 
@@ -136,12 +120,10 @@ public class SQLiteDAO : IJogoDAO {
                 string studio = reader["Studio"].ToString();
                 string edicao = reader["Edicao"].ToString();
                 bool disponibilidade = Convert.ToInt32(reader["Disponibilidade"]) == 1;
-
                 Jogo jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
                 jogos.Add(jogo);
             }
         }
-
         connection.Close();
         return jogos;
     }

@@ -1,7 +1,6 @@
-namespace GameMania.Dados;
-
 using GameMania.Modelos;
 
+namespace GameMania.Dados;
 public class JogoMemDAO : IJogoDAO {
     private Dictionary<string, Jogo> jogosRegistrados;
 

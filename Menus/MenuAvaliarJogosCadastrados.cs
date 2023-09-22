@@ -1,7 +1,4 @@
 namespace GameMania.Menus;
-
-using GameMania.Modelos;
-
 internal class MenuAvaliarJogosCadastrados: Menu {
 
     public MenuAvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }

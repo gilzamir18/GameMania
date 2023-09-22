@@ -1,7 +1,4 @@
 namespace GameMania.Menus;
-
-using GameMania.Modelos;
-
 internal class MenuExibirJogosCadastrados: Menu {
     public MenuExibirJogosCadastrados() : base("*  Jogos Cadastrados  *") { }
 

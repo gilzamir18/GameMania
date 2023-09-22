@@ -1,5 +1,4 @@
 ﻿using GameMania.Menus;
-using GameMania.Modelos;
 
 var opcoes = new Dictionary<string, Menu> {
     ["1"] = new MenuCadastrarNovoJogo(),

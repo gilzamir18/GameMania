@@ -1,8 +1,7 @@
-namespace GameMania.Menus;
-
 using GameMania.Modelos;
 using OpenAI_API;
 
+namespace GameMania.Menus;
 class MenuCadastrarNovoJogoGPT: Menu {
     public MenuCadastrarNovoJogoGPT() : base("*  Cadastrar Novo Jogo GPT  *") { }
 
@@ -18,7 +17,7 @@ class MenuCadastrarNovoJogoGPT: Menu {
         string plataformas = "";
 
         try {
-            var client = new OpenAI_API.OpenAIAPI("Token Pessoal");
+            var client = new OpenAIAPI("Token Pessoal");
             var chat = client.Chat.CreateConversation();
             string request = $"Retorne no formato \"titulo:genero:studio:edicao:descricao:plataformas\" os dados do jogo {titulo}, onde titulo é o título do jogo, edicao é a edição do jogo (por exemplo, GTA 5 para o jogo GTA, onde a edição deve conter o último lançamento do jogo), plataformas é o conjunto de plataformas separadas por espaço (por exemplo 'XBoxLive PlayStation') que suportam este jogo e descricão é um breve resumo jogo em uma linguagem descontraída.";
             chat.AppendSystemMessage(request);
@@ -42,11 +41,11 @@ class MenuCadastrarNovoJogoGPT: Menu {
             jogo.ExibirFichaTecnica();
             Console.Write("Você confirma estes dados (pressione S) ou deseja preencher manualmente? (qualquer tecla). ");
             key = Console.ReadKey().KeyChar;
-        } catch (Exception e) { 
+        } catch (Exception) { 
             Console.WriteLine($"Infelizmente ocorreu um erro na obtenção dos dados sobre o jogo {titulo}.\nPreencha as informações manualmente!\n");
         }
 
-        if ((jogo == null || key == null) || (key != 'S' && key != 's')) {
+        if (jogo == null || key == null || (key != 'S' && key != 's')) {
             Console.Write("Qual o genero do jogo? ");
             genero = Console.ReadLine();
             Console.Write("Qual studio desenvolveu o jogo? ");

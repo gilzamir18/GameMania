@@ -1,17 +1,13 @@
-using GameMania.Modelos;
 using GameMania.Dados;
 
 namespace GameMania.Menus;
-
 internal class Menu {
-
     public string Titulo {get;}
 
     protected IJogoDAO jogoDAO;
 
     public Menu(string titulo) {
         Titulo = titulo;
-        //jogoDAO = JogoMemDAO.GetInstance();
         jogoDAO = SQLiteDAO.GetInstance();
     }
 
@@ -25,7 +21,7 @@ internal class Menu {
         return sair;
     }
 
-    void Rodape() {
+    static void Rodape() {
         Console.Write("Pressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
@@ -34,7 +30,7 @@ internal class Menu {
         return false;
     }
 
-    void ExibirTituloDaOpcao(string titulo, char preencher = '*') {
+    static void ExibirTituloDaOpcao(string titulo, char preencher = '*') {
         Console.Clear();
         var barra = string.Empty.PadLeft(titulo.Length, preencher);
         Console.WriteLine(barra);
