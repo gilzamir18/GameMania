@@ -12,7 +12,7 @@ internal class Menu
     public Menu(string titulo)
     {
         Titulo = titulo;
-        jogoDAO = JogoMemDAO.GetInstance();
+        jogoDAO = SQLiteJogoDAO.GetInstance();//JogoMemDAO.GetInstance();
     }
 
     public bool Executar()

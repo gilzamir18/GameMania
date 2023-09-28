@@ -1,6 +1,7 @@
 ﻿
 using GameMania.Menus;
 using GameMania.Modelos;
+using GameMania.Dados;
 
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
@@ -52,4 +53,14 @@ void MenuPrincipal()
     }
 }
 
-MenuPrincipal();
+///MenuPrincipal();
+IJogoDAO dao = SQLiteJogoDAO.GetInstance();
+
+Jogo jogo = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
+jogo.AdicionarNota(new Avaliacao(10));
+jogo.AdicionarNota(new Avaliacao(5));
+jogo.AdicionarNota(new Avaliacao(2));
+jogo.AdicionarPlataforma("XBoxLive");
+jogo.AdicionarPlataforma("PC");
+
+dao.SalvarJogo(jogo);

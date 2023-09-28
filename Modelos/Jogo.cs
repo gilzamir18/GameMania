@@ -61,6 +61,32 @@ public class Jogo
         }
     }
 
+    public int QtdNotas
+    {
+        get
+        {
+            return notas.Count;
+        }
+    }
+
+    public int QtdPlataformas
+    {
+        get
+        {
+            return plataformas.Count;
+        }
+    }
+
+    public Avaliacao GetAvaliacao(int idx)
+    {
+        return notas[idx];
+    }
+
+    public string GetPlataforma(int idx)
+    {
+        return plataformas[idx];
+    }
+
     public void AdicionarNota(Avaliacao nota)
     {
         notas.Add(nota);
