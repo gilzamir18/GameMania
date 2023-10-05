@@ -1,3 +1,4 @@
+using GameMania.Menus;
 using GameMania.Modelos;
 using System.Data.SqlClient;
 using System.Data.SQLite;
@@ -122,14 +123,94 @@ public class SQLiteJogoDAO: IJogoDAO
     }
     
     public override List<Jogo> ObterTodosOsJogos(){
-        throw new System.NotImplementedException();
+        return SelectJogoPorCampo();
     }
     
-    public override  Jogo ObterPorTitulo(string titulo){
-        throw new System.NotImplementedException();
+    public override Jogo ObterPorTitulo(string titulo){
+        List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
+        if (jogos.Count > 0)
+        {
+            return jogos[0];
+        }
+        return null;
     }
     
     public override  List<Jogo> FiltrarPorGenero(string genero){
-        throw new System.NotImplementedException();
+        return SelectJogoPorCampo("Genero", genero);
+    }
+
+    private List<Jogo> SelectJogoPorCampo(string campo="", string valor="")
+    {
+        List<Jogo> resultado = new List<Jogo>();
+        using (var cmdSelect = new SQLiteCommand(con))
+        {
+            if (campo == "")
+            {
+                cmdSelect.CommandText = $"select * from Jogo";    
+            }
+            else
+            {
+                cmdSelect.CommandText = $"select * from Jogo where {campo}=@param";
+            }
+            cmdSelect.Parameters.AddWithValue("@param", valor);
+            using (var reader = cmdSelect.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int jogoID = -1;
+                    Jogo jogo = null;
+                    jogoID = reader.GetInt32(0);
+                    var titulo = reader.GetString(1);
+                    var genero = reader.GetString(2);
+                    var studio = reader.GetString(3);
+                    var edicao = reader.GetString(4);
+                    var descvalue = reader.GetValue(5);
+                    var desc = "";
+                    if (!(descvalue is System.DBNull))
+                    {
+                        desc = (string)descvalue;
+                    }
+                    var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
+                    jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
+                    jogo.Descricao = desc;
+                    using (var cmdSelectAval = new SQLiteCommand(con))
+                    {
+
+                        cmdSelectAval.CommandText = @"select Nota from Avaliacao 
+                                                                            where ID_Jogo=@param1";
+                        cmdSelectAval.Parameters.AddWithValue("@param1", jogoID);
+                        using (var readerAval = cmdSelectAval.ExecuteReader())
+                        {
+                            while (readerAval.Read())
+                            {
+                                int nota = readerAval.GetInt32(0);
+                                jogo.AdicionarNota(new Avaliacao(nota));
+                            }
+                        }
+                    }
+
+                    using (var cmdSelectPlat = new SQLiteCommand(con))
+                    {
+                        cmdSelectPlat.CommandText = @"
+                            SELECT Plataforma.Nome FROM Plataforma
+                                INNER JOIN JogoPlataforma ON Plataforma.ID = JogoPlataforma.ID_Plataforma
+                                WHERE JogoPlataforma.ID_Jogo = @param";
+                        cmdSelectPlat.Parameters.AddWithValue("@param", jogoID);
+                        using(var readerPlat = cmdSelectPlat.ExecuteReader())
+                        {
+
+                            while (readerPlat.Read())
+                            {
+                                jogo.AdicionarPlataforma(readerPlat.GetString(0));
+                            }
+                        }
+                    }
+
+                    resultado.Add(jogo);
+                }
+            }
+        }
+
+        return resultado;
     }
 }
