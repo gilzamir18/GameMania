@@ -2,16 +2,11 @@ namespace GameMania.Menus;
 
 using GameMania.Modelos;
 
-class MenuCadastrarNovoJogo: Menu
-{
+class MenuCadastrarNovoJogo: Menu {
 
-    public MenuCadastrarNovoJogo(): base("Cadastrar Novo Jogo")
-    {
+    public MenuCadastrarNovoJogo(): base("Cadastrar Novo Jogo") { }
 
-    }
-
-    public override bool MostrarOpcao()
-    {
+    public override bool MostrarOpcao() {
         Console.Write("Qual o título do jogo? ");
         var titulo = Console.ReadLine();
         Console.Write("Qual o genero do jogo? ");

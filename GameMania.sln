@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameMania", "GameMania.csproj", "{9AF64029-527C-4030-BE30-3D9B4CF4A782}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AF64029-527C-4030-BE30-3D9B4CF4A782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF64029-527C-4030-BE30-3D9B4CF4A782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF64029-527C-4030-BE30-3D9B4CF4A782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF64029-527C-4030-BE30-3D9B4CF4A782}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54ED3A1D-8D1B-4F11-A73B-8885A757A3E7}
+	EndGlobalSection
+EndGlobal
