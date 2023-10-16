@@ -1,4 +1,6 @@
 namespace GameMania.Menus;
+
+using System.Diagnostics;
 using GameMania.Modelos;
 
 internal class MenuAvaliarJogoCadastrado: Menu{
@@ -11,13 +13,17 @@ internal class MenuAvaliarJogoCadastrado: Menu{
         string? aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux) ? "": aux;
         while(!jogosRegistrados.ContainsKey(aux) && aux != "-1"){
-            Console.Write("Nome Invalido ou Nao Cadastrado ou Jogo Indisponvel Para Avaliacao. Tente Novamente: ");
+            Console.Write("Nome Invalido ou Nao Cadastrado. Tente Novamente: ");
             aux = Console.ReadLine();
             aux = string.IsNullOrEmpty(aux) ? "": aux;
         }
-        
+
         if(aux != "-1"){
             Jogo? jogo = jogosRegistrados[aux];
+            if(jogo.Disponibilidade == false){
+                Console.WriteLine("Jogo Indisponivel Para Avaliacao.");
+                return;
+            }
             Console.WriteLine("Insira Notas | Digite -1 Para Cancelar: ");
             float n = 0;
             jogo.Notas = jogo.Notas == null ? new List<float>{} : jogo.Notas; //Apenas para tirar o warning
