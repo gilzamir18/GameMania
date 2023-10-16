@@ -6,13 +6,13 @@ internal class MenuPreencherDadosComGPT: Menu{
     public MenuPreencherDadosComGPT():base(titulo:"Preenchendo Dados Com GPT"){
 
     }    
-    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override void ExecutarOpcao(){
         Console.WriteLine("Cadastrar Um Novo Jogo Usando ChatGPT | Digite -1 Para Cancelar: ");
         Console.Write("Titulo: ");
         string? aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux) ? "" : aux;
 
-        while((string.IsNullOrEmpty(aux) || jogosRegistrados.ContainsKey(aux)) && aux != "-1"){
+        while((string.IsNullOrEmpty(aux) || jogoDAO?.JogoPorTitulo(aux)!=null) && aux != "-1"){
             Console.Write("Nome Invalido Ou Ja Cadastrado. Tente Novamente: ");
             aux = Console.ReadLine();
             aux = string.IsNullOrEmpty(aux) ? "" : aux;
@@ -26,7 +26,7 @@ internal class MenuPreencherDadosComGPT: Menu{
             jogo = jogo==null?new Jogo():jogo;
             jogo.Titulo = aux;
             jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
-            jogosRegistrados.Add(jogo.Titulo,jogo);
+            jogoDAO?.SalvarJogo(jogo);
             jogo.ExibirFichaTecnica();
             Console.WriteLine("Jogo Adicionado Com Sucesso");        
         }else{
@@ -53,7 +53,7 @@ internal class MenuPreencherDadosComGPT: Menu{
                 //Console.WriteLine("Resposta do ChatGPT: " + resposta);
                 Console.WriteLine("Feito!");
                 return resposta;                    
-        }catch (System.Exception){
+        }catch (Exception){
                 Console.WriteLine("Erro na API - Tarefa Cancelada - Pressione Qualquer Tecla");
                 Console.ReadKey();
                 return "";

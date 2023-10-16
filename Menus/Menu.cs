@@ -1,27 +1,22 @@
 namespace GameMania.Menus;
 using GameMania.Modelos;
+using GameMania.Dados;
+
 internal class Menu {
     public string Titulo {get;set;}
+
+    protected JogoDAO? jogoDAO;
     public Menu(string titulo = ""){
         Titulo = titulo;
+        jogoDAO = JogoMemDAO.GetInstance();
     }
-    public virtual void ExecutarMenu(Dictionary<string, Jogo> jogosRegistrados){
+    public virtual void ExecutarMenu(){
         ExibirTituloDaOpcao(Titulo);
-        ExecutarOpcao(jogosRegistrados);
+        ExecutarOpcao();
         Rodape();
     }
-    public virtual void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
-        Task.Delay(0);//apenas para retirar o warning
-    }       
-    // public void ExecutarMenuAsync(Dictionary<string, Jogo> jogosRegistrados){
-    //     ExibirTituloDaOpcao(Titulo);
-    //     ExecutarOpcaoAsync(jogosRegistrados);
-    //     Rodape();
-    // }    
-
-    // public virtual void ExecutarOpcaoAsync(Dictionary<string, Jogo> jogosRegistrados){
-    //     Task.Delay(0);//apenas para retirar o warning
-    // }        
+    public virtual void ExecutarOpcao(){
+    }            
     void Rodape(){
         Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
@@ -38,7 +33,6 @@ internal class Menu {
         }
 
     }
-
     public string ForcedValidationString(string? aux){
         while(string.IsNullOrEmpty(aux)) {
             Console.Write("Tente Novamente: ");

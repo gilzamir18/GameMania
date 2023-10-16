@@ -5,13 +5,13 @@ internal class MenuCadastrarNovoJogo: Menu{
     public MenuCadastrarNovoJogo():base(titulo:"Cadastrar Novo Jogo"){
 
     }    
-    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override void ExecutarOpcao(){
         Console.WriteLine("Cadastrar Um Novo Jogo | Digite -1 Para Cancelar: ");
         Console.Write("Titulo: ");
         string? aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux) ? "" : aux;
 
-        while((string.IsNullOrEmpty(aux) || jogosRegistrados.ContainsKey(aux)) && aux != "-1"){
+        while((string.IsNullOrEmpty(aux) || jogoDAO?.JogoPorTitulo(aux)!=null) && aux != "-1"){
             Console.Write("Nome Invalido Ou Ja Cadastrado. Tente Novamente: ");
             aux = Console.ReadLine();
             aux = string.IsNullOrEmpty(aux) ? "" : aux;
@@ -21,8 +21,7 @@ internal class MenuCadastrarNovoJogo: Menu{
             Jogo? jogo = new(titulo:aux);
             Console.Write("Genero: ");
             aux = Console.ReadLine();
-            //TryCatch que manda pra um validador?
-            jogo.Genero = base.ForcedValidationString(aux);
+            jogo.Genero = ForcedValidationString(aux);
 
             Console.Write("Studio: ");
             aux = Console.ReadLine();
@@ -63,7 +62,7 @@ internal class MenuCadastrarNovoJogo: Menu{
                 }
             }
             jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
-            jogosRegistrados.Add(jogo.Titulo,jogo);
+            jogoDAO?.SalvarJogo(jogo);
             Console.WriteLine("Jogo Adicionado Com Sucesso");        
         }else{
             Console.WriteLine("Cadastro Cancelado");

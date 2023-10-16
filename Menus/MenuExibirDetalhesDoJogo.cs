@@ -5,7 +5,7 @@ internal class MenuExibirDetalhesDoJogo: Menu{
     public MenuExibirDetalhesDoJogo():base(titulo:"Exibir Detalhes Do Jogo"){
 
     }    
-    public override void ExecutarOpcao(Dictionary<string, Jogo> jogosRegistrados){
+    public override void ExecutarOpcao(){
         string? aux = "0";
         while(aux != "-1"){
             Console.Write("Informe o Título Do Jogo | Digite -1 Para Cancelar: ");
@@ -14,10 +14,11 @@ internal class MenuExibirDetalhesDoJogo: Menu{
             if(aux == "-1"){
                 break;
             }
-            if(!jogosRegistrados.ContainsKey(aux)){
+            Jogo? jogo = jogoDAO?.JogoPorTitulo(aux);
+            if(jogo == null){
                 Console.WriteLine("Titulo Nao Encontrado");
             }else{
-                jogosRegistrados[aux].ExibirFichaTecnica();
+                jogo.ExibirFichaTecnica();
                 Console.WriteLine("");
             }             
         }

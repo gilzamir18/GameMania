@@ -1,5 +1,5 @@
 namespace GameMania.Modelos;
-class Jogo {
+public class Jogo {
     private string? titulo;
     public string? Titulo {
         get{ 
