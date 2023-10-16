@@ -34,18 +34,17 @@ void TextoMenu(){
     Console.WriteLine(" 5 - Preencher Dados Com GPT");
     
 }
-async Task MenuPrincipal(){
+void MenuPrincipal(){
     string? aux = "";
-    TextoMenu();
     while(aux != "-1"){
         TextoMenu();
         aux = Console.ReadLine();
         aux = string.IsNullOrEmpty(aux)?"":aux;
         if(listaOpcoes.ContainsKey(aux) && aux!="-1"){
-            await listaOpcoes[aux].ExecutarMenu(listaJogos);
+            listaOpcoes[aux].ExecutarMenu(listaJogos);
             
         }
     }    
 }
 
-await MenuPrincipal();
+MenuPrincipal();
