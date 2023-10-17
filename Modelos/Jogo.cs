@@ -1,124 +1,99 @@
 namespace GameMania.Modelos;
-public class Jogo {
-    private string? titulo;
-    public string? Titulo {
-        get{ 
-            return string.IsNullOrEmpty(titulo)?"":titulo;
-        } 
-        set{ 
-            titulo = string.IsNullOrEmpty(value)?"":value;
-        }
-    }
-    private string? genero;
-    public string? Genero {
-        get{ 
-            return string.IsNullOrEmpty(genero)?"":genero;
-        } 
-        set{ 
-            genero = string.IsNullOrEmpty(value)?"":value;
-        }
-    }
-    private string? studio;
-    public string? Studio {
-        get{ 
-            return string.IsNullOrEmpty(studio)?"":studio;
-        } 
-        set{ 
-            studio = string.IsNullOrEmpty(value)?"":value;
-        }
-    }
-    private string? edicao;
-    public string? Edicao {
-        get{ 
-            return string.IsNullOrEmpty(edicao)?"":edicao;
-        } 
-        set{ 
-            edicao = string.IsNullOrEmpty(value)?"":value;
-        }
-    }
-    private string? descricao;
-    public string? Descricao {
-        get{ 
-            return string.IsNullOrEmpty(descricao)?$"{Titulo} - {Studio}":descricao;
-        }
-        set{ 
-            descricao = string.IsNullOrEmpty(value)?"":value;
-        }        
-    }
-    private bool disponibilidade;
-    public bool Disponibilidade {
-        get{ 
-            return disponibilidade;
-        } 
-        set{ 
-            disponibilidade = value;
-        }
-    }
-    private string? plataformas;
-    public string? Plataformas {
-        get{ 
-            return string.IsNullOrEmpty(plataformas)?"":plataformas;
-        } 
-        set{ 
-            plataformas = string.IsNullOrEmpty(value)?"":value;
-        }
-    }
-    private List<float> notas = new();
-    public List<float>? Notas {
-        get{ 
-            return notas==null ? new List<float>{}:notas;
-        } 
-        set{ 
-            notas = value==null ? new List<float>{}:value;
-        }
-    }
-    public Jogo(string? titulo="", string? genero="", string? studio="", string? edicao="", string? descricao="", bool disponibilidade=false, string? plataformas="", List<float>? notas = null){
-        Titulo = titulo;
-        Genero = genero;
-        Studio = studio;
-        Edicao = edicao;
-        Descricao = descricao;
-        Disponibilidade = disponibilidade;
-        Plataformas = plataformas;
-        Notas = notas ?? new List<float>(){};
-    }
 
-    public float AvaliacaoMedia {
-        get {
-            Notas = (Notas==null)?new List<float>{0}:Notas;
-            if (Notas.Count == 0) {
+public class Jogo
+{
+    public string Titulo {get; set;}
+    public string Genero {get; set;}
+    public string Studio{get; set;}
+    public string Edicao{get; set;}
+    public string? Descricao {get; set;} 
+    public bool Disponibilidade {get;set;}
+    
+    public List<string> plataformas;
+    public List<Avaliacao> notas;
+
+    public float NotaMedia
+    {
+        get
+        {
+            if (notas.Count > 0)
+            {
+                return (float)notas.Average( a => a.Nota );
+            }
+            else
+            {
                 return 0;
             }
-            float soma = 0;
-            foreach (float nota in Notas) {
-                soma += nota;
-            }
-            return soma/Notas.Count;
-        }    
+
+        }
     }
-    public void ExibirFichaTecnica() {
+
+    public Jogo(string titulo, string genero, string studio, string edicao, bool disponilidade = true) 
+    {
+        this.Titulo = titulo;
+        this.Genero = genero;
+        this.Studio = studio;
+        this.Edicao = edicao;
+        this.Disponibilidade = disponilidade;
+        plataformas = new();
+        notas = new();
+    }
+
+    public void ExibirFichaTecnica()
+    {
         Console.WriteLine($"Título: {Titulo}");
-        Console.WriteLine($"Gênero: {Genero}");
-        Console.WriteLine($"Estúdio: {Studio}");
+        Console.WriteLine($"Genero: {Genero}");
         Console.WriteLine($"Edição: {Edicao}");
-        Console.WriteLine($"Descricao: {Descricao}");
-        Console.WriteLine($"Plataformas: {Plataformas}");
-        Console.Write($"Notas: ");
-        Notas = (Notas==null)?new List<float>{0}:Notas;
-        foreach (float? nota in Notas){
-            if(nota.HasValue){
-                Console.Write(nota + " ");
-            }
+        Console.Write("Plataformas Suportadas:\t");
+        foreach(var plat in plataformas)
+        {
+            Console.Write($"{plat} ");
         }
-        Console.WriteLine($"\nMedia: {AvaliacaoMedia:F2}");
-        if(Disponibilidade) {
-            Console.WriteLine("Disponível para avaliação.");
-        } else {
-            Console.WriteLine("Não disponível para avaliação.");
+        Console.WriteLine();
+        
+        if (Disponibilidade)
+        {
+            Console.WriteLine("Jogo disponível para avaliação.");
+        }
+        else
+        {
+            Console.WriteLine("Este jogo não está disponível para avaliação.");
         }
     }
 
+    public int QtdNotas
+    {
+        get
+        {
+            return notas.Count;
+        }
+    }
+
+    public int QtdPlataformas
+    {
+        get
+        {
+            return plataformas.Count;
+        }
+    }
+
+    public Avaliacao GetAvaliacao(int idx)
+    {
+        return notas[idx];
+    }
+
+    public string GetPlataforma(int idx)
+    {
+        return plataformas[idx];
+    }
+
+    public void AdicionarNota(Avaliacao nota)
+    {
+        notas.Add(nota);
+    }
+
+    public void AdicionarPlataforma(string plataforma)
+    {
+        plataformas.Add(plataforma);
+    }
 }
-
-
-

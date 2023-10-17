@@ -18,7 +18,7 @@ internal class MenuCadastrarNovoJogo: Menu{
         }
         
         if(aux != "-1"){
-            Jogo? jogo = new(titulo:aux);
+            Jogo? jogo = new("","","", "");
             Console.Write("Genero: ");
             aux = Console.ReadLine();
             jogo.Genero = ForcedValidationString(aux);
@@ -47,20 +47,19 @@ internal class MenuCadastrarNovoJogo: Menu{
 
             Console.Write("Plataformas: ");
             aux = Console.ReadLine();
-            jogo.Plataformas = ForcedValidationString(aux);
+            jogo.plataformas.Add(ForcedValidationString(aux)); 
 
-            jogo.Notas = new List<float>{};//Evitar Warning
             Console.Write("Notas | Digite -1 Para Cancelar: ");
-            float n = 0;
-            while(n >= 0){
+            var n = 0;
+            //while(n >= 0){
                 aux = Console.ReadLine();
-                n = ForcedValidationFloat(aux);
                 if(n>=0){
-                    jogo.Notas.Add(n);
+                    Avaliacao avaliacao = new Avaliacao(n);
+                    jogo.notas.Add(avaliacao);
                 }else{
                     n=-1;
                 }
-            }
+            //}
             jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
             jogoDAO?.SalvarJogo(jogo);
             Console.WriteLine("Jogo Adicionado Com Sucesso");        

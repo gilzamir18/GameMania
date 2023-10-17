@@ -23,7 +23,6 @@ internal class MenuPreencherDadosComGPT: Menu{
                 return;
             }
             Jogo? jogo = JsonConvert.DeserializeObject<Jogo>(jsonString);
-            jogo = jogo==null?new Jogo():jogo;
             jogo.Titulo = aux;
             jogo.Titulo = string.IsNullOrEmpty(jogo.Titulo)?"":jogo.Titulo;
             jogoDAO?.SalvarJogo(jogo);

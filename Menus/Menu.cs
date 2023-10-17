@@ -8,7 +8,7 @@ internal class Menu {
     protected JogoDAO? jogoDAO;
     public Menu(string titulo = ""){
         Titulo = titulo;
-        jogoDAO = JogoMemDAO.GetInstance();
+        jogoDAO = SQLiteJogoDAO.GetInstance();
     }
     public virtual void ExecutarMenu(){
         ExibirTituloDaOpcao(Titulo);

@@ -25,16 +25,14 @@ internal class MenuAvaliarJogoCadastrado: Menu{
                 return;
             }
             Console.WriteLine("Insira Notas | Digite -1 Para Cancelar: ");
-            float n = 0;
-
-            jogo = jogo == null ? new Jogo(): jogo; //Apenas para tirar o warning
-            jogo.Notas = jogo.Notas == null ? new List<float>{} : jogo.Notas; //Apenas para tirar o warning
+            var n = 0;
             
             while(n >= 0){
                 aux = Console.ReadLine();
-                n = ForcedValidationFloat(aux);
-                if(n>=0){   
-                    jogo.Notas.Add(n);
+                int.TryParse(aux, out n);
+                if(n>=0){
+                    Avaliacao avaliacao = new Avaliacao(n);
+                    jogo.notas.Add(avaliacao);
                 }else{
                     n=-1;
                 }
