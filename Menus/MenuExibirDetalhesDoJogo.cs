@@ -9,9 +9,9 @@ internal class MenuExibirDetalhesDoJogo: Menu
     {
         Console.Write("Informe o título do jogo: ");
         string titulo = Console.ReadLine();
-        if (jogosRegistrados.ContainsKey(titulo))
+        var jogo = jogoDAO.ObterPorTitulo(titulo);
+        if (jogo != null)
         {
-            var jogo = jogosRegistrados[titulo];
             Console.WriteLine($"A média de avaliação do jogo {titulo} é: {jogo.NotaMedia}");
         }
         else

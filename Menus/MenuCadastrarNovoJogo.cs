@@ -15,7 +15,7 @@ class MenuCadastrarNovoJogo: Menu
         var studio = Console.ReadLine();
         Console.Write("Qual a edição do jogo? ");
         var edicao = Console.ReadLine();
-        jogosRegistrados.Add(titulo, new Jogo(titulo, genero, studio, edicao));
+        jogoDAO.SalvarJogo(new Jogo(titulo, genero, studio, edicao));
         Console.WriteLine("Jogo Adicionado com sucesso");
         return false;
     }

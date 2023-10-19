@@ -1,12 +1,12 @@
 namespace GameMania.Modelos;
 
-internal class Jogo
+public class Jogo
 {
     public string Titulo {get; set;}
     public string Genero {get; set;}
     public string Studio{get; set;}
     public string Edicao{get; set;}
-    public string Descricao  => $"Jogo: {Titulo}(Edição {Edicao})\nStudio: {Studio}\n"; 
+    public string Descricao {get; set;} 
     public bool Disponibilidade {get;}
     
     private List<string> plataformas;
@@ -59,6 +59,32 @@ internal class Jogo
         {
             Console.WriteLine("Este jogo não está disponível para avaliação.");
         }
+    }
+
+    public int QtdNotas
+    {
+        get
+        {
+            return notas.Count;
+        }
+    }
+
+    public int QtdPlataformas
+    {
+        get
+        {
+            return plataformas.Count;
+        }
+    }
+
+    public Avaliacao GetAvaliacao(int idx)
+    {
+        return notas[idx];
+    }
+
+    public string GetPlataforma(int idx)
+    {
+        return plataformas[idx];
     }
 
     public void AdicionarNota(Avaliacao nota)
