@@ -2,7 +2,7 @@ namespace GameMania.Menus;
 
 internal class MenuExibirDetalhesDoJogo: Menu {
 
-    public MenuExibirDetalhesDoJogo() : base("Exibir Detalhe de Jogo") { }
+    public MenuExibirDetalhesDoJogo() : base("*  Exibir Detalhes de Jogo  *") { }
 
     public override bool MostrarOpcao() {
         Console.Write("Informe o título do jogo: ");

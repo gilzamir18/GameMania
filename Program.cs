@@ -1,8 +1,9 @@
 ﻿using GameMania.Menus;
 
-int tempo = 0;
-bool estaMenuPrincipal = true;
-Dictionary<string, Menu> opcoes = new() {
+/* int tempo = 0;
+bool estaMenuPrincipal = true; */
+
+var opcoes = new Dictionary<string, Menu> {
     ["1"] = new MenuCadastrarNovoJogo(),
     ["2"] = new MenuExibirJogosCadastrados(),
     ["3"] = new MenuExibirDetalhesDoJogo(),
@@ -24,11 +25,11 @@ void ExibirMensagemBoasVindas() {
 
 
 void MenuPrincipal() {
-    estaMenuPrincipal = true;
+    /* estaMenuPrincipal = true;
     CancellationTokenSource cts = new();
-
     MostrarRelogio();
-    Task t = MostrarAlerta();
+    Task t = MostrarAlerta(); */
+    
     while (true) {
         ExibirMensagemBoasVindas();
         Console.WriteLine("1 - Cadastrar novo Jogo");
@@ -37,14 +38,16 @@ void MenuPrincipal() {
         Console.WriteLine("4 - Avaliar jogo");
         Console.WriteLine("0 - Sair");
         string opcao = Console.ReadLine();
-        if (opcoes.ContainsKey(opcao)) {   
-            estaMenuPrincipal = false;
+
+        if (opcoes.ContainsKey(opcao)) {
+            //estaMenuPrincipal = false;
             bool sair = opcoes[opcao].Executar();
+
             if (sair) {
                 break;
             }
         } else {
-            Console.WriteLine("Opcao Inválida!. Tente novamente. Pressione qualquer tecla para continuar.");
+            Console.WriteLine("Opcao Inválida! Tente novamente.\nPressione qualquer tecla para continuar.");
             Console.ReadKey();
             Console.Clear();
         }
@@ -53,21 +56,26 @@ void MenuPrincipal() {
 
 MenuPrincipal();
 
-async void MostrarRelogio() {
+
+/* async void MostrarRelogio() {
     int contagem = 0;
+
     while (true) {
         Console.Write("                                                \r");
         await Task.Delay(100);
         contagem += 100;
+
         if (contagem % 1000 == 0) {
             tempo ++;
         }
+
         Console.Write($"Tempo: {tempo}s");
     }
 }
 
 async Task MostrarAlerta() {
     int contagem = 0;
+
     while (true) {
         if (!estaMenuPrincipal) {
             contagem = 0;
@@ -77,6 +85,7 @@ async Task MostrarAlerta() {
             await Task.Delay(500);
             Console.Write("\r");
             contagem += 500;
+            
             if (contagem % 8000 == 0) {
                 tempo = 0;
                 contagem = 0;
@@ -84,21 +93,4 @@ async Task MostrarAlerta() {
             }
         }
     }
-}
-
-/*
-IJogoDAO dao = SQLiteJogoDAO.GetInstance();
-Jogo jogo = new Jogo("Valorant", "FPS", "Riot", "1");
-jogo.AdicionarNota(new Avaliacao(10));
-jogo.AdicionarNota(new Avaliacao(10));
-jogo.AdicionarNota(new Avaliacao(8));
-jogo.AdicionarPlataforma("XBoxLive");
-jogo.AdicionarPlataforma("PC");
-jogo.AdicionarPlataforma("PS");
-dao.SalvarJogo(jogo);
-
-List<Jogo> jogos = dao.ObterTodosOsJogos();
-foreach (Jogo jogo in jogos)
-{
-    jogo.ExibirFichaTecnica();
-}*/
+} */

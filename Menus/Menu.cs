@@ -3,7 +3,6 @@ using GameMania.Dados;
 namespace GameMania.Menus;
 
 internal class Menu {
-
     public string Titulo {get;}
 
     protected IJogoDAO jogoDAO;
@@ -14,11 +13,13 @@ internal class Menu {
     }
 
     public bool Executar() {
-        ExibirTituloDaOpcao("Cadastrar novo Jogo");
+        ExibirTituloDaOpcao(Titulo);
         bool sair = MostrarOpcao();
+
         if (!sair) {
             Rodape();
         }
+
         return sair;
     }
 
@@ -37,5 +38,6 @@ internal class Menu {
         Console.WriteLine(barra);
         Console.WriteLine(titulo);
         Console.WriteLine(barra);
+        Console.WriteLine();
     }
 }
