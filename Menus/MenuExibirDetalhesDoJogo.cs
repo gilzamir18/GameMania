@@ -13,7 +13,9 @@ internal class MenuExibirDetalhesDoJogo: Menu
     public override bool MostrarOpcao()
     {
         Console.Write("Informe o título do jogo: ");
-        string titulo = Console.ReadLine();
+        
+        string? titulo = Console.ReadLine();
+        titulo = string.IsNullOrEmpty(titulo)? "":titulo;
         var jogo = jogoDAO.ObterPorTitulo(titulo);
         if (jogo != null)
         {

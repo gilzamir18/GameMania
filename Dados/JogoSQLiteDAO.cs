@@ -1,13 +1,12 @@
 using GameMania.Menus;
 using GameMania.Modelos;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 namespace GameMania.Dados;
 
 public class SQLiteJogoDAO: IJogoDAO
 {
 
-    private static SQLiteJogoDAO instance;
+    private static SQLiteJogoDAO? instance;
 
     public static IJogoDAO GetInstance()
     {
@@ -18,20 +17,20 @@ public class SQLiteJogoDAO: IJogoDAO
         return instance;
     }
 
-    private SQLiteConnection con;
+    private SQLiteConnection connection;
 
     private SQLiteJogoDAO()
     {
          var connectionString = $"Data Source=gamemania.db;Version=3";
-         con = new SQLiteConnection(connectionString);
-         con.Open();
+         connection = new SQLiteConnection(connectionString);
+         connection.Open();
     }
 
     public override void SalvarJogo(Jogo jogo){
-        var transaction = con.BeginTransaction();
+        var transaction = connection.BeginTransaction();
         try
         {
-            using (var command = new SQLiteCommand(con))
+            using (var command = new SQLiteCommand(connection))
             {
                 command.CommandText = @"INSERT INTO 
                                                 Jogo(
@@ -55,7 +54,7 @@ public class SQLiteJogoDAO: IJogoDAO
                 command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
                 var idJogo = command.ExecuteScalar();
 
-                using (var commandAval = new SQLiteCommand(con))
+                using (var commandAval = new SQLiteCommand(connection))
                 {
                     for (int i = 0; i < jogo.QtdNotas; i++)
                     {
@@ -69,13 +68,13 @@ public class SQLiteJogoDAO: IJogoDAO
                         commandAval.ExecuteNonQuery();
                     }
                 }
-                using (var commandPlat = new SQLiteCommand(con))
+                using (var commandPlat = new SQLiteCommand(connection))
                 {
                     for (int i = 0; i < jogo.QtdPlataformas; i++)
                     {
                         var plataforma = jogo.GetPlataforma(i);
                         object idplat = -1;
-                        using (var selectPlat = new SQLiteCommand(con))
+                        using (var selectPlat = new SQLiteCommand(connection))
                         {
                             selectPlat.CommandText = @"SELECT ID, Nome 
                                                         FROM Plataforma
@@ -90,7 +89,7 @@ public class SQLiteJogoDAO: IJogoDAO
                             }
                             else
                             {
-                                using (var addPlat = new SQLiteCommand(con))
+                                using (var addPlat = new SQLiteCommand(connection))
                                 {
                                     addPlat.CommandText = @"INSERT INTO 
                                                             Plataforma(Nome)
@@ -126,7 +125,7 @@ public class SQLiteJogoDAO: IJogoDAO
         return SelectJogoPorCampo();
     }
     
-    public override Jogo ObterPorTitulo(string titulo){
+    public override Jogo? ObterPorTitulo(string titulo){
         List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
         if (jogos.Count > 0)
         {
@@ -142,7 +141,7 @@ public class SQLiteJogoDAO: IJogoDAO
     private List<Jogo> SelectJogoPorCampo(string campo="", string valor="")
     {
         List<Jogo> resultado = new List<Jogo>();
-        using (var cmdSelect = new SQLiteCommand(con))
+        using (var cmdSelect = new SQLiteCommand(connection))
         {
             if (campo == "")
             {
@@ -158,7 +157,7 @@ public class SQLiteJogoDAO: IJogoDAO
                 while (reader.Read())
                 {
                     int jogoID = -1;
-                    Jogo jogo = null;
+                    Jogo? jogo = null;
                     jogoID = reader.GetInt32(0);
                     var titulo = reader.GetString(1);
                     var genero = reader.GetString(2);
@@ -173,7 +172,7 @@ public class SQLiteJogoDAO: IJogoDAO
                     var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
                     jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
                     jogo.Descricao = desc;
-                    using (var cmdSelectAval = new SQLiteCommand(con))
+                    using (var cmdSelectAval = new SQLiteCommand(connection))
                     {
 
                         cmdSelectAval.CommandText = @"select Nota from Avaliacao 
@@ -189,7 +188,7 @@ public class SQLiteJogoDAO: IJogoDAO
                         }
                     }
 
-                    using (var cmdSelectPlat = new SQLiteCommand(con))
+                    using (var cmdSelectPlat = new SQLiteCommand(connection))
                     {
                         cmdSelectPlat.CommandText = @"
                             SELECT Plataforma.Nome FROM Plataforma

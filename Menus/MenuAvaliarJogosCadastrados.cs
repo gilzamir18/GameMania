@@ -14,13 +14,15 @@ internal class MenuAvaliarJogosCadastrados: Menu
     {
         Console.Write("Informe o título do jogo a ser avaliado: ");
         var titulo = Console.ReadLine();
+        titulo = string.IsNullOrEmpty(titulo)? "":titulo;
         var jogo = jogoDAO.ObterPorTitulo(titulo);
         if (jogo != null)
         {
             Console.Write($"Qual nota você dá ao jogo {titulo}? ");
             try
-            {
-                Avaliacao nota = Avaliacao.Parse(Console.ReadLine());
+            {   var opcao = Console.ReadLine();
+                opcao = string.IsNullOrEmpty(opcao)? "":opcao;
+                Avaliacao nota = Avaliacao.Parse(opcao);
                 jogo.AdicionarNota(nota);
             } 
             catch(FormatException e)

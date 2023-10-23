@@ -6,7 +6,7 @@ public class Jogo
     public string Genero {get; set;}
     public string Studio{get; set;}
     public string Edicao{get; set;}
-    public string Descricao {get; set;} 
+    public string? Descricao {get; set;} 
     public bool Disponibilidade {get;}
     
     private List<string> plataformas;
