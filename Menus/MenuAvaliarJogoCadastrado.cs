@@ -1,14 +1,10 @@
 namespace GameMania.Menus;
 
-using GameMania.Modelos;
-
 internal class MenuAvaliarJogosCadastrados: Menu{
-
-    public MenuAvaliarJogosCadastrados() : base("Avaliar Jogos Cadastrados"){
+    public MenuAvaliarJogosCadastrados() : base("Avaliar Jogo Cadastrado"){
 
     }
-
-    public override bool MostrarOpcao(){
+    public override void ExecutarOpcao(){
         Console.Write("Informe o título do jogo a ser avaliado: ");
         var titulo = Console.ReadLine();
         titulo = string.IsNullOrEmpty(titulo)? "":titulo;
@@ -26,6 +22,5 @@ internal class MenuAvaliarJogosCadastrados: Menu{
         }else{
             Console.WriteLine($"Não existe jogo cadastrado com o título {titulo}");
         }
-        return false;
     }
 }

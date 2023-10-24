@@ -1,41 +1,45 @@
 namespace GameMania.Menus;
 using GameMania.Dados;
-
 internal class Menu {
-
-    public string Titulo {get;}
-
+    private string? titulo;
+    public string? Titulo{
+        get{
+            return titulo;
+        }
+        set{
+            titulo = string.IsNullOrEmpty(value)? "":value;
+        }
+    }
     protected JogoDAO jogoDAO;
-
     public Menu(string titulo){
         Titulo = titulo;
         jogoDAO = JogoMemDAO.GetInstance();
     }
-
-    public bool Executar(){
-            ExibirTituloDaOpcao("Cadastrar novo Jogo");
-            bool sair = MostrarOpcao();
-            if (!sair){
-                Rodape();
-            }
-            return sair;
-    }
-
-    void Rodape(){
-        Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
-        Console.ReadKey();
-    }
-
-    public virtual bool MostrarOpcao(){
-        return false;
-    }
-
-    void ExibirTituloDaOpcao(string titulo, char preencher='*'){
+    void ExibirTituloDaOpcao(string titulo = "", char preencher='*'){
         Console.Clear();
-        var barra = string.Empty.PadLeft(titulo.Length, preencher);
+        string barra = string.Empty.PadLeft(titulo.Length, preencher);
         Console.WriteLine(barra);
         Console.WriteLine(titulo);
         Console.WriteLine(barra);
     }
+    public virtual void ExecutarOpcao(){
+    
+    }
+    void Rodape(){
+        Console.WriteLine("Pressione Qualquer Tecla Para Continuar");
+        Console.ReadKey();
+    }    
+    public void Executar(){
+            Titulo = string.IsNullOrEmpty(Titulo)? "":Titulo;//Warning
+            ExibirTituloDaOpcao(Titulo);
+            ExecutarOpcao();
+            Rodape();
+    }
+
+
+
+
+
+
 
 }

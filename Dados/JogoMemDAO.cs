@@ -16,24 +16,21 @@ public class JogoMemDAO : JogoDAO{
 
     private JogoMemDAO(){
         jogosRegistrados = new();
-        jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
+        jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios");
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
         jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
-        jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
 
-        jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games", "6");
+        jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games");
         jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(8));
         jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(9));
-        jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
-        jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
-        jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
     }
 
 
     public override void SalvarJogo(Jogo jogo){
-        jogosRegistrados[jogo.Titulo] = jogo;
+        jogo.Nome = string.IsNullOrEmpty(jogo.Nome)?"":jogo.Nome;
+        jogosRegistrados[jogo.Nome] = jogo;
     }
 
     public override List<Jogo> ListarTodosOsJogos(){

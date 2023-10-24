@@ -7,21 +7,23 @@ class MenuCadastrarNovoJogo: Menu{
 
     }
 
-    public override bool MostrarOpcao(){
+public override void ExecutarOpcao(){
         Console.Write("Qual o título do jogo? ");
-        var titulo = Console.ReadLine();
+        string? titulo = Console.ReadLine();
         titulo = string.IsNullOrEmpty(titulo)? "":titulo;
         Console.Write("Qual o genero do jogo? ");
-        var genero = Console.ReadLine();
+        string? genero = Console.ReadLine();
         genero = string.IsNullOrEmpty(genero)? "":genero;
         Console.Write("Qual studio desenvolveu o jogo? ");
-        var studio = Console.ReadLine();
+        string? studio = Console.ReadLine();
         studio = string.IsNullOrEmpty(studio)? "":studio;
         Console.Write("Qual a edição do jogo? ");
-        var edicao = Console.ReadLine();
+        string? edicao = Console.ReadLine();
         edicao = string.IsNullOrEmpty(edicao)? "":edicao;
-        jogoDAO.SalvarJogo(new Jogo(titulo, genero, studio, edicao));
+        jogoDAO.SalvarJogo(new Jogo(nome:titulo,
+                                    edicao:edicao,
+                                    genero:genero,
+                                    studio:studio));
         Console.WriteLine("Jogo Adicionado com sucesso");
-        return false;
     }
 }

@@ -6,7 +6,7 @@ internal class MenuExibirDetalhesDoJogo: Menu{
         
     }
 
-    public override bool MostrarOpcao(){
+public override void ExecutarOpcao(){
         Console.Write("Informe o título do jogo: ");
         
         string? titulo = Console.ReadLine();
@@ -17,6 +17,5 @@ internal class MenuExibirDetalhesDoJogo: Menu{
         }else{
             Console.WriteLine($"Não existe um jogo com o título {titulo}");
         }
-        return false;
     }
 }

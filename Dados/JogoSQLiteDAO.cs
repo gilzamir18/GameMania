@@ -39,7 +39,7 @@ public class JogoSQLiteDAO: JogoDAO{
                                                        @edicao,
                                                        @descricao,
                                                        @disponibilidade); SELECT last_insert_rowid();";
-                command.Parameters.AddWithValue("@titulo", jogo.Titulo);
+                command.Parameters.AddWithValue("@titulo", jogo.Nome);
                 command.Parameters.AddWithValue("@genero", jogo.Genero);
                 command.Parameters.AddWithValue("@studio", jogo.Studio);
                 command.Parameters.AddWithValue("@edicao", jogo.Edicao);
@@ -59,41 +59,41 @@ public class JogoSQLiteDAO: JogoDAO{
                         commandAval.ExecuteNonQuery();
                     }
                 }
-                using (var commandPlat = new SQLiteCommand(connection)){
-                    for (int i = 0; i < jogo.QtdPlataformas; i++){
-                        var plataforma = jogo.GetPlataforma(i);
-                        object idplat = -1;
-                        using (var selectPlat = new SQLiteCommand(connection)){
-                            selectPlat.CommandText = @"SELECT ID, Nome 
-                                                        FROM Plataforma
-                                                        WHERE Plataforma.Nome = @nome";
-                            selectPlat.Parameters.AddWithValue("@nome", plataforma);
-                            var reader = selectPlat.ExecuteReader();
+                // using (var commandPlat = new SQLiteCommand(connection)){
+                //     for (int i = 0; i < jogo.QtdPlataformas; i++){
+                //         var plataforma = jogo.GetPlataforma(i);
+                //         object idplat = -1;
+                //         using (var selectPlat = new SQLiteCommand(connection)){
+                //             selectPlat.CommandText = @"SELECT ID, Nome 
+                //                                         FROM Plataforma
+                //                                         WHERE Plataforma.Nome = @nome";
+                //             selectPlat.Parameters.AddWithValue("@nome", plataforma);
+                //             var reader = selectPlat.ExecuteReader();
                             
-                            if (reader.Read()){
-                                idplat = reader.GetInt32(0);
-                                //vreader.GetString(1);
-                            }else{
-                                using (var addPlat = new SQLiteCommand(connection)){
-                                    addPlat.CommandText = @"INSERT INTO 
-                                                            Plataforma(Nome)
-                                                            VALUES (@nome); SELECT last_insert_rowid();";
-                                    addPlat.Parameters.AddWithValue("@nome", plataforma);
-                                    idplat = addPlat.ExecuteScalar();
-                                }
-                            }
-                        }
+                //             if (reader.Read()){
+                //                 idplat = reader.GetInt32(0);
+                //                 //vreader.GetString(1);
+                //             }else{
+                //                 using (var addPlat = new SQLiteCommand(connection)){
+                //                     addPlat.CommandText = @"INSERT INTO 
+                //                                             Plataforma(Nome)
+                //                                             VALUES (@nome); SELECT last_insert_rowid();";
+                //                     addPlat.Parameters.AddWithValue("@nome", plataforma);
+                //                     idplat = addPlat.ExecuteScalar();
+                //                 }
+                //             }
+                //         }
 
 
-                        commandPlat.CommandText = @"INSERT INTO
-                                                            JogoPlataforma(ID_Jogo, ID_Plataforma) 
-                                                            VALUES(@p1, @p2)
-                                                            ";
-                        commandPlat.Parameters.AddWithValue("@p1", idJogo);
-                        commandPlat.Parameters.AddWithValue("@p2", idplat);
-                        commandPlat.ExecuteNonQuery();
-                    }
-                }
+                //         commandPlat.CommandText = @"INSERT INTO
+                //                                             JogoPlataforma(ID_Jogo, ID_Plataforma) 
+                //                                             VALUES(@p1, @p2)
+                //                                             ";
+                //         commandPlat.Parameters.AddWithValue("@p1", idJogo);
+                //         commandPlat.Parameters.AddWithValue("@p2", idplat);
+                //         commandPlat.ExecuteNonQuery();
+                //     }
+                // }
             }
 
             transaction.Commit();
@@ -142,8 +142,11 @@ public class JogoSQLiteDAO: JogoDAO{
                     if (!(descvalue is System.DBNull)){
                         desc = (string)descvalue;
                     }
-                    var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
-                    jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
+                    var disponibilidade = reader.GetInt32(6) == 1 ? true : false;                  
+                    jogo = new Jogo(nome:titulo,
+                                    edicao:edicao,
+                                    genero:genero,
+                                    studio:studio);
                     jogo.Descricao = desc;
                     using (var cmdSelectAval = new SQLiteCommand(connection)){
 
@@ -168,7 +171,7 @@ public class JogoSQLiteDAO: JogoDAO{
                         using(var readerPlat = cmdSelectPlat.ExecuteReader()){
 
                             while (readerPlat.Read()){
-                                jogo.AdicionarPlataforma(readerPlat.GetString(0));
+                                //jogo.AdicionarPlataforma(readerPlat.GetString(0));
                             }
                         }
                     }
