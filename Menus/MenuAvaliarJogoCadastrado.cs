@@ -5,22 +5,22 @@ internal class MenuAvaliarJogosCadastrados: Menu{
 
     }
     public override void ExecutarOpcao(){
-        Console.Write("Informe o título do jogo a ser avaliado: ");
+        Console.Write("Informe o Titulo Do Jogo a Ser Avaliado: ");
         var titulo = Console.ReadLine();
         titulo = string.IsNullOrEmpty(titulo)? "":titulo;
         var jogo = jogoDAO.ObterJogoPorTitulo(titulo);
         if (jogo != null){
-            Console.Write($"Qual nota você dá ao jogo {titulo}? ");
+            Console.Write($"Qual Nota Voce Da ao Jogo {titulo}? ");
             try{   
                 var opcao = Console.ReadLine();
                 opcao = string.IsNullOrEmpty(opcao)? "":opcao;
-                Avaliacao nota = Avaliacao.Parse(opcao);
+                int nota = int.Parse(opcao);
                 jogo.AdicionarNota(nota);
             }catch(FormatException e){
                 Console.WriteLine(e.Message);
             }
         }else{
-            Console.WriteLine($"Não existe jogo cadastrado com o título {titulo}");
+            Console.WriteLine($"Nao Existe Jogo Cadastrado Com o Titulo {titulo}");
         }
     }
 }

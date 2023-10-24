@@ -55,7 +55,7 @@ public class JogoSQLiteDAO: JogoDAO{
                                                             VALUES(@idjogo, @nota)
                                                             ";
                         commandAval.Parameters.AddWithValue("@idjogo", idJogo);
-                        commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
+                        //commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
                         commandAval.ExecuteNonQuery();
                     }
                 }
@@ -157,7 +157,7 @@ public class JogoSQLiteDAO: JogoDAO{
                             while (readerAval.Read())
                             {
                                 int nota = readerAval.GetInt32(0);
-                                jogo.AdicionarNota(new Avaliacao(nota));
+                                //jogo.AdicionarNota(new Avaliacao(nota));
                             }
                         }
                     }

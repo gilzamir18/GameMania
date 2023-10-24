@@ -5,17 +5,17 @@ internal class MenuExibirDetalhesDoJogo: Menu{
     public MenuExibirDetalhesDoJogo() : base("Exibir Detalhe de Jogo"){
         
     }
-
 public override void ExecutarOpcao(){
-        Console.Write("Informe o título do jogo: ");
+        Console.Write("Informe o Titulo Do Jogo: ");
         
         string? titulo = Console.ReadLine();
         titulo = string.IsNullOrEmpty(titulo)? "":titulo;
         var jogo = jogoDAO.ObterJogoPorTitulo(titulo);
         if (jogo != null){
-            Console.WriteLine($"A média de avaliação do jogo {titulo} é: {jogo.NotaMedia}");
+            float media = jogo.NotaMedia();
+            Console.WriteLine($"A Media De Avaliacao Do Jogo {titulo} e: {media:F2}");
         }else{
-            Console.WriteLine($"Não existe um jogo com o título {titulo}");
+            Console.WriteLine($"Nao Existe Um Jogo Com o Titulo {titulo}");
         }
     }
 }

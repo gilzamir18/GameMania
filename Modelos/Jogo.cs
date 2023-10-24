@@ -64,32 +64,20 @@ public class Jogo{
             plataforma = string.IsNullOrEmpty(value)? "":value;
         }
     }     
-    private List<Avaliacao>? nota;
-    public List<Avaliacao>? Nota{
+    private List<int>? nota;
+    public List<int>? Nota{
         get{
             return nota;
         }
         set{
             if(value == null){
-                nota = new List<Avaliacao>();
+                nota = new List<int>();
             }else{
                 nota = value;
             }
         }
     }         
-    public float NotaMedia{
-        get{
-            if(nota==null){
-                nota = new List<Avaliacao>();
-            }
-            if (nota.Count > 0){
-                return (float)nota.Average( a => a.Nota );
-            }else{
-                return 0;
-            }
 
-        }
-    }
     public Jogo(string nome = "", 
                 string edicao = "",
                 string descricao = "", 
@@ -105,42 +93,79 @@ public class Jogo{
         Genero = genero;
         Studio = studio;
         Plataforma = plataforma;
-        Nota = new List<Avaliacao>();
-    }
+    }  
+
+    public Jogo(List<int> nota,
+                string nome = "", 
+                string edicao = "",
+                string descricao = "", 
+                bool disponibilidade = true,
+                string genero = "", 
+                string studio = "",
+                string plataforma = "")
+    {
+        Nota = nota;
+        Nome = nome;
+        Edicao = edicao;
+        Descricao = descricao;
+        Disponibilidade = disponibilidade;
+        Genero = genero;
+        Studio = studio;
+        Plataforma = plataforma;
+    }      
 
     public void ExibirFichaTecnica(){
         Console.WriteLine($"Titulo: {Nome}");
+        Console.WriteLine($"Edicao: {Edicao}");
+        Console.WriteLine($"Descricao: {Descricao}");
         Console.WriteLine($"Genero: {Genero}");
+        Console.WriteLine($"Studio: {Studio}");
         Console.WriteLine($"Edição: {Edicao}");
         Console.WriteLine($"Plataforma: {Plataforma}");
-        Console.WriteLine();
-        
-        if (Disponibilidade){
+        if (Disponibilidade == true){
             Console.WriteLine("Jogo disponível para avaliação.");
         }else{
             Console.WriteLine("Este jogo não está disponível para avaliação.");
         }
+        Console.WriteLine();
     }
 
+    public float NotaMedia(){
+        if(Nota == null){
+            Console.WriteLine("Nao Ha Notas Cadastradas");
+            return 0;
+        }
+        float soma = 0;
+        if(Nota.Count > 0){
+            foreach (int nota in Nota){
+                soma += nota;
+            }
+            soma /=Nota.Count;
+            return soma;
+        }else{
+            Console.WriteLine("Nao Ha Notas Cadastradas");
+        }
+        return 0;
+    }
     public int QtdNotas{
         get{
             if(Nota==null){
-                Nota = new List<Avaliacao>();
+                Nota = new List<int>();
             }            
             return Nota.Count;
         }
     }
 
-    public Avaliacao GetAvaliacao(int idx){
+    public List<int> GetAvaliacao(int idx){
         if(Nota==null){
-            Nota = new List<Avaliacao>();
+            Nota = new List<int>();
         }             
-        return Nota[idx];
+        return Nota;
     }
 
-    public void AdicionarNota(Avaliacao nota){
+    public void AdicionarNota(int nota){
         if(Nota==null){
-            Nota = new List<Avaliacao>();
+            Nota = new List<int>();
         }                 
         Nota.Add(nota);
     }

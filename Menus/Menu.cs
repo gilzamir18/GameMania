@@ -23,14 +23,14 @@ internal class Menu {
         Console.WriteLine(barra);
     }
     public virtual void ExecutarOpcao(){
-    
+
     }
     void Rodape(){
         Console.WriteLine("Pressione Qualquer Tecla Para Continuar");
         Console.ReadKey();
     }    
     public void Executar(){
-            Titulo = string.IsNullOrEmpty(Titulo)? "":Titulo;//Warning
+            Titulo = string.IsNullOrEmpty(Titulo)? "":Titulo;
             ExibirTituloDaOpcao(Titulo);
             ExecutarOpcao();
             Rodape();
