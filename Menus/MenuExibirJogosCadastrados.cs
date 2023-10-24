@@ -1,18 +1,13 @@
 namespace GameMania.Menus;
 
-using GameMania.Modelos;
+internal class MenuExibirJogosCadastrados: Menu{
 
-internal class MenuExibirJogosCadastrados: Menu
-{
-
-    public MenuExibirJogosCadastrados() : base("Exibir Jogos Cadastrados")
-    {
+    public MenuExibirJogosCadastrados() : base("Exibir Jogos Cadastrados"){
 
     }
 
-    public override bool MostrarOpcao()
-    {
-        var jogos = jogoDAO.ObterTodosOsJogos();
+    public override bool MostrarOpcao(){
+        var jogos = jogoDAO.ListarTodosOsJogos();
         foreach (var jogo in jogos)
         {
             jogo.ExibirFichaTecnica();
