@@ -131,7 +131,7 @@ public class JogoSQLiteDAO: JogoDAO{
             using (var reader = cmdSelect.ExecuteReader()){
                 while (reader.Read()){
                     int jogoID = -1;
-                    Jogo? jogo = null;
+                    //Jogo? jogo = null;
                     jogoID = reader.GetInt32(0);
                     var titulo = reader.GetString(1);
                     var genero = reader.GetString(2);
@@ -143,11 +143,11 @@ public class JogoSQLiteDAO: JogoDAO{
                         desc = (string)descvalue;
                     }
                     var disponibilidade = reader.GetInt32(6) == 1 ? true : false;                  
-                    jogo = new Jogo(nome:titulo,
-                                    edicao:edicao,
-                                    genero:genero,
-                                    studio:studio);
-                    jogo.Descricao = desc;
+                    // jogo = new Jogo(nome:titulo,
+                    //                 edicao:edicao,
+                    //                 genero:genero,
+                    //                 studio:studio);
+                    // jogo.Descricao = desc;
                     using (var cmdSelectAval = new SQLiteCommand(connection)){
 
                         cmdSelectAval.CommandText = @"select Nota from Avaliacao 
@@ -176,7 +176,7 @@ public class JogoSQLiteDAO: JogoDAO{
                         }
                     }
 
-                    resultado.Add(jogo);
+                    //resultado.Add(jogo);
                 }
             }
         }
