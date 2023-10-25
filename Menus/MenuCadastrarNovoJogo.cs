@@ -8,22 +8,45 @@ class MenuCadastrarNovoJogo: Menu{
     }
 
 public override void ExecutarOpcao(){
-        Console.Write("Qual o Titulo Do Jogo? ");
-        string? titulo = Console.ReadLine();
-        titulo = string.IsNullOrEmpty(titulo)? "":titulo;
-        Console.Write("Qual o Genero Do Jogo? ");
+        Console.Write("Nome: ");
+        string? nome = Console.ReadLine();
+        nome = string.IsNullOrEmpty(nome)? "":nome;
+
+        Console.Write("Edicao: ");
+        string? edicao = Console.ReadLine();    
+        edicao = string.IsNullOrEmpty(edicao)? "":edicao;
+
+        Console.Write("Descricao: ");
+        string? descricao = Console.ReadLine();    
+        descricao = string.IsNullOrEmpty(descricao)? "":descricao;   
+
+        Console.Write("Genero: ");
         string? genero = Console.ReadLine();
         genero = string.IsNullOrEmpty(genero)? "":genero;
-        Console.Write("Qual Studio Desenvolveu o Jogo? ");
+
+        Console.Write("Studio: ");
         string? studio = Console.ReadLine();
         studio = string.IsNullOrEmpty(studio)? "":studio;
-        Console.Write("Qual a Edicao do Jogo? ");
-        string? edicao = Console.ReadLine();
-        edicao = string.IsNullOrEmpty(edicao)? "":edicao;
-        jogoDAO.SalvarJogo(new Jogo(nome:titulo,
+
+        Console.Write("Plataforma: ");
+        string? plataforma = Console.ReadLine();
+        plataforma = string.IsNullOrEmpty(plataforma)? "":plataforma;
+
+        Console.Write("Nota: ");
+        string? aux = Console.ReadLine();
+        aux = string.IsNullOrEmpty(aux)? "":aux;
+        int nota;
+        int.TryParse(aux, out nota);
+        List<int> notas = new List<int>(){nota};
+
+        jogoDAO.SalvarJogo(new Jogo(nome:nome,
                                     edicao:edicao,
+                                    descricao:descricao,
                                     genero:genero,
-                                    studio:studio));
+                                    studio:studio,
+                                    plataforma:plataforma,
+                                    nota:notas
+                                    ));
         Console.WriteLine("Jogo Adicionado Com Sucesso");
     }
 }

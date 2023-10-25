@@ -1,11 +1,12 @@
 ﻿using GameMania.Menus;
 
-Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
-opcoes["-1"] = new MenuSair();
-opcoes["1"] = new MenuCadastrarNovoJogo();
-opcoes["2"] = new MenuExibirJogoCadastrado();
-opcoes["3"] = new MenuExibirDetalhesDoJogo();
-opcoes["4"] = new MenuAvaliarJogosCadastrados();
+Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>(){
+    {"0", new MenuSair()},
+    {"1", new MenuCadastrarNovoJogo()},
+    {"2", new MenuExibirJogoCadastrado()},
+    {"3", new MenuExibirDetalhesDoJogo()},
+    {"4", new MenuAvaliarJogosCadastrados()}
+};
 
 void ExibirMensagemBoasVindas(){
     Console.Clear();
@@ -19,16 +20,16 @@ void ExibirMensagemBoasVindas(){
 
 
 void MenuPrincipal(){
-    string? opcao = "0";
-    while (opcao != "-1"){
+    string? opcao = "1";
+    while (opcao != "0"){
         ExibirMensagemBoasVindas();
-        Console.WriteLine("-1 - Sair");
+        Console.WriteLine(" 0 - Sair");
         Console.WriteLine(" 1 - Cadastrar Novo Jogo");
         Console.WriteLine(" 2 - Listar Jogos Cadastrados ");
         Console.WriteLine(" 3 - Mostrar Detalhe de Jogo");
         Console.WriteLine(" 4 - Avaliar Jogo Disponivel");
         opcao = Console.ReadLine();
-        opcao = string.IsNullOrEmpty(opcao)? "":opcao;
+        opcao = string.IsNullOrEmpty(opcao)? "":opcao;//Warning
         if (opcoes.ContainsKey(opcao)){   
             opcoes[opcao].Executar();
         }else{
@@ -37,5 +38,4 @@ void MenuPrincipal(){
         }
     }
 }
-
 MenuPrincipal();

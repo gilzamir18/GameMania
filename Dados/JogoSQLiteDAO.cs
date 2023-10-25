@@ -48,16 +48,16 @@ public class JogoSQLiteDAO: JogoDAO{
                 var idJogo = command.ExecuteScalar();
 
                 using (var commandAval = new SQLiteCommand(connection)){
-                    for (int i = 0; i < jogo.QtdNotas; i++){
-                        var avaliacao = jogo.GetAvaliacao(i);
-                        commandAval.CommandText = @"INSERT INTO
-                                                            Avaliacao(ID_Jogo, Nota) 
-                                                            VALUES(@idjogo, @nota)
-                                                            ";
-                        commandAval.Parameters.AddWithValue("@idjogo", idJogo);
-                        //commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
-                        commandAval.ExecuteNonQuery();
-                    }
+                    // for (int i = 0; i < jogo.QtdNotas; i++){
+                    //     var avaliacao = jogo.GetAvaliacao(i);
+                    //     commandAval.CommandText = @"INSERT INTO
+                    //                                         Avaliacao(ID_Jogo, Nota) 
+                    //                                         VALUES(@idjogo, @nota)
+                    //                                         ";
+                    //     commandAval.Parameters.AddWithValue("@idjogo", idJogo);
+                    //     //commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
+                    //     commandAval.ExecuteNonQuery();
+                    // }
                 }
                 // using (var commandPlat = new SQLiteCommand(connection)){
                 //     for (int i = 0; i < jogo.QtdPlataformas; i++){

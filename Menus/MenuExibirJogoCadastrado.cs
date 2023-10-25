@@ -1,4 +1,5 @@
 namespace GameMania.Menus;
+using GameMania.Modelos;
 
 internal class MenuExibirJogoCadastrado: Menu{
 
@@ -7,8 +8,8 @@ internal class MenuExibirJogoCadastrado: Menu{
     }
 
     public override void ExecutarOpcao(){
-        var jogos = jogoDAO.ListarTodosOsJogos();
-        foreach (var jogo in jogos){
+        List<Jogo> jogos = jogoDAO.ListarTodosOsJogos();
+        foreach (Jogo jogo in jogos){
             jogo.ExibirFichaTecnica();
         }
     }

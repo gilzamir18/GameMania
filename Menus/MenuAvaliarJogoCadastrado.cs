@@ -15,7 +15,8 @@ internal class MenuAvaliarJogosCadastrados: Menu{
                 var opcao = Console.ReadLine();
                 opcao = string.IsNullOrEmpty(opcao)? "":opcao;
                 int nota = int.Parse(opcao);
-                jogo.AdicionarNota(nota);
+                jogo.Nota = jogo.Nota == null ? new List<int>():jogo.Nota;
+                jogo.Nota.Add(nota);
             }catch(FormatException e){
                 Console.WriteLine(e.Message);
             }

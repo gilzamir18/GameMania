@@ -84,7 +84,8 @@ public class Jogo{
                 bool disponibilidade = true,
                 string genero = "", 
                 string studio = "",
-                string plataforma = "")
+                string plataforma = "",
+                List<int>? nota = null)
     {
         Nome = nome;
         Edicao = edicao;
@@ -93,26 +94,8 @@ public class Jogo{
         Genero = genero;
         Studio = studio;
         Plataforma = plataforma;
-    }  
-
-    public Jogo(List<int> nota,
-                string nome = "", 
-                string edicao = "",
-                string descricao = "", 
-                bool disponibilidade = true,
-                string genero = "", 
-                string studio = "",
-                string plataforma = "")
-    {
         Nota = nota;
-        Nome = nome;
-        Edicao = edicao;
-        Descricao = descricao;
-        Disponibilidade = disponibilidade;
-        Genero = genero;
-        Studio = studio;
-        Plataforma = plataforma;
-    }      
+    }     
 
     public void ExibirFichaTecnica(){
         Console.WriteLine($"Titulo: {Nome}");
@@ -123,9 +106,9 @@ public class Jogo{
         Console.WriteLine($"Edição: {Edicao}");
         Console.WriteLine($"Plataforma: {Plataforma}");
         if (Disponibilidade == true){
-            Console.WriteLine("Jogo disponível para avaliação.");
+            Console.WriteLine("Jogo Disponivel Para Avaliacao");
         }else{
-            Console.WriteLine("Este jogo não está disponível para avaliação.");
+            Console.WriteLine("Jogo NAO Disponivel Para Avaliacao");
         }
         Console.WriteLine();
     }
@@ -146,28 +129,6 @@ public class Jogo{
             Console.WriteLine("Nao Ha Notas Cadastradas");
         }
         return 0;
-    }
-    public int QtdNotas{
-        get{
-            if(Nota==null){
-                Nota = new List<int>();
-            }            
-            return Nota.Count;
-        }
-    }
-
-    public List<int> GetAvaliacao(int idx){
-        if(Nota==null){
-            Nota = new List<int>();
-        }             
-        return Nota;
-    }
-
-    public void AdicionarNota(int nota){
-        if(Nota==null){
-            Nota = new List<int>();
-        }                 
-        Nota.Add(nota);
     }
 
 }
