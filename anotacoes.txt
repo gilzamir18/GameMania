@@ -1,0 +1,9 @@
+Inserir Ano do Jogo
+Inserir Verificacoes de Tipo e Persistencias, Duplicatar, Atribuições Invalidas
+Conferir Esquema SQL
+Reinserir Chat GPT
+
+Testar para casos como: 
+    Metal Gear: The Phantom Pain
+    Metal Gear: Rising
+    -Mesmo nome, mas edicao, genero e estudios diferentes

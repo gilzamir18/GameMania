@@ -29,19 +29,19 @@ public class JogoSQLiteDAO: JogoDAO{
                                                 Jogo(
                                                     Titulo, 
                                                     Genero, 
-                                                    Studio, 
+                                                    Estudio, 
                                                     Edicao, 
                                                     Descricao,
                                                     Disponibilidade)
                                                 VALUES(@titulo,
                                                        @genero,
-                                                       @studio,
+                                                       @estudio,
                                                        @edicao,
                                                        @descricao,
                                                        @disponibilidade); SELECT last_insert_rowid();";
                 command.Parameters.AddWithValue("@titulo", jogo.Nome);
                 command.Parameters.AddWithValue("@genero", jogo.Genero);
-                command.Parameters.AddWithValue("@studio", jogo.Studio);
+                command.Parameters.AddWithValue("@eestudio", jogo.Estudio);
                 command.Parameters.AddWithValue("@edicao", jogo.Edicao);
                 command.Parameters.AddWithValue("@descricao", jogo.Descricao);
                 command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
@@ -135,7 +135,7 @@ public class JogoSQLiteDAO: JogoDAO{
                     jogoID = reader.GetInt32(0);
                     var titulo = reader.GetString(1);
                     var genero = reader.GetString(2);
-                    var studio = reader.GetString(3);
+                    var estudio = reader.GetString(3);
                     var edicao = reader.GetString(4);
                     var descvalue = reader.GetValue(5);
                     var desc = "";
@@ -146,7 +146,7 @@ public class JogoSQLiteDAO: JogoDAO{
                     // jogo = new Jogo(nome:titulo,
                     //                 edicao:edicao,
                     //                 genero:genero,
-                    //                 studio:studio);
+                    //                 estudio:estudio);
                     // jogo.Descricao = desc;
                     using (var cmdSelectAval = new SQLiteCommand(connection)){
 

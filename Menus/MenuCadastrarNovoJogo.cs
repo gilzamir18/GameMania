@@ -25,8 +25,8 @@ public override void ExecutarOpcao(){
         genero = string.IsNullOrEmpty(genero)? "":genero;
 
         Console.Write("Studio: ");
-        string? studio = Console.ReadLine();
-        studio = string.IsNullOrEmpty(studio)? "":studio;
+        string? estudio = Console.ReadLine();
+        estudio = string.IsNullOrEmpty(estudio)? "":estudio;
 
         Console.Write("Plataforma: ");
         string? plataforma = Console.ReadLine();
@@ -43,7 +43,7 @@ public override void ExecutarOpcao(){
                                     edicao:edicao,
                                     descricao:descricao,
                                     genero:genero,
-                                    studio:studio,
+                                    estudio:estudio,
                                     plataforma:plataforma,
                                     nota:notas
                                     ));

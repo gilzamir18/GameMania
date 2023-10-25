@@ -46,13 +46,13 @@ public class Jogo{
             genero = string.IsNullOrEmpty(value)? "":value;
         }
     }    
-    private string? studio;
-    public string? Studio{
+    private string? estudio;
+    public string? Estudio{
         get{
-            return studio;
+            return estudio;
         }
         set{
-            studio = string.IsNullOrEmpty(value)? "":value;
+            estudio = string.IsNullOrEmpty(value)? "":value;
         }
     }        
     private string? plataforma;
@@ -83,7 +83,7 @@ public class Jogo{
                 string descricao = "", 
                 bool disponibilidade = true,
                 string genero = "", 
-                string studio = "",
+                string estudio = "",
                 string plataforma = "",
                 List<int>? nota = null)
     {
@@ -92,7 +92,7 @@ public class Jogo{
         Descricao = descricao;
         Disponibilidade = disponibilidade;
         Genero = genero;
-        Studio = studio;
+        Estudio = estudio;
         Plataforma = plataforma;
         Nota = nota;
     }     
@@ -102,7 +102,7 @@ public class Jogo{
         Console.WriteLine($"Edicao: {Edicao}");
         Console.WriteLine($"Descricao: {Descricao}");
         Console.WriteLine($"Genero: {Genero}");
-        Console.WriteLine($"Studio: {Studio}");
+        Console.WriteLine($"Estudio: {Estudio}");
         Console.WriteLine($"Edição: {Edicao}");
         Console.WriteLine($"Plataforma: {Plataforma}");
         if (Disponibilidade == true){

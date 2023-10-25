@@ -16,7 +16,7 @@ public class JogoMemDAO : JogoDAO{
                                             edicao:"1",
                                             descricao:"",
                                             genero: "Corrida", 
-                                            studio: "XBox Game Studios",
+                                            estudio: "XBox Game Studios",
                                             plataforma:"Xbox One"
                                             )},
           {"Valorant",new Jogo(nota: new List<int>(){0,1,3},
@@ -25,7 +25,7 @@ public class JogoMemDAO : JogoDAO{
                                             descricao:"",
                                             disponibilidade:true,
                                             genero: "FPS", 
-                                            studio: "Riot",
+                                            estudio: "Riot",
                                             plataforma:"PC"
                                             )}                                            
 
