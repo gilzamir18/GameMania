@@ -1,6 +1,7 @@
 Prioridade:
 Implementar SQLDAO
 
+
 Feature:
 Inserir Ano do Jogo
 Reinserir Chat GPT
