@@ -14,6 +14,7 @@ public class JogoMemDAO : JogoDAO{
             {"forza",new Jogo(  nome: "forza", 
                                 edicao:"horizon",
                                 descricao:"edicao 1 de forza",
+                                disponibilidade:true,
                                 genero: "corrida", 
                                 estudio: "xbox game studios",
                                 plataforma:"xbox one",

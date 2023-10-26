@@ -62,7 +62,7 @@ public class Jogo{
         }
     }        
     private string? plataforma;
-    public string? Plataforma{
+    public string Plataforma{
         get{
             plataforma = string.IsNullOrEmpty(plataforma)?"":plataforma;
             return plataforma;
@@ -74,6 +74,7 @@ public class Jogo{
     private List<int>? nota;
     public List<int>? Nota{
         get{
+            nota = nota == null? new List<int>():nota;
             return nota;
         }
         set{
@@ -132,6 +133,11 @@ public class Jogo{
         Console.WriteLine();
     }
 
+    public void AdicionarNota(int nota){
+        Nota = Nota == null ? new List<int>():Nota; //Warning
+        Nota.Add(nota);
+    }
+
     public float NotaMedia(){
         if(Nota == null){
             Console.WriteLine("Nao Ha Notas Cadastradas");
@@ -142,8 +148,8 @@ public class Jogo{
             foreach (int nota in Nota){
                 soma += nota;
             }
-            soma /=Nota.Count;
-            return soma;
+            soma /= Nota.Count;
+            return (int)Math.Round(soma);
         }else{
             Console.WriteLine("Nao Ha Notas Cadastradas");
         }

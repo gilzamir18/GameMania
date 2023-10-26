@@ -38,13 +38,11 @@ internal class Menu {
     }
 
     public string ValidarConsulta(string? texto){
-        string aux;
         while(string.IsNullOrEmpty(texto)){
-            Console.Write("Insira Um Nome Valido: ");
+            Console.Write("Insira Um Valor Valido: ");
             texto = Console.ReadLine();
         }
-        aux = texto.ToLower();
-        return aux;
+        return texto.ToLower();
     }
     public string ValidarStringParaExibicao(string texto){
         if(string.IsNullOrEmpty(texto)){
@@ -64,5 +62,17 @@ internal class Menu {
         }   
         return n;
     }
+    public bool ValidaDisponibilidade(string? texto){
+        List<string> EntradaValida = new List<string>(){"1", "s","2", "n"};
+        while(string.IsNullOrEmpty(texto) || !EntradaValida.Contains(texto.ToLower())){
+            Console.WriteLine("Digite Um Valor Correspondente: ");
+            texto = Console.ReadLine();
+        }
+        if(texto == "1" || texto == "s"){
+            return true;
+        }else{
+            return false;
+        }
+    }    
 
 }

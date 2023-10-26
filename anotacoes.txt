@@ -1,7 +1,5 @@
 Prioridade:
-Inserir Verificacoes de Tipo e Persistencias, Duplicatas, Atribuições Invalidas
-Validar todas as entradas para minusculas e validar todas as saidas para ToTitle
-Erro de cadastro de duplicatas
+Implementar SQLDAO
 
 Feature:
 Inserir Ano do Jogo

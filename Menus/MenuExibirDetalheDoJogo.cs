@@ -1,6 +1,4 @@
 namespace GameMania.Menus;
-
-using GameMania.Dados;
 using GameMania.Modelos;
 internal class MenuExibirDetalheDoJogo: Menu{
 
@@ -9,11 +7,10 @@ internal class MenuExibirDetalheDoJogo: Menu{
     }
 public override void ExecutarOpcao(){
         Console.Write("Informe o Titulo Do Jogo: ");
-        string? nome = Console.ReadLine();
-        nome = string.IsNullOrEmpty(nome)?"":nome;
+        string nome = ValidarConsulta(Console.ReadLine());
         Jogo? jogo = jogoDAO.ObterJogoPorNome(nome);
         if (jogo != null){
-            Console.WriteLine($"A Media De Avaliacao Do Jogo {jogo.Nome} e: {jogo.NotaMedia():F2}");
+            Console.WriteLine($"A Media De Avaliacao Do Jogo {jogo.Nome} e: {jogo.NotaMedia()}");
         }else{
             Console.WriteLine($"Nao Existe Jogo Com o Titulo {nome}");
         }
