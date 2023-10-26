@@ -38,7 +38,7 @@ public override void ExecutarOpcao(){
         int nota;
         int.TryParse(aux, out nota);
         List<int> notas = new List<int>(){nota};
-
+        
         jogoDAO.SalvarJogo(new Jogo(nome:nome,
                                     edicao:edicao,
                                     descricao:descricao,

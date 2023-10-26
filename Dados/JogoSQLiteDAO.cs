@@ -107,7 +107,7 @@ public class JogoSQLiteDAO: JogoDAO{
         return SelectJogoPorCampo();
     }
     
-    public override Jogo? ObterJogoPorTitulo(string titulo){
+    public override Jogo? ObterJogoPorNome(string titulo){
         List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
         if (jogos.Count > 0){
             return jogos[0];

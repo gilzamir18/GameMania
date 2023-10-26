@@ -6,14 +6,14 @@ internal class MenuAvaliarJogosCadastrados: Menu{
 
     }
     public override void ExecutarOpcao(){
-        Console.Write("Informe o Titulo Do Jogo a Ser Avaliado: ");
-        string? titulo = Console.ReadLine();
-        titulo = string.IsNullOrEmpty(titulo)? "":titulo;
-        Jogo? jogo = jogoDAO.ObterJogoPorTitulo(titulo);
+        Console.Write("Informe o Nome Do Jogo a Ser Avaliado: ");
+        string? nome = Console.ReadLine();
+        nome = string.IsNullOrEmpty(nome)?"":nome;
+        Jogo? jogo = jogoDAO.ObterJogoPorNome(nome);
         if (jogo != null && jogo.Disponibilidade == true){
-            Console.Write($"Qual Nota Voce Da ao Jogo {titulo}? ");
+            Console.Write($"Qual Nota Voce Da ao Jogo {jogo.Nome}? ");
             try{   
-                var opcao = Console.ReadLine();
+                string? opcao = Console.ReadLine();
                 opcao = string.IsNullOrEmpty(opcao)? "":opcao;
                 int nota = int.Parse(opcao);
                 jogo.Nota = jogo.Nota == null ? new List<int>():jogo.Nota;
@@ -22,7 +22,7 @@ internal class MenuAvaliarJogosCadastrados: Menu{
                 Console.WriteLine(e.Message);
             }
         }else{
-            Console.WriteLine($"Nao Existe Jogo Cadastrado Com o Titulo {titulo} ( Ou Disponivel Para Avaliacao)");
+            Console.WriteLine($"Nao Existe Jogo Cadastrado Com o Titulo {nome} ( Ou Disponivel Para Avaliacao)");
         }
     }
 }

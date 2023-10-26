@@ -11,23 +11,23 @@ public class JogoMemDAO : JogoDAO{
     }
     private JogoMemDAO(){
         jogos = new(){
-            {"Forza",new Jogo(nota: new List<int>(){8,7,8},
-                                            nome: "Forza", 
-                                            edicao:"Horizon",
-                                            descricao:"Edicao 1 de Forza",
-                                            genero: "Corrida", 
-                                            estudio: "XBox Game Studios",
-                                            plataforma:"Xbox One"
-                                            )},
-          {"Valorant",new Jogo(nota: new List<int>(){3,5,2},
-                                            nome: "Valorant", 
-                                            edicao:"1",
-                                            descricao:"Edicao 1 de Valorant",
-                                            disponibilidade:false,
-                                            genero: "FPS", 
-                                            estudio: "Riot",
-                                            plataforma:"Windows"
-                                            )}                                            
+            {"forza",new Jogo(  nome: "forza", 
+                                edicao:"horizon",
+                                descricao:"edicao 1 de forza",
+                                genero: "corrida", 
+                                estudio: "xbox game studios",
+                                plataforma:"xbox one",
+                                nota: new List<int>(){8,7,8}
+                                )},
+          {"valorant",new Jogo( nome: "valorant", 
+                                edicao:"1",
+                                descricao:"edicao 1 de valorant",
+                                disponibilidade:false,
+                                genero: "fps", 
+                                estudio: "riot",
+                                plataforma:"windows",
+                                nota: new List<int>(){3,5,2}
+                                )}                                            
 
         };
     }
@@ -38,9 +38,9 @@ public class JogoMemDAO : JogoDAO{
     public override List<Jogo> ListarTodosOsJogos(){
         return jogos.Values.ToList();
     }
-    public override Jogo? ObterJogoPorTitulo(string titulo){
-        if (jogos.ContainsKey(titulo)){
-            return jogos[titulo];
+    public override Jogo? ObterJogoPorNome(string nome){
+        if (jogos.ContainsKey(nome)){
+            return jogos[nome];
         }else{
             return null;
         }
@@ -48,4 +48,5 @@ public class JogoMemDAO : JogoDAO{
     public override List<Jogo> FiltrarPorGenero(string genero){
         return jogos.Values.Where( j => j.Genero == genero  ).ToList();
     }
+
 }

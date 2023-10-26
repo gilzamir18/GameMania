@@ -1,4 +1,6 @@
-﻿using GameMania.Menus;
+﻿using GameMania.Dados;
+using GameMania.Menus;
+using GameMania.Modelos;
 
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>(){
     {"0", new MenuSair()},

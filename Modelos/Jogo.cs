@@ -1,31 +1,35 @@
 namespace GameMania.Modelos;
+using System.Globalization;
 
 public class Jogo{
     private string? nome;
     public string? Nome{
         get{
+            nome = string.IsNullOrEmpty(nome)?"":nome;
             return nome;
         }
         set{
-            nome = string.IsNullOrEmpty(value)?"":value;
+            nome = string.IsNullOrEmpty(value)?"":value.ToLower();
         }
     }
     private string? edicao;
     public string? Edicao{
         get{
+            edicao = string.IsNullOrEmpty(edicao)?"":edicao;
             return edicao;
         }
         set{
-            edicao = string.IsNullOrEmpty(value)? "":value;
+            edicao = string.IsNullOrEmpty(value)? "":value.ToLower();
         }
     }
     private string? descricao;
     public string? Descricao{
         get{
+            descricao = string.IsNullOrEmpty(descricao)?"":descricao;
             return descricao;
         }
         set{
-            descricao = string.IsNullOrEmpty(value)? "":value;
+            descricao = string.IsNullOrEmpty(value)? "":value.ToLower();
         }
     }    
     private bool disponibilidade = true;
@@ -40,28 +44,31 @@ public class Jogo{
     private string? genero;
     public string? Genero{
         get{
+            genero = string.IsNullOrEmpty(genero)?"":genero;
             return genero;
         }
         set{
-            genero = string.IsNullOrEmpty(value)? "":value;
+            genero = string.IsNullOrEmpty(value)? "":value.ToLower();
         }
     }    
     private string? estudio;
     public string? Estudio{
         get{
+            estudio = string.IsNullOrEmpty(estudio)?"":estudio;
             return estudio;
         }
         set{
-            estudio = string.IsNullOrEmpty(value)? "":value;
+            estudio = string.IsNullOrEmpty(value)? "":value.ToLower();
         }
     }        
     private string? plataforma;
     public string? Plataforma{
         get{
+            plataforma = string.IsNullOrEmpty(plataforma)?"":plataforma;
             return plataforma;
         }
         set{
-            plataforma = string.IsNullOrEmpty(value)? "":value;
+            plataforma = string.IsNullOrEmpty(value)? "":value.ToLower();
         }
     }     
     private List<int>? nota;
@@ -87,7 +94,7 @@ public class Jogo{
                 string plataforma = "",
                 List<int>? nota = null)
     {
-        Nome = nome;
+        Nome = nome.ToLower();
         Edicao = edicao;
         Descricao = descricao;
         Disponibilidade = disponibilidade;
@@ -98,13 +105,25 @@ public class Jogo{
     }     
 
     public void ExibirFichaTecnica(){
-        Console.WriteLine($"Titulo: {Nome}");
-        Console.WriteLine($"Edicao: {Edicao}");
-        Console.WriteLine($"Descricao: {Descricao}");
-        Console.WriteLine($"Genero: {Genero}");
-        Console.WriteLine($"Estudio: {Estudio}");
-        Console.WriteLine($"Edição: {Edicao}");
-        Console.WriteLine($"Plataforma: {Plataforma}");
+        TextInfo txt = new CultureInfo("pt-BR").TextInfo;
+        Nome = string.IsNullOrEmpty(Nome)?"":Nome;
+        Console.WriteLine($"Titulo: {txt.ToTitleCase(Nome)}");
+
+        Edicao = string.IsNullOrEmpty(Edicao)?"":Edicao;
+        Console.WriteLine($"Edicao: {txt.ToTitleCase(Edicao)}");
+
+        Descricao = string.IsNullOrEmpty(Descricao)?"":Descricao;
+        Console.WriteLine($"Descricao: {txt.ToTitleCase(Descricao)}");
+
+        Genero = string.IsNullOrEmpty(Genero)?"":Genero;
+        Console.WriteLine($"Genero: {txt.ToTitleCase(Genero)}");
+
+        Estudio = string.IsNullOrEmpty(Estudio)?"":Estudio;
+        Console.WriteLine($"Estudio: {txt.ToTitleCase(Estudio)}");
+
+        Plataforma = string.IsNullOrEmpty(Plataforma)?"":Plataforma;
+        Console.WriteLine($"Plataforma: {txt.ToTitleCase(Plataforma)}");
+
         if (Disponibilidade == true){
             Console.WriteLine("Jogo Disponivel Para Avaliacao");
         }else{
@@ -130,5 +149,7 @@ public class Jogo{
         }
         return 0;
     }
+
+ 
 
 }
