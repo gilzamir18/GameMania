@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="G:/Meu Drive/UVA/2023.2/LP3LingProg3/GameMania/GameMania/GameMania.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1817"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,15:mainsqlite_sequence"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Estudio" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="43"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Genero" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="43"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Jogo" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="43"/><column index="3" value="49"/><column index="4" value="71"/><column index="5" value="103"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="JogoEstudio" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="52"/><column index="3" value="69"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="JogoGenero" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="52"/><column index="3" value="68"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="JogoNota" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="52"/><column index="3" value="52"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="JogoPlataforma" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="52"/><column index="3" value="93"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Nota" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="40"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Plataforma" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="43"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sqlite_sequence" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="43"/><column index="2" value="40"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">BEGIN TRANSACTION;
+    CREATE TABLE IF NOT EXISTS &quot;Genero&quot; (
+            &quot;ID&quot; INTEGER NOT NULL UNIQUE,
+            &quot;Nome&quot; TEXT NOT NULL UNIQUE DEFAULT &quot;&quot;,
+            PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT)
+        );
+
+    CREATE TABLE IF NOT EXISTS &quot;Estudio&quot; (
+            &quot;ID&quot; INTEGER NOT NULL UNIQUE,
+            &quot;Nome&quot; TEXT NOT NULL UNIQUE DEFAULT &quot;&quot;,
+            PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT)
+        );
+
+    CREATE TABLE IF NOT EXISTS &quot;Plataforma&quot; (
+            &quot;ID&quot; INTEGER NOT NULL UNIQUE,
+            &quot;Nome&quot; TEXT NOT NULL UNIQUE DEFAULT &quot;&quot;,
+            PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT)
+        );
+
+    CREATE TABLE IF NOT EXISTS &quot;Nota&quot; (
+            &quot;ID&quot; INTEGER NOT NULL UNIQUE,
+            &quot;Nota&quot; TEXT NOT NULL UNIQUE DEFAULT &quot;&quot;,
+            PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT)
+        );                    
+
+    CREATE TABLE IF NOT EXISTS &quot;Jogo&quot; (
+        &quot;ID&quot; INTEGER NOT NULL UNIQUE,
+        &quot;Nome&quot; TEXT NOT NULL DEFAULT &quot;&quot;,
+        &quot;Edicao&quot; TEXT NOT NULL DEFAULT &quot;&quot;,
+        &quot;Descricao&quot; TEXT NOT NULL DEFAULT &quot;&quot;,
+        &quot;Disponibilidade&quot; BOOLEAN NOT NULL DEFAULT 1,
+        PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT),
+        UNIQUE (&quot;Nome&quot;, &quot;Edicao&quot;)
+    );
+
+    CREATE TABLE IF NOT EXISTS &quot;JogoGenero&quot; (
+        &quot;ID&quot;	INTEGER NOT NULL,
+        &quot;IDJogo&quot;	INTEGER NOT NULL,
+        &quot;IDGenero&quot;	INTEGER NOT NULL,
+        PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT),
+        FOREIGN KEY(&quot;IDJogo&quot;) REFERENCES &quot;Jogo&quot;(&quot;ID&quot;),
+        FOREIGN KEY(&quot;IDGenero&quot;) REFERENCES &quot;Genero&quot;(&quot;ID&quot;),
+        UNIQUE (&quot;IDJogo&quot;, &quot;IDGenero&quot;)
+    );
+
+    CREATE TABLE IF NOT EXISTS &quot;JogoEstudio&quot; (
+        &quot;ID&quot;	INTEGER NOT NULL,
+        &quot;IDJogo&quot;	INTEGER NOT NULL,
+        &quot;IDEstudio&quot;	INTEGER NOT NULL,
+        PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT),
+        FOREIGN KEY(&quot;IDJogo&quot;) REFERENCES &quot;Jogo&quot;(&quot;ID&quot;),
+        FOREIGN KEY(&quot;IDEstudio&quot;) REFERENCES &quot;Estudio&quot;(&quot;ID&quot;),
+        UNIQUE (&quot;IDJogo&quot;, &quot;IDEstudio&quot;)
+    );
+
+    CREATE TABLE IF NOT EXISTS &quot;JogoPlataforma&quot; (
+        &quot;ID&quot;	INTEGER NOT NULL,
+        &quot;IDJogo&quot;	INTEGER NOT NULL,
+        &quot;IDPlataforma&quot;	INTEGER NOT NULL,
+        PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT),
+        FOREIGN KEY(&quot;IDJogo&quot;) REFERENCES &quot;Jogo&quot;(&quot;ID&quot;),
+        FOREIGN KEY(&quot;IDPlataforma&quot;) REFERENCES &quot;Plataforma&quot;(&quot;ID&quot;),
+        UNIQUE (&quot;IDJogo&quot;, &quot;IDPlataforma&quot;)
+    );        
+
+    CREATE TABLE IF NOT EXISTS &quot;JogoNota&quot; (
+        &quot;ID&quot;	INTEGER NOT NULL,
+        &quot;IDJogo&quot;	INTEGER NOT NULL,
+        &quot;IDNota&quot;	INTEGER NOT NULL,
+        PRIMARY KEY(&quot;ID&quot; AUTOINCREMENT),
+        FOREIGN KEY(&quot;IDJogo&quot;) REFERENCES &quot;Jogo&quot;(&quot;ID&quot;),
+        FOREIGN KEY(&quot;IDNota&quot;) REFERENCES &quot;Nota&quot;(&quot;ID&quot;)
+    );   
+COMMIT;
+
+BEGIN TRANSACTION;
+    INSERT INTO &quot;Genero&quot; (&quot;Nome&quot;)
+    VALUES 	
+         (&quot;acao&quot;),(&quot;aventura&quot;),(&quot;rpg&quot;),(&quot;corrida&quot;),(&quot;luta&quot;),(&quot;puzzle&quot;),(&quot;plataforma&quot;),(&quot;sobrevivencia&quot;),
+         (&quot;terror&quot;),(&quot;mundo aberto&quot;),(&quot;fps&quot;),(&quot;tps&quot;),(&quot;rts&quot;),(&quot;battle royale&quot;),(&quot;single player&quot;),(&quot;multi player&quot;),
+         (&quot;souls like&quot;),(&quot;rogue like&quot;),(&quot;sandbox&quot;),(&quot;simulacao&quot;),(&quot;esporte&quot;),(&quot;2d&quot;),(&quot;3d&quot;),(&quot;stealth&quot;),
+         (&quot;tabuleiro&quot;),(&quot;hack and slash&quot;),(&quot;mmo&quot;),(&quot;vr&quot;),(&quot;tower defense&quot;),(&quot;point and click&quot;);   
+
+    INSERT INTO &quot;Plataforma&quot; (&quot;Nome&quot;)
+    VALUES 	
+         (&quot;windows&quot;),(&quot;linux&quot;),(&quot;mac&quot;),
+         (&quot;android&quot;),(&quot;ios&quot;),(&quot;switch&quot;),
+         (&quot;xbox&quot;),(&quot;xbox 360&quot;),(&quot;xbox one&quot;),(&quot;xbox sx&quot;),
+         (&quot;ps 1&quot;),(&quot;ps 2&quot;),(&quot;ps 3&quot;),(&quot;ps 4&quot;),(&quot;ps 5&quot;),
+         (&quot;x cloud&quot;),(&quot;geforce now&quot;);   
+
+    INSERT INTO &quot;Estudio&quot; (&quot;Nome&quot;)
+    VALUES 	
+         (&quot;rockstar north&quot;),(&quot;ubisoft&quot;),(&quot;bethesda&quot;),(&quot;santa monica&quot;),(&quot;nintendo&quot;),(&quot;game freak&quot;),
+         (&quot;guerrila&quot;),(&quot;insomniac&quot;),(&quot;naughty dog&quot;),(&quot;from software&quot;),(&quot;mojang&quot;),(&quot;obsidian&quot;),
+         (&quot;343 industries&quot;),(&quot;activision&quot;),(&quot;blizzard&quot;),(&quot;infinity ward&quot;),(&quot;king&quot;),(&quot;gearbox&quot;),
+         (&quot;treyarch&quot;),(&quot;valve&quot;),(&quot;rare&quot;),(&quot;square enix&quot;),(&quot;epic games&quot;),(&quot;capcom&quot;),(&quot;netherrealm&quot;),
+         (&quot;bungie&quot;),(&quot;riot&quot;),(&quot;konami&quot;),(&quot;ea&quot;);   
+
+    INSERT INTO &quot;Nota&quot; (&quot;Nota&quot;)
+    VALUES 	
+         (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);   
+COMMIT;
+
+BEGIN TRANSACTION;
+
+    INSERT INTO &quot;Jogo&quot; (&quot;Nome&quot;, &quot;Edicao&quot;, &quot;Descricao&quot;, &quot;Disponibilidade&quot;)
+    VALUES (
+            &quot;far cry&quot;,
+            &quot;3&quot;,
+            &quot;Edicao 3 de Far Cry&quot;,
+            1
+    );
+
+    CREATE TEMPORARY TABLE TempJogo AS
+    SELECT &quot;ID&quot;
+    FROM &quot;Jogo&quot;
+    WHERE &quot;Nome&quot; = &quot;far cry&quot; AND &quot;Edicao&quot; = &quot;3&quot;;
+
+    INSERT INTO &quot;JogoGenero&quot; (&quot;IDJogo&quot;, &quot;IDGenero&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;acao&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;aventura&quot;));
+
+    INSERT INTO &quot;JogoEstudio&quot; (&quot;IDJogo&quot;, &quot;IDEstudio&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Estudio&quot; WHERE &quot;Nome&quot; = &quot;ubisoft&quot;));
+
+    INSERT INTO &quot;JogoPlataforma&quot; (&quot;IDJogo&quot;, &quot;IDPlataforma&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;windows&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;xbox 360&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;ps 3&quot;));
+
+    INSERT INTO &quot;JogoNota&quot; (&quot;IDJogo&quot;, &quot;IDNota&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 10)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 9)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 9)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 8));
+
+    DROP TABLE TempJogo;
+
+COMMIT;
+
+BEGIN TRANSACTION;
+
+    INSERT INTO &quot;Jogo&quot; (&quot;Nome&quot;, &quot;Edicao&quot;, &quot;Descricao&quot;, &quot;Disponibilidade&quot;)
+    VALUES (
+            &quot;starfield&quot;,
+            &quot;1&quot;,
+            &quot;Edicao 1 de Starfield&quot;,
+            1
+    );
+
+    CREATE TEMPORARY TABLE TempJogo AS
+    SELECT &quot;ID&quot;
+    FROM &quot;Jogo&quot;
+    WHERE &quot;Nome&quot; = &quot;starfield&quot; AND &quot;Edicao&quot; = &quot;1&quot;;
+
+    INSERT INTO &quot;JogoGenero&quot; (&quot;IDJogo&quot;, &quot;IDGenero&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;rpg&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;mundo aberto&quot;));
+
+    INSERT INTO &quot;JogoEstudio&quot; (&quot;IDJogo&quot;, &quot;IDEstudio&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Estudio&quot; WHERE &quot;Nome&quot; = &quot;bethesda&quot;));
+
+    INSERT INTO &quot;JogoPlataforma&quot; (&quot;IDJogo&quot;, &quot;IDPlataforma&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;windows&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;xbox sx&quot;));
+
+    INSERT INTO &quot;JogoNota&quot; (&quot;IDJogo&quot;, &quot;IDNota&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 9)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 8)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 8));
+
+    DROP TABLE TempJogo;
+
+COMMIT;
+
+BEGIN TRANSACTION;
+
+    INSERT INTO &quot;Jogo&quot; (&quot;Nome&quot;, &quot;Edicao&quot;, &quot;Descricao&quot;, &quot;Disponibilidade&quot;)
+    VALUES (
+            &quot;valorant&quot;,
+            &quot;1&quot;,
+            &quot;Edicao 1 de valorant&quot;,
+            0
+    );
+
+    CREATE TEMPORARY TABLE TempJogo AS
+    SELECT &quot;ID&quot;
+    FROM &quot;Jogo&quot;
+    WHERE &quot;Nome&quot; = &quot;valorant&quot; AND &quot;Edicao&quot; = &quot;1&quot;;
+
+    INSERT INTO &quot;JogoGenero&quot; (&quot;IDJogo&quot;, &quot;IDGenero&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;fps&quot;)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Genero&quot; WHERE &quot;Nome&quot; = &quot;multi player&quot;));
+
+    INSERT INTO &quot;JogoEstudio&quot; (&quot;IDJogo&quot;, &quot;IDEstudio&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Estudio&quot; WHERE &quot;Nome&quot; = &quot;riot&quot;));
+
+    INSERT INTO &quot;JogoPlataforma&quot; (&quot;IDJogo&quot;, &quot;IDPlataforma&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Plataforma&quot; WHERE &quot;Nome&quot; = &quot;windows&quot;));
+
+    INSERT INTO &quot;JogoNota&quot; (&quot;IDJogo&quot;, &quot;IDNota&quot;)
+    VALUES
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 3)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 5)),
+        ((SELECT &quot;ID&quot; FROM TempJogo), (SELECT &quot;ID&quot; FROM &quot;Nota&quot; WHERE &quot;Nota&quot; = 2));
+
+    DROP TABLE TempJogo;
+
+COMMIT;</sql><current_tab id="0"/></tab_sql></sqlb_project>

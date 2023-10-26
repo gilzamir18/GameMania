@@ -3,8 +3,8 @@
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>(){
     {"0", new MenuSair()},
     {"1", new MenuCadastrarNovoJogo()},
-    {"2", new MenuExibirJogoCadastrado()},
-    {"3", new MenuExibirDetalhesDoJogo()},
+    {"2", new MenuExibirJogosCadastrados()},
+    {"3", new MenuExibirDetalheDoJogo()},
     {"4", new MenuAvaliarJogosCadastrados()}
 };
 

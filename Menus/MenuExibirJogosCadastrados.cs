@@ -1,9 +1,9 @@
 namespace GameMania.Menus;
 using GameMania.Modelos;
 
-internal class MenuExibirJogoCadastrado: Menu{
+internal class MenuExibirJogosCadastrados: Menu{
 
-    public MenuExibirJogoCadastrado() : base("Exibir Jogo Cadastrado"){
+    public MenuExibirJogosCadastrados() : base("Exibir Jogo Cadastrado"){
 
     }
 

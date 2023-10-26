@@ -1,7 +1,7 @@
 namespace GameMania.Dados;
 using GameMania.Modelos;
 public class JogoMemDAO : JogoDAO{
-    private Dictionary<string, Jogo> jogosRegistrados;
+    private Dictionary<string, Jogo> jogos;
     private static JogoMemDAO? jogoDAO;
     public static JogoMemDAO GetInstance(){
         if (jogoDAO == null){
@@ -10,42 +10,42 @@ public class JogoMemDAO : JogoDAO{
         return jogoDAO;
     }
     private JogoMemDAO(){
-        jogosRegistrados = new(){
+        jogos = new(){
             {"Forza",new Jogo(nota: new List<int>(){8,7,8},
                                             nome: "Forza", 
-                                            edicao:"1",
-                                            descricao:"",
+                                            edicao:"Horizon",
+                                            descricao:"Edicao 1 de Forza",
                                             genero: "Corrida", 
                                             estudio: "XBox Game Studios",
                                             plataforma:"Xbox One"
                                             )},
-          {"Valorant",new Jogo(nota: new List<int>(){0,1,3},
+          {"Valorant",new Jogo(nota: new List<int>(){3,5,2},
                                             nome: "Valorant", 
                                             edicao:"1",
-                                            descricao:"",
-                                            disponibilidade:true,
+                                            descricao:"Edicao 1 de Valorant",
+                                            disponibilidade:false,
                                             genero: "FPS", 
                                             estudio: "Riot",
-                                            plataforma:"PC"
+                                            plataforma:"Windows"
                                             )}                                            
 
         };
     }
     public override void SalvarJogo(Jogo jogo){
         jogo.Nome = string.IsNullOrEmpty(jogo.Nome)?"":jogo.Nome;
-        jogosRegistrados[jogo.Nome] = jogo;
+        jogos[jogo.Nome] = jogo;
     }
     public override List<Jogo> ListarTodosOsJogos(){
-        return jogosRegistrados.Values.ToList();
+        return jogos.Values.ToList();
     }
     public override Jogo? ObterJogoPorTitulo(string titulo){
-        if (jogosRegistrados.ContainsKey(titulo)){
-            return jogosRegistrados[titulo];
+        if (jogos.ContainsKey(titulo)){
+            return jogos[titulo];
         }else{
             return null;
         }
     }
     public override List<Jogo> FiltrarPorGenero(string genero){
-        return jogosRegistrados.Values.Where( j => j.Genero == genero  ).ToList();
+        return jogos.Values.Where( j => j.Genero == genero  ).ToList();
     }
 }

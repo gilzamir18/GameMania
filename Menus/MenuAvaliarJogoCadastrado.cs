@@ -1,4 +1,5 @@
 namespace GameMania.Menus;
+using GameMania.Modelos;
 
 internal class MenuAvaliarJogosCadastrados: Menu{
     public MenuAvaliarJogosCadastrados() : base("Avaliar Jogo Cadastrado"){
@@ -6,10 +7,10 @@ internal class MenuAvaliarJogosCadastrados: Menu{
     }
     public override void ExecutarOpcao(){
         Console.Write("Informe o Titulo Do Jogo a Ser Avaliado: ");
-        var titulo = Console.ReadLine();
+        string? titulo = Console.ReadLine();
         titulo = string.IsNullOrEmpty(titulo)? "":titulo;
-        var jogo = jogoDAO.ObterJogoPorTitulo(titulo);
-        if (jogo != null){
+        Jogo? jogo = jogoDAO.ObterJogoPorTitulo(titulo);
+        if (jogo != null && jogo.Disponibilidade == true){
             Console.Write($"Qual Nota Voce Da ao Jogo {titulo}? ");
             try{   
                 var opcao = Console.ReadLine();
@@ -21,7 +22,7 @@ internal class MenuAvaliarJogosCadastrados: Menu{
                 Console.WriteLine(e.Message);
             }
         }else{
-            Console.WriteLine($"Nao Existe Jogo Cadastrado Com o Titulo {titulo}");
+            Console.WriteLine($"Nao Existe Jogo Cadastrado Com o Titulo {titulo} ( Ou Disponivel Para Avaliacao)");
         }
     }
 }

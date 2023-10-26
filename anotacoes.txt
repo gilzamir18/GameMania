@@ -1,7 +1,9 @@
 Inserir Ano do Jogo
-Inserir Verificacoes de Tipo e Persistencias, Duplicatar, Atribuições Invalidas
+Inserir Verificacoes de Tipo e Persistencias, Duplicatas, Atribuições Invalidas
 Conferir Esquema SQL
 Reinserir Chat GPT
+Validar todas as entradas para minusculas e validar todas as saidas para ToTitle
+Erro de cadastro de duplicatas
 
 Testar para casos como: 
     Metal Gear: The Phantom Pain

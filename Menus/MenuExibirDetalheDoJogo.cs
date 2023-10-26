@@ -1,8 +1,8 @@
 namespace GameMania.Menus;
 
-internal class MenuExibirDetalhesDoJogo: Menu{
+internal class MenuExibirDetalheDoJogo: Menu{
 
-    public MenuExibirDetalhesDoJogo() : base("Exibir Detalhe de Jogo"){
+    public MenuExibirDetalheDoJogo() : base("Exibir Detalhe de Jogo"){
         
     }
 public override void ExecutarOpcao(){
