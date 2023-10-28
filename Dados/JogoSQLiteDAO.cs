@@ -172,7 +172,8 @@ public class JogoSQLiteDAO: JogoDAO{
 
                             Genero = ObterGeneroDoJogo(IDJogo),
                             Estudio = ObterEstudioDoJogo(IDJogo),
-                            Plataforma = ObterPlataformaDoJogo(IDJogo)
+                            Plataforma = ObterPlataformaDoJogo(IDJogo),
+                            Nota = ObterNotaDoJogo(IDJogo)
                         };
                         jogos.Add(jogo);
                     }
@@ -205,7 +206,10 @@ public class JogoSQLiteDAO: JogoDAO{
                             Descricao = reader.GetString(3),
                             Disponibilidade = reader.GetBoolean(4),
 
-                            Genero = ObterGeneroDoJogo(IDJogo)
+                            Genero = ObterGeneroDoJogo(IDJogo),
+                            Estudio = ObterEstudioDoJogo(IDJogo),
+                            Plataforma = ObterPlataformaDoJogo(IDJogo),
+                            Nota = ObterNotaDoJogo(IDJogo)
                         };
                         return jogo;
                     }
@@ -286,7 +290,7 @@ public class JogoSQLiteDAO: JogoDAO{
         return plataforma;
     }
 
-    public List<int> ObterNotasDoJogo(int IDJogo) {
+    public List<int> ObterNotaDoJogo(int IDJogo) {
         List<int> notas = new List<int>();
         try {
             using (SQLiteCommand command = connection.CreateCommand()) {

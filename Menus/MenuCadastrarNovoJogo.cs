@@ -30,7 +30,12 @@ public override void ExecutarOpcao(){
                 Console.Write("Nota: ");
                 int nota = ValidarNota(Console.ReadLine());
                 notas.Add(nota);
+                foreach (var item in notas){
+                    Console.WriteLine(item);
+                }                
             }
+
+
 
             jogoDAO.SalvarJogo(new Jogo(nome:nome,
                                         edicao:edicao,
