@@ -130,6 +130,11 @@ public class Jogo{
         }else{
             Console.WriteLine("Jogo NAO Disponivel Para Avaliacao");
         }
+        //Nota = Nota == null? new List<int>():Nota;
+        Console.WriteLine($"Nota:");
+        foreach (int valor in Nota){
+            Console.WriteLine("Nota: " + valor);
+        }
         Console.WriteLine();
     }
 

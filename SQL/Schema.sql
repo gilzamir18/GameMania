@@ -95,7 +95,7 @@ BEGIN TRANSACTION;
          ("guerrila"),("insomniac"),("naughty dog"),("from software"),("mojang"),("obsidian"),
          ("343 industries"),("activision"),("blizzard"),("infinity ward"),("king"),("gearbox"),
          ("treyarch"),("valve"),("rare"),("square enix"),("epic games"),("capcom"),("netherrealm"),
-         ("bungie"),("riot"),("konami"),("ea"),("playground games");   
+         ("bungie"),("riot"),("konami"),("ea"),("playground games"),("sabotage studio"),("devolver digital");   
 
     INSERT INTO "Nota" ("Nota")
     VALUES 	
