@@ -2,12 +2,12 @@ namespace GameMania.Dados;
 using GameMania.Modelos;
 public class JogoMemDAO : JogoDAO{
     private Dictionary<string, Jogo> jogos;
-    private static JogoMemDAO? jogoDAO;
+    private static JogoMemDAO? instancia;
     public static JogoMemDAO GetInstance(){
-        if (jogoDAO == null){
-            jogoDAO = new JogoMemDAO();
+        if (instancia == null){
+            instancia = new JogoMemDAO();
         }
-        return jogoDAO;
+        return instancia;
     }
     private JogoMemDAO(){
         jogos = new(){

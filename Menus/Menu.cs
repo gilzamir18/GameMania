@@ -14,7 +14,7 @@ internal class Menu {
     public JogoDAO jogoDAO;
     public Menu(string titulo){
         Titulo = titulo;
-        jogoDAO = JogoMemDAO.GetInstance();
+        jogoDAO = JogoSQLiteDAO.GetInstance();
     }
     void ExibirTituloDaOpcao(string titulo = "", char preencher='*'){
         Console.Clear();

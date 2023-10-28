@@ -5,6 +5,7 @@ Implementar SQLDAO
 Feature:
 Inserir Ano do Jogo
 Reinserir Chat GPT
+Paginação
 
 Case:
 Testar para casos como: 
