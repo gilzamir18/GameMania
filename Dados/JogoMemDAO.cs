@@ -46,8 +46,8 @@ public class JogoMemDAO : JogoDAO{
             return null;
         }
     }
-    public override List<Jogo> FiltrarPorGenero(string genero){
-        return jogos.Values.Where( j => j.Genero == genero  ).ToList();
+    public override void AdicionarNota(Jogo jogo, int nota){
+        jogo.AdicionarNota(nota);
     }
 
 }

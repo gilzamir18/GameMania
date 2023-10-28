@@ -1,14 +1,12 @@
 Prioridade:
-Implementar SQLDAO
-
 
 Feature:
-Inserir Ano do Jogo
-Reinserir Chat GPT
-Paginação
+    Inserir Ano do Jogo
+    Reinserir Chat GPT
+    Paginação
 
 Case:
-Testar para casos como: 
-    Metal Gear: The Phantom Pain
-    Metal Gear: Rising
-    -Mesmo nome, mas edicao, genero e estudios diferentes
+    Testar para casos como: 
+        Metal Gear: The Phantom Pain
+        Metal Gear: Rising
+        -Mesmo nome, mas edicao, genero e estudios diferentes

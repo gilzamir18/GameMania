@@ -136,6 +136,7 @@ public class Jogo{
             foreach (int valor in Nota){
                 Console.Write(valor + " ");
             }
+            Console.WriteLine();
         }
 
         Console.WriteLine();

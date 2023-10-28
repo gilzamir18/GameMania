@@ -12,7 +12,7 @@ internal class MenuAvaliarJogosCadastrados: Menu{
         if (jogo != null && jogo.Disponibilidade == true){
             Console.Write($"Qual Nota Voce Da ao Jogo {jogo.Nome}? ");
                 int nota = ValidarNota(Console.ReadLine());
-                jogo.AdicionarNota(nota);
+                jogoDAO.AdicionarNota(jogo, nota);
         }else if(jogo != null && jogo.Disponibilidade == false){
             Console.WriteLine($"Jogo NAO Disponivel Para Avaliacao");
         }else{
