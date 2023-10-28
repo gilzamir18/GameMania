@@ -12,9 +12,7 @@ public class JogoSQLiteDAO: JogoDAO{
         }
         return instancia;
     }
-
     private SQLiteConnection connection;
-
     private JogoSQLiteDAO(){
          string connectionString = $"Data Source=GameMania.db";
          connection = new SQLiteConnection(connectionString);

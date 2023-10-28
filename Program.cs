@@ -1,6 +1,4 @@
-﻿using GameMania.Dados;
-using GameMania.Menus;
-using GameMania.Modelos;
+﻿using GameMania.Menus;
 
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>(){
     {"0", new MenuSair()},
@@ -13,13 +11,12 @@ Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>(){
 void ExibirMensagemBoasVindas(){
     Console.Clear();
     Console.WriteLine(@"
- ██████   █████  ███    ███ ███████ ███    ███  █████  ███   ██ ██  █████ 
-██       ██   ██ ████  ████ ██      ████  ████ ██   ██ ████  ██ ██ ██   ██
-██   ███ ███████ ██ ████ ██ █████   ██ ████ ██ ███████ ██ ██ ██ ██ ███████
-██    ██ ██   ██ ██  ██  ██ ██      ██  ██  ██ ██   ██ ██  ████ ██ ██   ██
- ██████  ██   ██ ██      ██ ███████ ██      ██ ██   ██ ██   ███ ██ ██   ██");
+ █████   ████  ██      ██ █████ ██      ██  ████  ██    ██ ██  ████ 
+██      ██  ██ ███    ███ ██    ███    ███ ██  ██ ███   ██ ██ ██  ██
+██  ███ ██████ ██ █  █ ██ ████  ██ █  █ ██ ██████ ██ ██ ██ ██ ██████
+██   ██ ██  ██ ██  ██  ██ ██    ██  ██  ██ ██  ██ ██   ███ ██ ██  ██
+ █████  ██  ██ ██      ██ █████ ██      ██ ██  ██ ██    ██ ██ ██  ██");
 }
-
 
 void MenuPrincipal(){
     string? opcao = "";
