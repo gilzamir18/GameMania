@@ -29,10 +29,7 @@ public override void ExecutarOpcao(){
             if(disponibilidade == true){
                 Console.Write("Nota: ");
                 int nota = ValidarNota(Console.ReadLine());
-                notas.Add(nota);
-                foreach (var item in notas){
-                    Console.WriteLine(item);
-                }                
+                notas.Add(nota);              
             }
 
 

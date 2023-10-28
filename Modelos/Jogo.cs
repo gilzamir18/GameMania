@@ -95,7 +95,7 @@ public class Jogo{
                 string plataforma = "",
                 List<int>? nota = null)
     {
-        Nome = nome.ToLower();
+        Nome = nome;
         Edicao = edicao;
         Descricao = descricao;
         Disponibilidade = disponibilidade;
