@@ -17,7 +17,7 @@ public class JogoMemDAO : IJogoDAO {
 
     private JogoMemDAO() {
         jogosRegistrados = new();
-        jogosRegistrados["The Witcher"] = new Jogo("The Wicther", "RPG de Ação", "CD Projeckt RED", "3", "");
+        jogosRegistrados["The Witcher"] = new Jogo("The Wicther", "RPG de Ação", "CD Projeckt RED", "3");
         jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(9));
         jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(9));
@@ -26,7 +26,7 @@ public class JogoMemDAO : IJogoDAO {
         jogosRegistrados["The Witcher"].AdicionarPlataforma("Xbox");
         jogosRegistrados["The Witcher"].Descricao = "Prepare-se para entrar em uma jornada épica no mundo sombrio e perigoso de The Witcher. Explore terras deslumbrantes, enfrente criaturas mortais e faça escolhas difíceis que moldarão o seu destino. Com gráficos deslumbrantes e uma história envolvente, The Witcher é um jogo imperdível para os fãs de RPG de ação.";
 
-        jogosRegistrados["GTA"] = new Jogo("GTA", "Ação, Aventura", "Rockstar Games", "5", "");
+        jogosRegistrados["GTA"] = new Jogo("GTA", "Ação, Aventura", "Rockstar Games", "5");
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(10));
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(8));
         jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(9));

@@ -21,12 +21,11 @@ public class Jogo {
         }
     }
 
-    public Jogo(string titulo, string genero, string studio, string edicao, string descricao, bool disponilidade = true) {
+    public Jogo(string titulo, string genero, string studio, string edicao, bool disponilidade = true) {
         Titulo = titulo;
         Genero = genero;
         Studio = studio;
         Edicao = edicao;
-        Descricao = descricao;
         Disponibilidade = disponilidade;
         plataformas = new();
         notas = new();

@@ -129,7 +129,7 @@ public class SQLiteJogoDAO : IJogoDAO {
                     }
 
                     var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
-                    jogo = new Jogo(titulo, genero, studio, edicao, desc, disponibilidade);
+                    jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
                     using (var cmdSelectAval = new SQLiteCommand(connection)) {
                         cmdSelectAval.CommandText = @"select Nota from Avaliacao 
                                                 where ID_Jogo=@param1";
