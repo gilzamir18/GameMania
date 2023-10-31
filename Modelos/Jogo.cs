@@ -21,12 +21,13 @@ public class Jogo {
         }
     }
 
-    public Jogo(string titulo, string genero, string studio, string edicao, bool disponilidade = true) {
-        this.Titulo = titulo;
-        this.Genero = genero;
-        this.Studio = studio;
-        this.Edicao = edicao;
-        this.Disponibilidade = disponilidade;
+    public Jogo(string titulo, string genero, string studio, string edicao, string descricao, bool disponilidade = true) {
+        Titulo = titulo;
+        Genero = genero;
+        Studio = studio;
+        Edicao = edicao;
+        Descricao = descricao;
+        Disponibilidade = disponilidade;
         plataformas = new();
         notas = new();
     }
@@ -34,17 +35,23 @@ public class Jogo {
     public void ExibirFichaTecnica() {
         Console.WriteLine($"Título: {Titulo}");
         Console.WriteLine($"Genero: {Genero}");
+        Console.WriteLine($"Studio: {Studio}");
         Console.WriteLine($"Edição: {Edicao}");
-        Console.Write("Plataformas Suportadas:\t");
-        foreach(var plat in plataformas) {
-            Console.Write($"{plat} ");
+        if (Descricao != null && !string.IsNullOrWhiteSpace(Descricao)) {
+            Console.WriteLine($"Descrição: {Descricao}");
         }
-        Console.WriteLine();
-        
+        Console.Write("Plataformas Suportadas:\t");
+        var plataformasStr = String.Join(", ", plataformas);
+        Console.WriteLine($"{plataformasStr[..]}.");
+
         if (Disponibilidade) {
-            Console.WriteLine("Jogo disponível para avaliação.");
+            if (NotaMedia > 0) {
+                Console.WriteLine($"Nota Média: {NotaMedia:N2}");
+            }
+
+            Console.WriteLine("\nJogo disponível para avaliação.");
         } else {
-            Console.WriteLine("Este jogo não está disponível para avaliação.");
+            Console.WriteLine("\nEste jogo não está disponível para avaliação.");
         }
     }
 

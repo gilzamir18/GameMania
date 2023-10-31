@@ -56,7 +56,6 @@ void MenuPrincipal() {
 
 MenuPrincipal();
 
-
 /* async void MostrarRelogio() {
     int contagem = 0;
 

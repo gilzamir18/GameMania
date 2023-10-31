@@ -24,7 +24,7 @@ internal class Menu {
     }
 
     void Rodape() {
-        Console.WriteLine("Pressione qualquer tecla para voltar ao menu principal...");
+        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
 

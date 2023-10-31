@@ -6,7 +6,7 @@ public class JogoMemDAO : IJogoDAO {
 
     private Dictionary< string, Jogo > jogosRegistrados;
 
-    private static JogoMemDAO jogoDAO;
+    private static JogoMemDAO? jogoDAO;
 
     public static JogoMemDAO GetInstance() {
         if (jogoDAO == null) {
@@ -17,19 +17,23 @@ public class JogoMemDAO : IJogoDAO {
 
     private JogoMemDAO() {
         jogosRegistrados = new();
-        jogosRegistrados["Forza"] = new Jogo("Forza", "Corrida", "XBox Game Studios", "5");
-        jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(10));
-        jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(5));
-        jogosRegistrados["Forza"].AdicionarNota(new Avaliacao(2));
-        jogosRegistrados["Forza"].AdicionarPlataforma("XBox360");
+        jogosRegistrados["The Witcher"] = new Jogo("The Wicther", "RPG de Ação", "CD Projeckt RED", "3", "");
+        jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(10));
+        jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(9));
+        jogosRegistrados["The Witcher"].AdicionarNota(new Avaliacao(9));
+        jogosRegistrados["The Witcher"].AdicionarPlataforma("PC");
+        jogosRegistrados["The Witcher"].AdicionarPlataforma("Playstation");
+        jogosRegistrados["The Witcher"].AdicionarPlataforma("Xbox");
+        jogosRegistrados["The Witcher"].Descricao = "Prepare-se para entrar em uma jornada épica no mundo sombrio e perigoso de The Witcher. Explore terras deslumbrantes, enfrente criaturas mortais e faça escolhas difíceis que moldarão o seu destino. Com gráficos deslumbrantes e uma história envolvente, The Witcher é um jogo imperdível para os fãs de RPG de ação.";
 
-        jogosRegistrados["Valorant"] = new Jogo("Valorant", "Tático", "Riot Games", "6");
-        jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(10));
-        jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(8));
-        jogosRegistrados["Valorant"].AdicionarNota(new Avaliacao(9));
-        jogosRegistrados["Valorant"].AdicionarPlataforma("PS4");
-        jogosRegistrados["Valorant"].AdicionarPlataforma("XBox360");
-        jogosRegistrados["Valorant"].AdicionarPlataforma("PC");
+        jogosRegistrados["GTA"] = new Jogo("GTA", "Ação, Aventura", "Rockstar Games", "5", "");
+        jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(10));
+        jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(8));
+        jogosRegistrados["GTA"].AdicionarNota(new Avaliacao(9));
+        jogosRegistrados["GTA"].AdicionarPlataforma("Playstation");
+        jogosRegistrados["GTA"].AdicionarPlataforma("Xbox");
+        jogosRegistrados["GTA"].AdicionarPlataforma("PC");
+        jogosRegistrados["GTA"].Descricao = "Caos, criminalidade e muita diversão. Jogue como um criminoso em Los Santos, explore uma cidade vibrante, faça missões e cause estragos com seus amigos no modo online. Prepare-se para enfrentar a polícia, dominar o mercado de drogas e se tornar o maior bandido da história.";
     }
 
 

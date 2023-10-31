@@ -9,11 +9,14 @@ internal class MenuExibirDetalhesDoJogo: Menu {
         string titulo = Console.ReadLine();
         var jogo = jogoDAO.ObterPorTitulo(titulo);
 
-        if (jogo != null) {
-            Console.WriteLine($"A média de avaliação do jogo {titulo} é: {jogo.NotaMedia}");
+        Console.WriteLine();
+        jogo.ExibirFichaTecnica();
+
+        /* if (jogo != null) {
+            Console.WriteLine($"O jogo {titulo} tem média de avaliação: {jogo.NotaMedia}");
         } else {
-            Console.WriteLine($"Não existe um jogo com o título {titulo}");
-        }
+            Console.WriteLine($"O jogo {titulo} não existe ou não foi cadastrado!");
+        } */
         return false;
     }
 }

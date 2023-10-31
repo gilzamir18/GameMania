@@ -10,7 +10,7 @@ public class Avaliacao {
         try {
             nota = int.Parse(texto);
         }
-        catch(FormatException e) {
+        catch(FormatException) {
             throw new FormatException("Valor informato não é um inteiro válido!");
         }
         
