@@ -40,7 +40,7 @@ public class Jogo {
             Console.WriteLine($"Descrição: {Descricao}");
         }
         Console.Write("Plataformas Suportadas:\t");
-        var plataformasStr = String.Join(", ", plataformas);
+        var plataformasStr = string.Join(", ", plataformas);
         Console.WriteLine($"{plataformasStr[..]}.");
 
         if (Disponibilidade) {

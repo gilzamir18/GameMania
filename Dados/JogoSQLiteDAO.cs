@@ -38,7 +38,7 @@ public class SQLiteJogoDAO : IJogoDAO {
                     for (int i = 0; i < jogo.QtdNotas; i++) {
                         var avaliacao = jogo.GetAvaliacao(i);
                         commandAval.CommandText = @"INSERT INTO Avaliacao(ID_Jogo, Nota) 
-                                                VALUES(@idjogo, @nota)";
+                                                    VALUES(@idjogo, @nota)";
                         commandAval.Parameters.AddWithValue("@idjogo", idJogo);
                         commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
                         commandAval.ExecuteNonQuery();
@@ -52,7 +52,7 @@ public class SQLiteJogoDAO : IJogoDAO {
                         object idplat = -1;
                         using (var selectPlat = new SQLiteCommand(connection)) {
                             selectPlat.CommandText = @"SELECT ID, Nome FROM Plataforma
-                                                    WHERE Plataforma.Nome = @nome";
+                                                        WHERE Plataforma.Nome = @nome";
                             selectPlat.Parameters.AddWithValue("@nome", plataforma);
                             var reader = selectPlat.ExecuteReader();
 
@@ -61,8 +61,8 @@ public class SQLiteJogoDAO : IJogoDAO {
                             } else {
                                 using (var addPlat = new SQLiteCommand(connection)) {
                                     addPlat.CommandText = @"INSERT INTO Plataforma(Nome)
-                                                    VALUES (@nome); 
-                                                    SELECT last_insert_rowid();";
+                                                            VALUES (@nome); 
+                                                            SELECT last_insert_rowid();";
                                     addPlat.Parameters.AddWithValue("@nome", plataforma);
                                     idplat = addPlat.ExecuteScalar();
                                 }
@@ -70,7 +70,7 @@ public class SQLiteJogoDAO : IJogoDAO {
                         }
 
                         commandPlat.CommandText = @"INSERT INTO JogoPlataforma(ID_Jogo, ID_Plataforma) 
-                                                VALUES(@p1, @p2)";
+                                                    VALUES(@p1, @p2)";
                         commandPlat.Parameters.AddWithValue("@p1", idJogo);
                         commandPlat.Parameters.AddWithValue("@p2", idplat);
                         commandPlat.ExecuteNonQuery();
@@ -107,9 +107,9 @@ public class SQLiteJogoDAO : IJogoDAO {
 
         using (var cmdSelect = new SQLiteCommand(connection)) {
             if (campo == "") {
-                cmdSelect.CommandText = "select * from Jogo";
+                cmdSelect.CommandText = "SELECT * FROM Jogo";
             } else {
-                cmdSelect.CommandText = $"select * from Jogo where {campo}=@param";
+                cmdSelect.CommandText = $"SELECT * FROM Jogo WHERE {campo}=@param";
             }
             cmdSelect.Parameters.AddWithValue("@param", valor);
             using (var reader = cmdSelect.ExecuteReader()) {
@@ -130,9 +130,10 @@ public class SQLiteJogoDAO : IJogoDAO {
 
                     var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
                     jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
+                    jogo.Descricao = desc;
                     using (var cmdSelectAval = new SQLiteCommand(connection)) {
-                        cmdSelectAval.CommandText = @"select Nota from Avaliacao 
-                                                where ID_Jogo=@param1";
+                        cmdSelectAval.CommandText = @"SELECT Nota FROM Avaliacao
+                                                        WHERE ID_Jogo=@param1";
                         cmdSelectAval.Parameters.AddWithValue("@param1", jogoID);
                         using (var readerAval = cmdSelectAval.ExecuteReader()) {
                             while (readerAval.Read()) {

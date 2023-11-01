@@ -1,6 +1,6 @@
-namespace GameMania.Dados;
-
 using GameMania.Modelos;
+
+namespace GameMania.Dados;
 
 public class JogoMemDAO : IJogoDAO {
 
@@ -9,9 +9,7 @@ public class JogoMemDAO : IJogoDAO {
     private static JogoMemDAO? jogoDAO;
 
     public static JogoMemDAO GetInstance() {
-        if (jogoDAO == null) {
-            jogoDAO = new JogoMemDAO();
-        }
+        jogoDAO ??= new JogoMemDAO();
         return jogoDAO;
     }
 

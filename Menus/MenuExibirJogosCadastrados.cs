@@ -6,20 +6,11 @@ internal class MenuExibirJogosCadastrados: Menu {
 
     public override bool MostrarOpcao() {
         var jogos = jogoDAO.ObterTodosOsJogos();
+        var jogosOrdenados = jogos.OrderBy(jogo => jogo.Titulo).ToList();
 
-        foreach (var jogo in jogos) {
+        foreach (var jogo in jogosOrdenados) {
             Console.WriteLine($"{jogo.Titulo}");
         }
         return false;
     }
-
-    /* public override bool MostrarOpcao() {
-        var jogos = jogoDAO.ObterTodosOsJogos();
-
-        foreach (var jogo in jogos) {
-            jogo.ExibirFichaTecnica();
-            Console.WriteLine();
-        }
-        return false;
-    } */
 }

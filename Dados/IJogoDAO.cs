@@ -1,6 +1,6 @@
-namespace GameMania.Dados;
-
 using GameMania.Modelos;
+
+namespace GameMania.Dados;
 
 public abstract class IJogoDAO {
     public abstract void SalvarJogo(Jogo jogo);
