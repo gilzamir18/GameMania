@@ -43,7 +43,7 @@ public class JogoMemDAO : IJogoDAO {
         return jogosRegistrados.Values.ToList();
     }
     
-    public override Jogo ObterPorTitulo(string titulo) {
+    public override Jogo? ObterPorTitulo(string titulo) {
         if (jogosRegistrados.ContainsKey(titulo)) {
             return jogosRegistrados[titulo];
         } else {

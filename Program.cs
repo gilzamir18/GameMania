@@ -1,8 +1,5 @@
 ﻿using GameMania.Menus;
 
-/* int tempo = 0;
-bool estaMenuPrincipal = true; */
-
 var opcoes = new Dictionary<string, Menu> {
     ["1"] = new MenuCadastrarNovoJogo(),
     ["2"] = new MenuExibirJogosCadastrados(),
@@ -25,11 +22,6 @@ void ExibirMensagemBoasVindas() {
 
 
 void MenuPrincipal() {
-    /* estaMenuPrincipal = true;
-    CancellationTokenSource cts = new();
-    MostrarRelogio();
-    Task t = MostrarAlerta(); */
-    
     while (true) {
         ExibirMensagemBoasVindas();
         Console.WriteLine("1 - Cadastrar novo Jogo");
@@ -40,7 +32,6 @@ void MenuPrincipal() {
         string opcao = Console.ReadLine();
 
         if (opcoes.ContainsKey(opcao)) {
-            //estaMenuPrincipal = false;
             bool sair = opcoes[opcao].Executar();
 
             if (sair) {
@@ -55,41 +46,3 @@ void MenuPrincipal() {
 }
 
 MenuPrincipal();
-
-/* async void MostrarRelogio() {
-    int contagem = 0;
-
-    while (true) {
-        Console.Write("                                                \r");
-        await Task.Delay(100);
-        contagem += 100;
-
-        if (contagem % 1000 == 0) {
-            tempo ++;
-        }
-
-        Console.Write($"Tempo: {tempo}s");
-    }
-}
-
-async Task MostrarAlerta() {
-    int contagem = 0;
-
-    while (true) {
-        if (!estaMenuPrincipal) {
-            contagem = 0;
-            tempo = 0;
-            await Task.Delay(500);
-        } else {
-            await Task.Delay(500);
-            Console.Write("\r");
-            contagem += 500;
-            
-            if (contagem % 8000 == 0) {
-                tempo = 0;
-                contagem = 0;
-                Console.Write("Está demorando muito!");
-            }
-        }
-    }
-} */

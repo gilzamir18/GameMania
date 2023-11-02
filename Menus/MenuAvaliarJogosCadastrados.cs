@@ -11,8 +11,12 @@ internal class MenuAvaliarJogosCadastrados: Menu {
         var jogo = jogoDAO.ObterPorTitulo(titulo);
 
         if (jogo != null) {
-            var nota = Validacoes.ObterNotaValida($"Qual nota você dá ao jogo {titulo}? ");
-            jogo.AdicionarNota(new Avaliacao(nota));
+            try {
+                var nota = Validacoes.ObterNotaValida($"Qual nota você dá ao jogo {titulo}? ");
+                jogo.AdicionarNota(new Avaliacao(nota));
+            } catch (Exception ex) {
+                Console.WriteLine($"Ocorreu um erro ao adicionar a nota: {ex.Message}");
+            }
         } else {
             Console.WriteLine($"\nNão existe um jogo cadastrado com o título '{titulo}'");
         }

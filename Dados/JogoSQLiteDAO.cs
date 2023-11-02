@@ -89,7 +89,7 @@ public class SQLiteJogoDAO : IJogoDAO {
         return SelectJogoPorCampo();
     }
 
-    public override Jogo ObterPorTitulo(string titulo) {
+    public override Jogo? ObterPorTitulo(string titulo) {
         List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
 
         if (jogos.Count > 0) {
@@ -115,7 +115,7 @@ public class SQLiteJogoDAO : IJogoDAO {
             using (var reader = cmdSelect.ExecuteReader()) {
                 while (reader.Read()) {
                     int jogoID = -1;
-                    Jogo jogo = null;
+                    Jogo? jogo = null;
                     jogoID = reader.GetInt32(0);
                     var titulo = reader.GetString(1);
                     var genero = reader.GetString(2);

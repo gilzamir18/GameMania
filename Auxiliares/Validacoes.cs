@@ -2,7 +2,7 @@ namespace Auxiliares;
 
 public class Validacoes {
     public static string ObterStringValida(string mensagem, int comprimentoMinimo = 3) {
-        string entrada;
+        string? entrada;
 
         do {
             Console.Write(mensagem);
@@ -17,7 +17,7 @@ public class Validacoes {
     }
 
     public static string ObterEdicaoValida(string mensagem) {
-        string entrada;
+        string? entrada;
 
         do {
             Console.Write(mensagem);
@@ -32,13 +32,12 @@ public class Validacoes {
     }
 
     public static int ObterNotaValida(string mensagem) {
-        int nota;
 
         while (true) {
             Console.Write(mensagem);
-            string entrada = Console.ReadLine();
+            string? entrada = Console.ReadLine();
 
-            if (int.TryParse(entrada, out nota) && nota >= 0 && nota <= 10) {
+            if (int.TryParse(entrada, out int nota) && nota >= 0 && nota <= 10) {
                 return nota;
             } else {
                 Console.WriteLine("A nota deve ser um número inteiro entre 0 e 10.");

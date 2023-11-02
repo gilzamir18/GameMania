@@ -15,7 +15,7 @@ class MenuCadastrarNovoJogo : Menu {
         string edicao = Validacoes.ObterEdicaoValida("Edição do jogo: ");
 
         Console.Write("Descrição do jogo (opcional): ");
-        string descricao = Console.ReadLine()?.Trim();
+        string? descricao = Console.ReadLine()?.Trim();
 
         string plataformasInput = Validacoes.ObterStringValida("Plataformas do jogo (separadas por vírgula): ");
 
