@@ -42,11 +42,7 @@ class MenuCadastrarNovoJogo : Menu {
                 jogoDAO.SalvarJogo(jogo);
                 Console.WriteLine("Jogo adicionado com sucesso!");
             } catch (SQLiteException ex) {
-                if (ex.Message.Contains("UNIQUE constraint failed: Jogo.Titulo")) {
-                    Console.WriteLine("Erro ao salvar o jogo: Já existe um jogo com o mesmo título.");
-                } else {
-                    Console.WriteLine($"Erro ao salvar o jogo: {ex.Message}");
-                }
+                Console.WriteLine($"Erro ao salvar o jogo: {ex.Message}");
             } catch (Exception e) {
                 Console.WriteLine($"Erro ao salvar o jogo: {e.Message}");
             }
