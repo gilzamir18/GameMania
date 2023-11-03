@@ -16,21 +16,6 @@ public class Validacoes {
         return entrada;
     }
 
-    public static string ObterEdicaoValida(string mensagem) {
-        string? entrada;
-
-        do {
-            Console.Write(mensagem);
-            entrada = Console.ReadLine()?.Trim();
-
-            if (string.IsNullOrWhiteSpace(entrada)) {
-                Console.WriteLine("A entrada não pode ser vazia.");
-            }
-        } while (string.IsNullOrWhiteSpace(entrada));
-
-        return entrada;
-    }
-
     public static int ObterNotaValida(string mensagem) {
 
         while (true) {
