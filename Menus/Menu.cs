@@ -9,7 +9,7 @@ internal class Menu {
 
     public Menu(string titulo) {
         Titulo = titulo;
-        jogoDAO = SQLiteJogoDAO.GetInstance();  //  JogoMemDAO.GetInstance();
+        jogoDAO = JogoSQLiteDAO.GetInstance();  //  JogoMemDAO.GetInstance();
     }
 
     public bool Executar() {
@@ -24,7 +24,7 @@ internal class Menu {
     }
 
     void Rodape() {
-        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu principal...");
+        Console.Write("\nPressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
 

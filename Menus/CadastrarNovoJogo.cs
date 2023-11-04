@@ -4,13 +4,13 @@ using Auxiliares;
 
 namespace GameMania.Menus;
 
-class MenuCadastrarNovoJogo : Menu {
+class CadastrarNovoJogo : Menu {
 
-    public MenuCadastrarNovoJogo() : base("*  Cadastrar Novo Jogo  *") { }
+    public CadastrarNovoJogo() : base("*  Cadastrar Novo Jogo  *") { }
 
     public override bool MostrarOpcao() {
         string titulo = Validacoes.ObterStringValida("Título do jogo: ");
-        var jogo = jogoDAO.ObterPorTitulo(titulo);
+        var jogo = jogoDAO.BuscarJogo(titulo);
 
         if (jogo != null) {
             Console.WriteLine($"Já existe um jogo com título {titulo} cadastrado.");
@@ -41,8 +41,6 @@ class MenuCadastrarNovoJogo : Menu {
             try {
                 jogoDAO.SalvarJogo(jogo);
                 Console.WriteLine("Jogo adicionado com sucesso!");
-            } catch (SQLiteException ex) {
-                Console.WriteLine($"Erro ao salvar o jogo: {ex.Message}");
             } catch (Exception e) {
                 Console.WriteLine($"Erro ao salvar o jogo: {e.Message}");
             }

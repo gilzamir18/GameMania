@@ -2,14 +2,14 @@ using Auxiliares;
 
 namespace GameMania.Menus;
 
-internal class MenuExibirDetalhesDoJogo: Menu {
+internal class ExibirDetalhesDoJogo: Menu {
 
-    public MenuExibirDetalhesDoJogo() : base("*  Exibir Detalhes de Jogo  *") { }
+    public ExibirDetalhesDoJogo() : base("*  Exibir Detalhes de Jogo  *") { }
 
     public override bool MostrarOpcao() {
         string titulo = Validacoes.ObterStringValida("Informe o título do jogo: ");
 
-        var jogo = jogoDAO.ObterPorTitulo(titulo);
+        var jogo = jogoDAO.BuscarJogo(titulo);
 
         Console.WriteLine();
 

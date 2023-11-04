@@ -3,329 +3,274 @@ using System.Data.SQLite;
 
 namespace GameMania.Dados;
 
-public class SQLiteJogoDAO : IJogoDAO {
-    private static SQLiteJogoDAO? instance;
+public class JogoSQLiteDAO : IJogoDAO {
+    private static JogoSQLiteDAO? instance;
+    private readonly string _conexaoString;
 
     public static IJogoDAO GetInstance() {
-        instance ??= new SQLiteJogoDAO();
+        instance ??= new JogoSQLiteDAO();
         return instance;
     }
 
-    private SQLiteConnection connection;
+    public JogoSQLiteDAO() {
+        _conexaoString = "Data Source=gamemania.db;Version=3";
+    }
 
-    private SQLiteJogoDAO() {
-        var connectionString = "Data Source=gamemania.db;Version=3";
-        connection = new SQLiteConnection(connectionString);
-        connection.Open();
+    public override List<Jogo> ListarJogos() {
+        using (var conexao = new SQLiteConnection(_conexaoString)) {
+            conexao.Open();
+
+            try {
+                return Buscar(conexao);
+            } catch (SQLiteException ex) {
+                Console.WriteLine($"Erro ao obter lista de jogos!\n{ex.Message}");
+                return new List<Jogo>();
+            }
+        }
+    }
+
+    public override Jogo? BuscarJogo(string titulo) {
+        using (var conexao = new SQLiteConnection(_conexaoString)) {
+            conexao.Open();
+
+            try {
+                var jogos = Buscar(conexao, titulo);
+
+                if (jogos.Count > 0) {
+                    return jogos[0];
+                }
+            } catch (SQLiteException e) {
+                Console.WriteLine($"Erro ao buscar o jogo '{titulo}'!\n{e.Message}");
+            }
+
+            return null;
+        }
+    }
+
+    public override void AvaliarJogo(int jogoID, int nota) {
+        using (var conexao = new SQLiteConnection(_conexaoString)) {
+            conexao.Open();
+            var transacao = conexao.BeginTransaction();
+
+            try {
+                InserirNota(conexao, jogoID, nota);
+                transacao.Commit();
+            } catch (SQLiteException e) {
+                Console.WriteLine($"Erro ao adicionar a nota ao jogo!\n{e.Message}");
+                transacao.Rollback();
+            }
+        }
     }
 
     public override void SalvarJogo(Jogo jogo) {
-        var transaction = connection.BeginTransaction();
+        using (var conexao = new SQLiteConnection(_conexaoString)) {
+            conexao.Open();
+            var transacao = conexao.BeginTransaction();
+
+            try {
+                int idJogo = InserirJogo(conexao, jogo);
+
+                if (idJogo != -1) {
+                    InserirAvaliacoes(conexao, idJogo, jogo);
+                    InserirPlataformas(conexao, idJogo, jogo);
+                    transacao.Commit();
+                } else {
+                    throw new Exception("Erro inesperado ao inserir o jogo no banco de dados.");
+                }
+            } catch (SQLiteException e) {
+                Console.WriteLine($"Erro ao salvar o jogo!\n{e.Message}");
+                transacao.Rollback();
+            }
+        }
+    }
+
+    private List<Jogo> Buscar(SQLiteConnection conexao, string? titulo = null) {
+        var resultado = new List<Jogo>();
+
         try {
-            using (var command = new SQLiteCommand(connection)) {
-                command.CommandText = @"INSERT INTO Jogo(Titulo, Genero, Studio, Edicao, Descricao, Disponibilidade)
-                                        VALUES(@titulo, @genero, @studio, @edicao, @descricao, @disponibilidade);
-                                        SELECT last_insert_rowid();";
-                command.Parameters.AddWithValue("@titulo", jogo.Titulo);
-                command.Parameters.AddWithValue("@genero", jogo.Genero);
-                command.Parameters.AddWithValue("@studio", jogo.Studio);
-                command.Parameters.AddWithValue("@edicao", jogo.Edicao);
-                command.Parameters.AddWithValue("@descricao", jogo.Descricao);
-                command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
-                var idJogo = command.ExecuteScalar();
-
-                using (var commandAval = new SQLiteCommand(connection)) {
-                    for (int i = 0; i < jogo.QtdNotas; i++) {
-                        var avaliacao = jogo.GetAvaliacao(i);
-                        commandAval.CommandText = @"INSERT INTO Avaliacao(ID_Jogo, Nota) 
-                                                    VALUES(@idjogo, @nota)";
-                        commandAval.Parameters.AddWithValue("@idjogo", idJogo);
-                        commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
-                        commandAval.ExecuteNonQuery();
-                    }
+            using (var cmdSelect = new SQLiteCommand(conexao)) {
+                if (string.IsNullOrEmpty(titulo)) {
+                    cmdSelect.CommandText = @"
+                        SELECT *
+                        FROM Jogo";
+                } else {
+                    cmdSelect.CommandText = @"
+                        SELECT *
+                        FROM Jogo
+                        WHERE Titulo=@titulo";
+                    cmdSelect.Parameters.AddWithValue("@titulo", titulo);
                 }
 
-                using (var commandPlat = new SQLiteCommand(connection)) {
-                    for (int i = 0; i < jogo.QtdPlataformas; i++) {
-                        var plataforma = jogo.GetPlataforma(i);
+                using (var reader = cmdSelect.ExecuteReader()) {
+                    while (reader.Read()) {
+                        var jogo = new Jogo(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(6) == 1) {
+                            ID = reader.GetInt32(0),
+                            Descricao = reader.GetValue(5) as string ?? ""
+                        };
+                        CarregarAvaliacoes(conexao, jogo);
+                        CarregarPlataformas(conexao, jogo);
 
-                        object idplat = -1;
-                        using (var selectPlat = new SQLiteCommand(connection)) {
-                            selectPlat.CommandText = @"SELECT ID, Nome FROM Plataforma
-                                                        WHERE Plataforma.Nome = @nome";
-                            selectPlat.Parameters.AddWithValue("@nome", plataforma);
-                            var reader = selectPlat.ExecuteReader();
-
-                            if (reader.Read()) {
-                                idplat = reader.GetInt32(0);
-                            } else {
-                                using (var addPlat = new SQLiteCommand(connection)) {
-                                    addPlat.CommandText = @"INSERT INTO Plataforma(Nome)
-                                                            VALUES (@nome); 
-                                                            SELECT last_insert_rowid();";
-                                    addPlat.Parameters.AddWithValue("@nome", plataforma);
-                                    idplat = addPlat.ExecuteScalar();
-                                }
-                            }
-                        }
-
-                        commandPlat.CommandText = @"INSERT INTO JogoPlataforma(ID_Jogo, ID_Plataforma) 
-                                                    VALUES(@p1, @p2)";
-                        commandPlat.Parameters.AddWithValue("@p1", idJogo);
-                        commandPlat.Parameters.AddWithValue("@p2", idplat);
-                        commandPlat.ExecuteNonQuery();
+                        resultado.Add(jogo);
                     }
                 }
             }
-
-            transaction.Commit();
-        } catch (Exception e) {
-            Console.WriteLine(e.Message);
-            transaction.Rollback();
-        }
-    }
-
-    public override List<Jogo> ObterTodosOsJogos() {
-        return SelectJogoPorCampo();
-    }
-
-    public override Jogo? ObterPorTitulo(string titulo) {
-        List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
-
-        if (jogos.Count > 0) {
-            return jogos[0];
-        }
-        return null;
-    }
-
-    public override List<Jogo> FiltrarPorGenero(string genero) {
-        return SelectJogoPorCampo("Genero", genero);
-    }
-
-    private List<Jogo> SelectJogoPorCampo(string campo = "", string valor = "") {
-        List<Jogo> resultado = new();
-
-        using (var cmdSelect = new SQLiteCommand(connection)) {
-            if (campo == "") {
-                cmdSelect.CommandText = "SELECT * FROM Jogo";
-            } else {
-                cmdSelect.CommandText = $"SELECT * FROM Jogo WHERE {campo}=@param";
-            }
-            cmdSelect.Parameters.AddWithValue("@param", valor);
-            using (var reader = cmdSelect.ExecuteReader()) {
-                while (reader.Read()) {
-                    int jogoID = -1;
-                    Jogo? jogo = null;
-                    jogoID = reader.GetInt32(0);
-                    var titulo = reader.GetString(1);
-                    var genero = reader.GetString(2);
-                    var studio = reader.GetString(3);
-                    var edicao = reader.GetString(4);
-                    var descvalue = reader.GetValue(5);
-                    var desc = "";
-
-                    if (!(descvalue is System.DBNull)) {
-                        desc = (string)descvalue;
-                    }
-
-                    var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
-                    jogo = new Jogo(titulo, genero, studio, edicao, disponibilidade);
-                    jogo.Descricao = desc;
-                    using (var cmdSelectAval = new SQLiteCommand(connection)) {
-                        cmdSelectAval.CommandText = @"SELECT Nota FROM Avaliacao
-                                                        WHERE ID_Jogo=@param1";
-                        cmdSelectAval.Parameters.AddWithValue("@param1", jogoID);
-                        using (var readerAval = cmdSelectAval.ExecuteReader()) {
-                            while (readerAval.Read()) {
-                                int nota = readerAval.GetInt32(0);
-                                jogo.AdicionarNota(new Avaliacao(nota));
-                            }
-                        }
-                    }
-
-                    using (var cmdSelectPlat = new SQLiteCommand(connection)) {
-                        cmdSelectPlat.CommandText = @"
-                            SELECT Plataforma.Nome FROM Plataforma
-                                INNER JOIN JogoPlataforma ON Plataforma.ID = JogoPlataforma.ID_Plataforma
-                                WHERE JogoPlataforma.ID_Jogo = @param";
-                        cmdSelectPlat.Parameters.AddWithValue("@param", jogoID);
-                        using (var readerPlat = cmdSelectPlat.ExecuteReader()) {
-                            while (readerPlat.Read()) {
-                                jogo.AdicionarPlataforma(readerPlat.GetString(0));
-                            }
-                        }
-                    }
-
-                    resultado.Add(jogo);
-                }
-            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao efetuar busca!\n{e.Message}");
         }
 
         return resultado;
     }
-}
 
-/* using GameMania.Modelos;
-using System.Data.SQLite;
-
-namespace GameMania.Dados;
-
-public class JogoSQLiteJogoDAO: IJogoDAO {
-
-    private static JogoSQLiteJogoDAO? instance;
-
-    public static IJogoDAO GetInstance() {
-        instance ??= new JogoSQLiteJogoDAO();
-        return instance;
-    }
-
-    private readonly SQLiteConnection connection;
-
-    private JogoSQLiteJogoDAO() {
-         var connectionString = $"Data Source=gamemania.db;Version=3";
-         connection = new SQLiteConnection(connectionString);
-         connection.Open();
-    }
-
-    public override void SalvarJogo(Jogo jogo) {
-        var transaction = connection.BeginTransaction();
+    private void CarregarAvaliacoes(SQLiteConnection conexao, Jogo jogo) {
         try {
-            using (var command = new SQLiteCommand(connection)) {
-                command.CommandText = @"INSERT INTO Jogo(Titulo, Genero, Studio, Edicao, Descricao, Disponibilidade)
-                                            VALUES(@titulo, @genero, @studio, @edicao, @descricao, @disponibilidade);
-                                            SELECT last_insert_rowid();";
-                command.Parameters.AddWithValue("@titulo", jogo.Titulo);
-                command.Parameters.AddWithValue("@genero", jogo.Genero);
-                command.Parameters.AddWithValue("@studio", jogo.Studio);
-                command.Parameters.AddWithValue("@edicao", jogo.Edicao);
-                command.Parameters.AddWithValue("@descricao", jogo.Descricao);
-                command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
-                var idJogo = command.ExecuteScalar();
+            using (var cmdSelectAval = new SQLiteCommand(conexao)) {
+                cmdSelectAval.CommandText = @"
+                    SELECT Nota
+                    FROM Avaliacao
+                    WHERE ID_Jogo=@idJogo";
+                cmdSelectAval.Parameters.AddWithValue("@idJogo", jogo.ID);
 
-                using (var commandAval = new SQLiteCommand(connection)) {
-                    for (int i = 0; i < jogo.QtdNotas; i++) {
-                        var avaliacao = jogo.GetAvaliacao(i);
-                        commandAval.CommandText = @"INSERT INTO Avaliacao(ID_Jogo, Nota) 
-                                                        VALUES(@idjogo, @nota)";
-                        commandAval.Parameters.AddWithValue("@idjogo", idJogo);
-                        commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
-                        commandAval.ExecuteNonQuery();
-                    }
-                }
-
-                using var commandPlat = new SQLiteCommand(connection);
-                for (int i = 0; i < jogo.QtdPlataformas; i++) {
-                    var plataforma = jogo.GetPlataforma(i);
-
-                    object idplat = -1;
-                    using (var selectPlat = new SQLiteCommand(connection)) {
-                        selectPlat.CommandText = @"SELECT ID, Nome FROM Plataforma
-                                                        WHERE Plataforma.Nome = @nome";
-                        selectPlat.Parameters.AddWithValue("@nome", plataforma);
-                        var reader = selectPlat.ExecuteReader();
-
-                        if (reader.Read()) {
-                            idplat = reader.GetInt32(0);
-                            //vreader.GetString(1);
-                        } else {
-                            using var addPlat = new SQLiteCommand(connection);
-                            addPlat.CommandText = @"INSERT INTO Plataforma(Nome)
-                                                        VALUES (@nome); 
-                                                        SELECT last_insert_rowid();";
-                            addPlat.Parameters.AddWithValue("@nome", plataforma);
-                            idplat = addPlat.ExecuteScalar();
-                        }
-                    }
-
-                    commandPlat.CommandText = @"INSERT INTO JogoPlataforma(ID_Jogo, ID_Plataforma) 
-                                                    VALUES(@p1, @p2)";
-                    commandPlat.Parameters.AddWithValue("@p1", idJogo);
-                    commandPlat.Parameters.AddWithValue("@p2", idplat);
-                    commandPlat.ExecuteNonQuery();
-
-                }
-            }
-
-            transaction.Commit();
-        }
-        catch(Exception e) {
-            Console.WriteLine(e.Message);
-            transaction.Rollback();
-        }
-    }
-    
-    public override List<Jogo> ObterTodosOsJogos() {
-        return SelectJogoPorCampo();
-    }
-    
-    public override Jogo ObterPorTitulo(string titulo) {
-        List<Jogo> jogos = SelectJogoPorCampo("Titulo", titulo);
-
-        if (jogos.Count > 0) {
-            return jogos[0];
-        }
-        return null;
-    }
-    
-    public override  List<Jogo> FiltrarPorGenero(string genero) {
-        return SelectJogoPorCampo("Genero", genero);
-    }
-
-    private List<Jogo> SelectJogoPorCampo(string campo="", string valor="") {
-        List<Jogo> resultado = new();
-
-        using (var cmdSelect = new SQLiteCommand(connection)) {
-            if (campo == "") {
-                cmdSelect.CommandText = $"select * from Jogo";    
-            } else {
-                cmdSelect.CommandText = $"select * from Jogo where {campo}=@param";
-            }
-            cmdSelect.Parameters.AddWithValue("@param", valor);
-            using var reader = cmdSelect.ExecuteReader();
-            while (reader.Read()) {
-                int jogoID = -1;
-                Jogo jogo = null;
-                jogoID = reader.GetInt32(0);
-                var titulo = reader.GetString(1);
-                var genero = reader.GetString(2);
-                var studio = reader.GetString(3);
-                var edicao = reader.GetString(4);
-                var descvalue = reader.GetValue(5);
-                var desc = "";
-
-                if (!(descvalue is DBNull)) {
-                    desc = (string)descvalue;
-                }
-
-                var disponibilidade = reader.GetInt32(6) == 1 ? true : false;
-                jogo = new Jogo(titulo, genero, studio, edicao, desc, disponibilidade);
-                using (var cmdSelectAval = new SQLiteCommand(connection)) {
-                    cmdSelectAval.CommandText = @"select Nota from Avaliacao 
-                                                        where ID_Jogo=@param1";
-                    cmdSelectAval.Parameters.AddWithValue("@param1", jogoID);
-                    using var readerAval = cmdSelectAval.ExecuteReader();
+                using (var readerAval = cmdSelectAval.ExecuteReader()) {
                     while (readerAval.Read()) {
-                        int nota = readerAval.GetInt32(0);
+                        var nota = readerAval.GetInt32(0);
                         jogo.AdicionarNota(new Avaliacao(nota));
                     }
                 }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao carregar as avaliações!\n{e.Message}");
+        }
+    }
 
-                using (var cmdSelectPlat = new SQLiteCommand(connection)) {
-                    cmdSelectPlat.CommandText = @"
-                            SELECT Plataforma.Nome FROM Plataforma
-                                INNER JOIN JogoPlataforma ON Plataforma.ID = JogoPlataforma.ID_Plataforma
-                                WHERE JogoPlataforma.ID_Jogo = @param";
-                    cmdSelectPlat.Parameters.AddWithValue("@param", jogoID);
-                    using var readerPlat = cmdSelectPlat.ExecuteReader();
+    private void CarregarPlataformas(SQLiteConnection conexao, Jogo jogo) {
+        try {
+            using (var cmdSelectPlat = new SQLiteCommand(conexao)) {
+                cmdSelectPlat.CommandText = @"
+                    SELECT Plataforma.Nome
+                    FROM Plataforma
+                    INNER JOIN JogoPlataforma ON Plataforma.ID = JogoPlataforma.ID_Plataforma
+                    WHERE JogoPlataforma.ID_Jogo = @idJogo";
+                cmdSelectPlat.Parameters.AddWithValue("@idJogo", jogo.ID);
+
+                using (var readerPlat = cmdSelectPlat.ExecuteReader()) {
                     while (readerPlat.Read()) {
                         jogo.AdicionarPlataforma(readerPlat.GetString(0));
                     }
                 }
-
-                resultado.Add(jogo);
             }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao carregar as plataformas!\n{e.Message}");
         }
-
-        return resultado;
     }
-} */
+
+    private void InserirNota(SQLiteConnection conexao, int jogoID, int nota) {
+        try {
+            using (var command = new SQLiteCommand(conexao)) {
+                command.CommandText = @"
+                    INSERT INTO Avaliacao(ID_Jogo, Nota)
+                    VALUES(@idJogo, @nota)";
+                command.Parameters.AddWithValue("@idJogo", jogoID);
+                command.Parameters.AddWithValue("@nota", nota);
+                command.ExecuteNonQuery();
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao inserir a nota!\n{e.Message}");
+        }
+    }
+
+    private int InserirJogo(SQLiteConnection conexao, Jogo jogo) {
+        try {
+            using (var command = new SQLiteCommand(conexao)) {
+                command.CommandText = @"
+                    INSERT INTO Jogo(Titulo, Genero, Studio, Edicao, Descricao, Disponibilidade) 
+                    VALUES(@titulo, @genero, @studio, @edicao, @descricao, @disponibilidade);
+                    SELECT last_insert_rowid();";
+                command.Parameters.AddWithValue("@titulo", jogo.Titulo);
+                command.Parameters.AddWithValue("@genero", jogo.Genero);
+                command.Parameters.AddWithValue("@studio", jogo.Studio);
+                command.Parameters.AddWithValue("@edicao", jogo.Edicao);
+                command.Parameters.AddWithValue("@descricao", jogo.Descricao);
+                command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
+                int idJogo = Convert.ToInt32(command.ExecuteScalar());
+                return idJogo;
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao inserir jogo!\n{e.Message}");
+            return -1; // Indica que ocorreu um erro.
+        }
+    }
+
+    private void InserirAvaliacoes(SQLiteConnection conexao, int idJogo, Jogo jogo) {
+        try {
+            using (var commandAval = new SQLiteCommand(conexao)) {
+                for (int i = 0; i < jogo.QtdNotas; i++) {
+                    var avaliacao = jogo.GetAvaliacao(i);
+
+                    commandAval.CommandText = @"
+                        INSERT INTO Avaliacao(ID_Jogo, Nota)
+                        VALUES(@idJogo, @nota)";
+                    commandAval.Parameters.AddWithValue("@idJogo", idJogo);
+                    commandAval.Parameters.AddWithValue("@nota", avaliacao.Nota);
+                    commandAval.ExecuteNonQuery();
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao inserir avaliações!\n{e.Message}");
+        }
+    }
+
+    private void InserirPlataformas(SQLiteConnection conexao, int idJogo, Jogo jogo) {
+        try {
+            using (var commandPlat = new SQLiteCommand(conexao)) {
+                for (int i = 0; i < jogo.QtdPlataformas; i++) {
+                    var plataforma = jogo.GetPlataforma(i);
+                    int idPlataforma = SelecionarOuAdicionarPlataforma(conexao, plataforma);
+
+                    if (idPlataforma != -1) {
+                        commandPlat.CommandText = @"
+                            INSERT INTO JogoPlataforma(ID_Jogo, ID_Plataforma)
+                            VALUES(@idJogo, @idPlataforma)";
+                        commandPlat.Parameters.AddWithValue("@idJogo", idJogo);
+                        commandPlat.Parameters.AddWithValue("@idPlataforma", idPlataforma);
+                        commandPlat.ExecuteNonQuery();
+                    } else {
+                        throw new Exception("Erro inesperado ao inserir plataforma no banco de dados.");
+                    }
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao inserir plataformas!\n{e.Message}");
+        }
+    }
+
+    private int SelecionarOuAdicionarPlataforma(SQLiteConnection conexao, string plataforma) {
+        try {
+            using (var selectPlat = new SQLiteCommand(conexao)) {
+                selectPlat.CommandText = @"
+                    SELECT ID FROM Plataforma
+                    WHERE Nome = @nome";
+                selectPlat.Parameters.AddWithValue("@nome", plataforma);
+
+                using (var reader = selectPlat.ExecuteReader()) {
+                    if (reader.Read()) {
+                        int idPlat = reader.GetInt32(0);
+                        return idPlat;
+                    } else {
+                        using (var addPlat = new SQLiteCommand(conexao)) {
+                            addPlat.CommandText = @"
+                                INSERT INTO Plataforma(Nome)
+                                VALUES (@nome); SELECT last_insert_rowid();";
+                            addPlat.Parameters.AddWithValue("@nome", plataforma);
+
+                            int idPlat = Convert.ToInt32(addPlat.ExecuteScalar());
+                            return idPlat;
+                        }
+                    }
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao selecionar ou adicionar plataforma!\n{e.Message}");
+            return -1; // Indica que ocorreu um erro.
+        }
+    }
+}

@@ -2,18 +2,21 @@ using Auxiliares;
 
 namespace GameMania.Menus;
 
-internal class MenuAvaliarJogosCadastrados: Menu {
+internal class AvaliarJogosCadastrados: Menu {
     
-    public MenuAvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }
+    public AvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }
 
     public override bool MostrarOpcao() {
         var titulo = Validacoes.ObterStringValida("Informe o título do jogo a ser avaliado: ");
-        var jogo = jogoDAO.ObterPorTitulo(titulo);
+        var jogo = jogoDAO.BuscarJogo(titulo);
 
         if (jogo != null) {
+            var nota = Validacoes.ObterNotaValida($"Sua nota para o jogo '{titulo}'? ");
+            var jogoID = jogo.ID;
+            
             try {
-                var nota = Validacoes.ObterNotaValida($"Qual nota você dá ao jogo {titulo}? ");
                 jogo.AdicionarNota(new Avaliacao(nota));
+                jogoDAO.AvaliarJogo(jogoID, nota);
             } catch (Exception ex) {
                 Console.WriteLine($"Ocorreu um erro ao adicionar a nota: {ex.Message}");
             }

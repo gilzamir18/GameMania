@@ -1,11 +1,11 @@
 ﻿using GameMania.Menus;
 
 var opcoes = new Dictionary<string, Menu> {
-    ["1"] = new MenuCadastrarNovoJogo(),
-    ["2"] = new MenuExibirJogosCadastrados(),
-    ["3"] = new MenuExibirDetalhesDoJogo(),
-    ["4"] = new MenuAvaliarJogosCadastrados(),
-    ["0"] = new MenuSair()
+    ["1"] = new CadastrarNovoJogo(),
+    ["2"] = new ExibirJogosCadastrados(),
+    ["3"] = new ExibirDetalhesDoJogo(),
+    ["4"] = new AvaliarJogosCadastrados(),
+    ["0"] = new Sair()
 };
 
 void ExibirMensagemBoasVindas() {
@@ -17,28 +17,34 @@ void ExibirMensagemBoasVindas() {
 ██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
 ╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
-    Console.WriteLine("Seja bem-vindo ao GAMEMANIA!");
+    Console.WriteLine("\nBEM VINDO(A)!\nSelecione uma das opções abaixo:\n");
 }
 
 
 void MenuPrincipal() {
     while (true) {
         ExibirMensagemBoasVindas();
-        Console.WriteLine("1 - Cadastrar novo Jogo");
-        Console.WriteLine("2 - Exibir jogos cadastrados ");
-        Console.WriteLine("3 - Mostrar detalhes dos jogos");
-        Console.WriteLine("4 - Avaliar jogo");
-        Console.WriteLine("0 - Sair");
-        string opcao = Console.ReadLine();
+        Console.WriteLine("1. Cadastrar novo Jogo");
+        Console.WriteLine("2. Exibir jogos cadastrados ");
+        Console.WriteLine("3. Mostrar detalhes dos jogos");
+        Console.WriteLine("4. Avaliar jogo");
+        Console.WriteLine("0. Sair");
+        string? opcao = Console.ReadLine()?.Trim();
 
-        if (opcoes.ContainsKey(opcao)) {
-            bool sair = opcoes[opcao].Executar();
+        if (!string.IsNullOrEmpty(opcao)) {
+            if (opcoes.ContainsKey(opcao)) {
+                bool sair = opcoes[opcao].Executar();
 
-            if (sair) {
-                break;
+                if (sair) {
+                    break;
+                }
+            } else {
+                Console.Write("\nOpção Inválida!\nSelecione uma das opções válidas. (itens 0 -> 4).\nPressione qualquer tecla para continuar.");
+                Console.ReadKey();
+                Console.Clear();
             }
         } else {
-            Console.WriteLine("Opcao Inválida! Tente novamente.\nPressione qualquer tecla para continuar.");
+            Console.Write("\nOpção tem que ser preenchida.\nSelecione uma das opções válidas. (itens 0 -> 4).\nPressione qualquer tecla para continuar.");
             Console.ReadKey();
             Console.Clear();
         }

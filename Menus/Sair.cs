@@ -1,8 +1,8 @@
 namespace GameMania.Menus;
 
-internal class MenuSair : Menu {
+internal class Sair : Menu {
 
-    public MenuSair() : base("*  Sair  *") { }
+    public Sair() : base("*  Sair  *") { }
 
     public override bool MostrarOpcao() {
         Console.WriteLine("Volte sempre!!!\n");

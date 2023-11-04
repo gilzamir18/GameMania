@@ -17,7 +17,6 @@ public class Validacoes {
     }
 
     public static int ObterNotaValida(string mensagem) {
-
         while (true) {
             Console.Write(mensagem);
             string? entrada = Console.ReadLine();

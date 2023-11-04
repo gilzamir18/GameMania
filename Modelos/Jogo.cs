@@ -1,6 +1,7 @@
 namespace GameMania.Modelos;
 
 public class Jogo {
+    public int ID {get; set;}
     public string Titulo {get; set;}
     public string Genero {get; set;}
     public string Studio{get; set;}
