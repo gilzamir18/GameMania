@@ -6,10 +6,15 @@ internal class ExibirJogosCadastrados: Menu {
 
     public override bool MostrarOpcao() {
         var jogos = jogoDAO.ListarJogos();
-        var jogosOrdenados = jogos.OrderBy(jogo => jogo.Titulo).ToList();
 
-        foreach (var jogo in jogosOrdenados) {
-            Console.WriteLine($"{jogo.Titulo}");
+        if (jogos.Count > 0) {
+            var jogosOrdenados = jogos.OrderBy(jogo => jogo.Titulo).ToList();
+
+            foreach (var jogo in jogosOrdenados) {
+                Console.WriteLine($"{jogo.Titulo}");
+            }
+        } else {
+            Console.WriteLine("Ainda não temos nem um jogo cadastrado!");
         }
         return false;
     }

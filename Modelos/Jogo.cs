@@ -3,8 +3,8 @@ namespace GameMania.Modelos;
 public class Jogo {
     public int ID {get; set;}
     public string Titulo {get; set;}
-    public string Genero {get; set;}
-    public string Studio{get; set;}
+    public List<string> Generos {get; set;}
+    public string Estudio{get; set;}
     public string Edicao{get; set;}
     public string? Descricao {get; set;} 
     public bool Disponibilidade {get;}
@@ -22,10 +22,10 @@ public class Jogo {
         }
     }
 
-    public Jogo(string titulo, string genero, string studio, string edicao, bool disponilidade = true) {
+    public Jogo(string titulo, string estudio, string edicao, bool disponilidade = true) {
         Titulo = titulo;
-        Genero = genero;
-        Studio = studio;
+        Generos = new();
+        Estudio = estudio;
         Edicao = edicao;
         Disponibilidade = disponilidade;
         plataformas = new();
@@ -34,13 +34,15 @@ public class Jogo {
 
     public void ExibirFichaTecnica() {
         Console.WriteLine($"Título: {Titulo}");
-        Console.WriteLine($"Genero: {Genero}");
-        Console.WriteLine($"Studio: {Studio}");
+        Console.Write("Gêneros: ");
+        var generosStr = string.Join(", ", Generos);
+        Console.WriteLine($"{generosStr[..]}.");
+        Console.WriteLine($"Estudio: {Estudio}");
         Console.WriteLine($"Edição: {Edicao}");
         if (Descricao != null && !string.IsNullOrWhiteSpace(Descricao)) {
             Console.WriteLine($"Descrição: {Descricao}");
         }
-        Console.Write("Plataformas Suportadas:\t");
+        Console.Write("Plataformas Suportadas: ");
         var plataformasStr = string.Join(", ", plataformas);
         Console.WriteLine($"{plataformasStr[..]}.");
 

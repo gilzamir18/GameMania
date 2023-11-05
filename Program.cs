@@ -20,7 +20,6 @@ void ExibirMensagemBoasVindas() {
     Console.WriteLine("\nBEM VINDO(A)!\nSelecione uma das opções abaixo:\n");
 }
 
-
 void MenuPrincipal() {
     while (true) {
         ExibirMensagemBoasVindas();

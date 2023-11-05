@@ -13,7 +13,7 @@ public class JogoSQLiteDAO : IJogoDAO {
     }
 
     public JogoSQLiteDAO() {
-        _conexaoString = "Data Source=gamemania.db;Version=3";
+        _conexaoString = "Data Source=GameMania.db;Version=3";
     }
 
     public override List<Jogo> ListarJogos() {
@@ -71,6 +71,7 @@ public class JogoSQLiteDAO : IJogoDAO {
                 int idJogo = InserirJogo(conexao, jogo);
 
                 if (idJogo != -1) {
+                    InserirGeneros(conexao, idJogo, jogo);
                     InserirAvaliacoes(conexao, idJogo, jogo);
                     InserirPlataformas(conexao, idJogo, jogo);
                     transacao.Commit();
@@ -103,10 +104,11 @@ public class JogoSQLiteDAO : IJogoDAO {
 
                 using (var reader = cmdSelect.ExecuteReader()) {
                     while (reader.Read()) {
-                        var jogo = new Jogo(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(6) == 1) {
+                        var jogo = new Jogo(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(5) == 1) {
                             ID = reader.GetInt32(0),
-                            Descricao = reader.GetValue(5) as string ?? ""
+                            Descricao = reader.GetValue(4) as string ?? ""
                         };
+                        CarregarGeneros(conexao, jogo);
                         CarregarAvaliacoes(conexao, jogo);
                         CarregarPlataformas(conexao, jogo);
 
@@ -119,6 +121,27 @@ public class JogoSQLiteDAO : IJogoDAO {
         }
 
         return resultado;
+    }
+
+    private void CarregarGeneros(SQLiteConnection conexao, Jogo jogo) {
+        try {
+            using (var cmdSelectGen = new SQLiteCommand(conexao)) {
+                cmdSelectGen.CommandText = @"
+                    SELECT Genero.Nome
+                    FROM Genero
+                    INNER JOIN JogoGenero ON Genero.ID = JogoGenero.ID_Genero
+                    WHERE JogoGenero.ID_Jogo = @idJogo";
+                cmdSelectGen.Parameters.AddWithValue("@idJogo", jogo.ID);
+
+                using (var readerGen = cmdSelectGen.ExecuteReader()) {
+                    while (readerGen.Read()) {
+                        jogo.Generos.Add(readerGen.GetString(0));
+                    }
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao carregar os gêneros!\n{e.Message}");
+        }
     }
 
     private void CarregarAvaliacoes(SQLiteConnection conexao, Jogo jogo) {
@@ -182,12 +205,11 @@ public class JogoSQLiteDAO : IJogoDAO {
         try {
             using (var command = new SQLiteCommand(conexao)) {
                 command.CommandText = @"
-                    INSERT INTO Jogo(Titulo, Genero, Studio, Edicao, Descricao, Disponibilidade) 
-                    VALUES(@titulo, @genero, @studio, @edicao, @descricao, @disponibilidade);
+                    INSERT INTO Jogo(Titulo, Estudio, Edicao, Descricao, Disponibilidade) 
+                    VALUES(@titulo, @estudio, @edicao, @descricao, @disponibilidade);
                     SELECT last_insert_rowid();";
                 command.Parameters.AddWithValue("@titulo", jogo.Titulo);
-                command.Parameters.AddWithValue("@genero", jogo.Genero);
-                command.Parameters.AddWithValue("@studio", jogo.Studio);
+                command.Parameters.AddWithValue("@estudio", jogo.Estudio);
                 command.Parameters.AddWithValue("@edicao", jogo.Edicao);
                 command.Parameters.AddWithValue("@descricao", jogo.Descricao);
                 command.Parameters.AddWithValue("@disponibilidade", jogo.Disponibilidade);
@@ -196,6 +218,61 @@ public class JogoSQLiteDAO : IJogoDAO {
             }
         } catch (SQLiteException e) {
             Console.WriteLine($"Erro ao inserir jogo!\n{e.Message}");
+            return -1; // Indica que ocorreu um erro.
+        }
+    }
+
+    private void InserirGeneros(SQLiteConnection conexao, int idJogo, Jogo jogo) {
+        try {
+            using (var commandGenero = new SQLiteCommand(conexao)) {
+                foreach (var genero in jogo.Generos) {
+                    int idGenero = SelecionarOuAdicionarGenero(conexao, genero);
+
+                    if (idGenero != -1) {
+                        commandGenero.CommandText = @"
+                            INSERT INTO JogoGenero(ID_Jogo, ID_Genero)
+                            VALUES(@idJogo, @idGenero)";
+                        commandGenero.Parameters.AddWithValue("@idJogo", idJogo);
+                        commandGenero.Parameters.AddWithValue("@idGenero", idGenero);
+                        commandGenero.ExecuteNonQuery();
+                    } else {
+                        throw new Exception("Erro inesperado ao inserir o gênero no banco de dados.");
+                    }
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"$Erro ao inserir generos!\n{e.Message}");
+        }
+    }
+
+    private int SelecionarOuAdicionarGenero(SQLiteConnection conexao, string genero) {
+        try {
+            using (var selectGenero = new SQLiteCommand(conexao)) {
+                selectGenero.CommandText = @"
+                    SELECT ID FROM Genero
+                    WHERE Nome = @nome";
+                selectGenero.Parameters.AddWithValue("@nome", genero);
+
+                using (var reader = selectGenero.ExecuteReader()) {
+                    if (reader.Read()) {
+                        int idGen = reader.GetInt32(0);
+                        return idGen;
+                    } else {
+                        using (var addGenero = new SQLiteCommand(conexao)) {
+                            addGenero.CommandText = @"
+                                INSERT INTO Genero(Nome)
+                                VALUES (@nome);
+                                SELECT last_insert_rowid();";
+                            addGenero.Parameters.AddWithValue("@nome", genero);
+
+                            int idGen = Convert.ToInt32(addGenero.ExecuteScalar());
+                            return idGen;
+                        }
+                    }
+                }
+            }
+        } catch (SQLiteException e) {
+            Console.WriteLine($"Erro ao selecionar ou adicionar genero!\n{e.Message}");
             return -1; // Indica que ocorreu um erro.
         }
     }

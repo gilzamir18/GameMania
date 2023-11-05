@@ -14,9 +14,9 @@ public class JogoMemDAO : IJogoDAO {
     private JogoMemDAO() {
         jogosRegistrados = new Dictionary<string, Jogo>();
 
-        InicializarJogo("The Witcher", "RPG de Ação", "CD Projekt RED", "3", "Explore o mundo sombrio de The Witcher, enfrente criaturas mortais e molde seu destino. Uma jornada épica aguarda.", 1, new int[] { 10, 9, 9 }, new string[] { "PC", "Playstation", "Xbox" });
+        InicializarJogo(1, "The Witcher", new string[] { "RPG", "Ação" }, "CD Projekt RED", "3", "Explore o mundo sombrio de The Witcher, enfrente criaturas mortais e molde seu destino. Uma jornada épica aguarda.", new string[] { "PC", "Playstation", "Xbox" }, new int[] { 10, 9, 9 });
 
-        InicializarJogo("GTA", "Ação, Aventura", "Rockstar Games", "5", "Explore a criminalidade de Los Santos, complete missões e cause caos. Se torne o maior bandido da história.", 2, new int[] { 9, 8, 9 }, new string[] { "Playstation", "Xbox", "PC" });
+        InicializarJogo(2, "GTA", new string[] { "Ação", "Aventura" }, "Rockstar Games", "5", "Explore a criminalidade de Los Santos, complete missões e cause caos. Se torne o maior bandido da história.", new string[] { "Playstation", "Xbox", "PC" }, new int[] { 7, 8, 9 });
     }
 
     public override List<Jogo> ListarJogos() {
@@ -42,14 +42,23 @@ public class JogoMemDAO : IJogoDAO {
     }
 
     public override void SalvarJogo(Jogo jogo) {
-        jogosRegistrados[jogo.Titulo] = jogo;
+        if (jogosRegistrados.ContainsKey(jogo.Titulo)) {
+            Console.WriteLine($"O jogo '{jogo.Titulo}' já foi cadastrado.");
+        } else {
+            jogosRegistrados[jogo.Titulo] = jogo;
+            Console.WriteLine($"Jogo '{jogo.Titulo}' cadastrado com sucesso.");
+        }
     }
 
-    private void InicializarJogo(string titulo, string genero, string studio, string edicao, string descricao, int jogoID, int[] notas, string[] plataformas) {
-        var jogo = new Jogo(titulo, genero, studio, edicao) {
+    private void InicializarJogo(int jogoID, string titulo, string[] generos,  string estudio, string edicao, string descricao, string[] plataformas, int[] notas) {
+        var jogo = new Jogo(titulo, estudio, edicao) {
             ID = jogoID,
             Descricao = descricao
         };
+
+        foreach (var genero in generos) {
+            jogo.Generos.Add(genero);
+        }
 
         foreach (var nota in notas) {
             jogo.AdicionarNota(new Avaliacao(nota));

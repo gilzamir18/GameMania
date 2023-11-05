@@ -1,4 +1,3 @@
-using System.Data.SQLite;
 using GameMania.Modelos;
 using Auxiliares;
 
@@ -15,20 +14,23 @@ class CadastrarNovoJogo : Menu {
         if (jogo != null) {
             Console.WriteLine($"Já existe um jogo com título {titulo} cadastrado.");
         } else {
-            string genero = Validacoes.ObterStringValida("Gênero do jogo: ");
-            string studio = Validacoes.ObterStringValida("Estúdio do jogo: ");
+            string generosInput = Validacoes.ObterStringValida("Gêneros do jogo (Separados por vírgula): ");
+            var generos = generosInput.Split(',').Select(g => g.Trim()).ToList();
+
+            string estudio = Validacoes.ObterStringValida("Estúdio do jogo: ");
             string edicao = Validacoes.ObterStringValida("Edição do jogo: ", 1);
 
             Console.Write("Descrição do jogo (opcional): ");
             string? descricao = Console.ReadLine()?.Trim();
 
             string plataformasInput = Validacoes.ObterStringValida("Plataformas do jogo (separadas por vírgula): ");
+            var plataformas = plataformasInput.Split(',').Select(p => p.Trim()).ToList();
 
-            var plataformas = string.IsNullOrWhiteSpace(plataformasInput)
-                ? new List<string>()
-                : plataformasInput.Split(',').Select(s => s.Trim()).ToList();
+            jogo = new Jogo(titulo, estudio, edicao);
 
-            jogo = new Jogo(titulo, genero, studio, edicao);
+            foreach (var genero in generos) {
+                jogo.Generos.Add(genero);
+            }
 
             if (!string.IsNullOrWhiteSpace(descricao)) {
                 jogo.Descricao = descricao;
