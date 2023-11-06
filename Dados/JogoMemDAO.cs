@@ -57,7 +57,7 @@ public class JogoMemDAO : IJogoDAO {
         };
 
         foreach (var genero in generos) {
-            jogo.Generos.Add(genero);
+            jogo.AdicionarGenero(genero);
         }
 
         foreach (var nota in notas) {

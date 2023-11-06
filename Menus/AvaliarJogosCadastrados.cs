@@ -7,12 +7,12 @@ internal class AvaliarJogosCadastrados: Menu {
     public AvaliarJogosCadastrados() : base("*  Avaliar Jogos Cadastrados  *") { }
 
     public override bool MostrarOpcao() {
-        var titulo = Validacoes.ObterStringValida("Informe o título do jogo a ser avaliado: ");
+        var titulo = Validacoes.ObterStringValida("Informe o título do jogo a ser avaliado: ", "Título");
         var jogo = jogoDAO.BuscarJogo(titulo);
 
         if (jogo != null) {
-            var nota = Validacoes.ObterNotaValida($"Sua nota para o jogo '{titulo}'? ");
             var jogoID = jogo.ID;
+            var nota = Validacoes.ObterNotaValida($"Sua nota para o jogo '{titulo}'? ");
             
             try {
                 jogo.AdicionarNota(new Avaliacao(nota));

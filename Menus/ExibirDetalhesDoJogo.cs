@@ -7,12 +7,10 @@ internal class ExibirDetalhesDoJogo: Menu {
     public ExibirDetalhesDoJogo() : base("*  Exibir Detalhes de Jogo  *") { }
 
     public override bool MostrarOpcao() {
-        string titulo = Validacoes.ObterStringValida("Informe o título do jogo: ");
-
+        string titulo = Validacoes.ObterStringValida("Informe o título do jogo: ", "Título");
         var jogo = jogoDAO.BuscarJogo(titulo);
 
         Console.WriteLine();
-
         if (jogo != null) {
             jogo.ExibirFichaTecnica();
         } else {

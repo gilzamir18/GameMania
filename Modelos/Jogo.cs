@@ -3,19 +3,18 @@ namespace GameMania.Modelos;
 public class Jogo {
     public int ID {get; set;}
     public string Titulo {get; set;}
-    public List<string> Generos {get; set;}
-    public string Estudio{get; set;}
-    public string Edicao{get; set;}
+    private List<string> Generos;
+    public string Estudio {get; set;}
+    public string Edicao {get; set;}
     public string? Descricao {get; set;} 
     public bool Disponibilidade {get;}
-    
-    private List<string> plataformas;
-    private List<Avaliacao> notas;
+    private List<string> Plataformas;
+    private List<Avaliacao> Notas;
 
     public float NotaMedia {
         get {
-            if (notas.Count > 0) {
-                return (float)notas.Average( a => a.Nota );
+            if (Notas.Count > 0) {
+                return (float)Notas.Average(a => a.Nota);
             } else {
                 return 0;
             }
@@ -28,22 +27,27 @@ public class Jogo {
         Estudio = estudio;
         Edicao = edicao;
         Disponibilidade = disponilidade;
-        plataformas = new();
-        notas = new();
+        Plataformas = new();
+        Notas = new();
     }
 
     public void ExibirFichaTecnica() {
         Console.WriteLine($"Título: {Titulo}");
-        Console.Write("Gêneros: ");
+
+        Console.Write($"Gênero{(Generos.Count >= 2 ? "s" : "")}: ");
         var generosStr = string.Join(", ", Generos);
         Console.WriteLine($"{generosStr[..]}.");
+
         Console.WriteLine($"Estudio: {Estudio}");
+
         Console.WriteLine($"Edição: {Edicao}");
+
         if (Descricao != null && !string.IsNullOrWhiteSpace(Descricao)) {
             Console.WriteLine($"Descrição: {Descricao}");
         }
-        Console.Write("Plataformas Suportadas: ");
-        var plataformasStr = string.Join(", ", plataformas);
+
+        Console.Write($"Plataforma{(Plataformas.Count >= 2 ? "s" : "")}: ");
+        var plataformasStr = string.Join(", ", Plataformas);
         Console.WriteLine($"{plataformasStr[..]}.");
 
         if (Disponibilidade) {
@@ -57,31 +61,39 @@ public class Jogo {
         }
     }
 
+    public int QtdGeneros {
+        get { return Generos.Count; }
+    }
+
     public int QtdNotas {
-        get {
-            return notas.Count;
-        }
+        get { return Notas.Count; }
     }
 
     public int QtdPlataformas {
-        get {
-            return plataformas.Count;
-        }
+        get { return Plataformas.Count; }
+    }
+
+    public string GetGenero(int idx) {
+        return Generos[idx];
     }
 
     public Avaliacao GetAvaliacao(int idx) {
-        return notas[idx];
+        return Notas[idx];
     }
 
     public string GetPlataforma(int idx) {
-        return plataformas[idx];
+        return Plataformas[idx];
+    }
+
+    public void AdicionarGenero(string genero) {
+        Generos.Add(genero);
     }
 
     public void AdicionarNota(Avaliacao nota) {
-        notas.Add(nota);
+        Notas.Add(nota);
     }
 
     public void AdicionarPlataforma(string plataforma) {
-        plataformas.Add(plataforma);
+        Plataformas.Add(plataforma);
     }
 }
