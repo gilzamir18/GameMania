@@ -3,13 +3,13 @@ using GameMania.Dados;
 namespace GameMania.Menus;
 
 internal class Menu {
-    public string Titulo {get;}
+    public string Titulo { get; }
 
     protected IJogoDAO jogoDAO;
 
     public Menu(string titulo) {
         Titulo = titulo;
-        jogoDAO = JogoSQLiteDAO.GetInstance();  //  JogoMemDAO.GetInstance();
+        jogoDAO = JogoSQLiteDAO.GetInstance();
     }
 
     public bool Executar() {
@@ -23,7 +23,7 @@ internal class Menu {
         return sair;
     }
 
-    void Rodape() {
+    private static void Rodape() {
         Console.Write("\nPressione qualquer tecla para voltar ao menu principal...");
         Console.ReadKey();
     }
@@ -32,7 +32,7 @@ internal class Menu {
         return false;
     }
 
-    void ExibirTituloDaOpcao(string titulo, char preencher='*') {
+    private static void ExibirTituloDaOpcao(string titulo, char preencher='*') {
         Console.Clear();
         var barra = string.Empty.PadLeft(titulo.Length, preencher);
         Console.WriteLine(barra);

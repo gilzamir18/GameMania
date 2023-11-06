@@ -4,7 +4,7 @@ var opcoes = new Dictionary<string, Menu> {
     ["1"] = new CadastrarNovoJogo(),
     ["2"] = new ExibirJogosCadastrados(),
     ["3"] = new ExibirDetalhesDoJogo(),
-    ["4"] = new AvaliarJogosCadastrados(),
+    ["4"] = new AvaliarJogoCadastrado(),
     ["0"] = new Sair()
 };
 
@@ -17,17 +17,17 @@ void ExibirMensagemBoasVindas() {
 ██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║╚██╔╝██║██╔══██║██║╚████║██║██╔══██║
 ╚██████╔╝██║░░██║██║░╚═╝░██║███████╗██║░╚═╝░██║██║░░██║██║░╚███║██║██║░░██║
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝");
-    Console.WriteLine("\nBEM VINDO(A)!\nSelecione uma das opções abaixo:\n");
+    Console.WriteLine("BEM VINDO(A)!\nSelecione uma das opções abaixo:\n");
 }
 
 void MenuPrincipal() {
     while (true) {
         ExibirMensagemBoasVindas();
-        Console.WriteLine("1. Cadastrar novo Jogo");
-        Console.WriteLine("2. Exibir jogos cadastrados ");
-        Console.WriteLine("3. Mostrar detalhes dos jogos");
-        Console.WriteLine("4. Avaliar jogo");
-        Console.WriteLine("0. Sair");
+        Console.WriteLine("1 - Cadastrar novo jogo.");
+        Console.WriteLine("2 - Exibir jogos cadastrados.");
+        Console.WriteLine("3 - Exibir detalhes do jogo.");
+        Console.WriteLine("4 - Avaliar jogo.");
+        Console.WriteLine("0 - Sair.");
         string? opcao = Console.ReadLine()?.Trim();
 
         if (!string.IsNullOrEmpty(opcao)) {
@@ -38,12 +38,12 @@ void MenuPrincipal() {
                     break;
                 }
             } else {
-                Console.Write("\nOpção Inválida!\nSelecione uma das opções válidas. (itens 0 -> 4).\nPressione qualquer tecla para continuar.");
+                Console.Write($"Opção Inválida!\nSelecione uma das opções válidas. (itens 0 -> {opcoes.Count - 1}).\nPressione qualquer tecla para continuar...");
                 Console.ReadKey();
                 Console.Clear();
             }
         } else {
-            Console.Write("\nOpção tem que ser preenchida.\nSelecione uma das opções válidas. (itens 0 -> 4).\nPressione qualquer tecla para continuar.");
+            Console.Write($"Opção deve ser preenchida!\nSelecione uma das opções válidas. (itens 0 -> {opcoes.Count - 1}).\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
             Console.Clear();
         }

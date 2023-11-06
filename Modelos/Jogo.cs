@@ -1,23 +1,18 @@
 namespace GameMania.Modelos;
 
 public class Jogo {
-    public int ID {get; set;}
-    public string Titulo {get; set;}
+    public string Titulo { get; set; }
     private List<string> Generos;
-    public string Estudio {get; set;}
-    public string Edicao {get; set;}
-    public string? Descricao {get; set;} 
-    public bool Disponibilidade {get;}
+    public string Estudio { get; set; }
+    public string Edicao { get; set; }
+    public string? Descricao { get; set; } 
+    public bool Disponibilidade { get; }
     private List<string> Plataformas;
     private List<Avaliacao> Notas;
 
     public float NotaMedia {
         get {
-            if (Notas.Count > 0) {
-                return (float)Notas.Average(a => a.Nota);
-            } else {
-                return 0;
-            }
+            return Notas.Count > 0 ? (float) Notas.Average(a => a.Nota) : 0;
         }
     }
 
@@ -32,15 +27,15 @@ public class Jogo {
     }
 
     public void ExibirFichaTecnica() {
-        Console.WriteLine($"Título: {Titulo}");
+        Console.WriteLine($"Título: {Titulo}.");
 
         Console.Write($"Gênero{(Generos.Count >= 2 ? "s" : "")}: ");
         var generosStr = string.Join(", ", Generos);
         Console.WriteLine($"{generosStr[..]}.");
 
-        Console.WriteLine($"Estudio: {Estudio}");
+        Console.WriteLine($"Estudio: {Estudio}.");
 
-        Console.WriteLine($"Edição: {Edicao}");
+        Console.WriteLine($"Edição: {Edicao}.");
 
         if (Descricao != null && !string.IsNullOrWhiteSpace(Descricao)) {
             Console.WriteLine($"Descrição: {Descricao}");
@@ -52,12 +47,12 @@ public class Jogo {
 
         if (Disponibilidade) {
             if (NotaMedia > 0) {
-                Console.WriteLine($"Nota Média: {NotaMedia:N2}");
+                Console.WriteLine($"Nota Média: {NotaMedia:N2}.");
             }
 
-            Console.WriteLine("\nJogo disponível para avaliação.");
+            Console.WriteLine($"\n{Titulo} está disponível para avaliação.");
         } else {
-            Console.WriteLine("\nEste jogo não está disponível para avaliação.");
+            Console.WriteLine($"\n{Titulo} não está disponível para avaliação.");
         }
     }
 

@@ -1,22 +1,24 @@
 namespace Auxiliares;
 
 public class Validacoes {
-    public static string ObterStringValida(string mensagem, string campo, int comprimentoMinimo = 3) {
+    public static string ObterStringValida(string? campo = null, int comprimentoMinimo = 3) {
         while (true) {
-            Console.Write(mensagem);
             string? entrada = Console.ReadLine()?.Trim();
             
             if (string.IsNullOrWhiteSpace(entrada) || entrada.Length < comprimentoMinimo) {
-                Console.WriteLine($"{campo} não pode ser vazio e deve ter pelo menos {comprimentoMinimo} caractere{(comprimentoMinimo >= 2 ? "s" : "")}.");
+                if (string.IsNullOrEmpty(campo)) {
+                    Console.WriteLine($"A entrada não pode ser vazia{(comprimentoMinimo > 1 ? $" e deve ter pelo menos {comprimentoMinimo} caracteres" : "")}.");
+                } else {
+                    Console.WriteLine($"{campo} do jogo não pode ser vazio{(comprimentoMinimo > 1 ? $" e deve ter pelo menos {comprimentoMinimo} caracteres" : "")}.");
+                }
             } else {
                 return entrada;
             }
         }
     }
 
-    public static int ObterNotaValida(string mensagem) {
+    public static int ObterNotaValida() {
         while (true) {
-            Console.Write(mensagem);
             string? entrada = Console.ReadLine()?.Trim();
 
             if (int.TryParse(entrada, out int nota) && nota >= 0 && nota <= 10) {
