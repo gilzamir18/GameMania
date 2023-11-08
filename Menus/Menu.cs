@@ -18,7 +18,7 @@ internal class Menu
     public bool Executar()
     {
             ExibirTituloDaOpcao(Titulo);
-            bool sair = MostrarOpcao(jogosRegistrados);
+            bool sair = MostrarOpcao();
             if (!sair)
             {
                 Rodape();

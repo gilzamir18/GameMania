@@ -8,7 +8,8 @@ Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
 opcoes["2"] = new MenuExibirJogosCadastrados();
 opcoes["3"] = new MenuExibirDetalhesDoJogo();
-opcoes["4"] = new MenuAvaliarJogosCadastrados();
+opcoes["4"] = new MenuExibirDetalhesDoJogoPorFiltro();
+opcoes["5"] = new MenuAvaliarJogosCadastrados();
 opcoes["0"] = new MenuSair();
 
 void ExibirMensagemBoasVindas()
@@ -38,7 +39,8 @@ void MenuPrincipal()
         Console.WriteLine("1 - Cadastrar novo Jogo");
         Console.WriteLine("2 - Exibir jogos cadastrados ");
         Console.WriteLine("3 - Mostrar detalhes dos jogos");
-        Console.WriteLine("4 - Avaliar jogo");
+        Console.WriteLine("4 - Mostrar detalhes dos jogos por filtro");
+        Console.WriteLine("5 - Avaliar jogo");
         Console.WriteLine("0 - Sair");
         string opcao = Console.ReadLine();
         if (opcoes.ContainsKey(opcao))

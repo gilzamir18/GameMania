@@ -62,4 +62,22 @@ public class JogoMemDAO : IJogoDAO
     {
         return jogosRegistrados.Values.Where( j => j.Genero == genero  ).ToList();
     }
+
+
+     public override List<Jogo> SelectJogoPorCampo(string campo = "", string valor = "")
+    {
+        List<Jogo> resultado = new List<Jogo>();
+
+        foreach (var jogo in jogosRegistrados.Values)
+        {
+            if (campo == "" || (campo == "Título" && jogo.Titulo == valor) || (campo == "Gênero" && jogo.Genero == valor))
+            {
+                resultado.Add(jogo);
+            }
+        }
+
+        return resultado;
+    }
 }
+
+

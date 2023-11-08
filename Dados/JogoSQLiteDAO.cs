@@ -139,7 +139,7 @@ public class SQLiteJogoDAO: IJogoDAO
         return SelectJogoPorCampo("Genero", genero);
     }
 
-    private List<Jogo> SelectJogoPorCampo(string campo="", string valor="")
+    public override List<Jogo> SelectJogoPorCampo(string campo="", string valor="")
     {
         List<Jogo> resultado = new List<Jogo>();
         using (var cmdSelect = new SQLiteCommand(con))
