@@ -58,8 +58,8 @@ public class Jogo
         Console.WriteLine($"Título: {Titulo}");
         Console.WriteLine($"Genero: {Genero}");
         Console.WriteLine($"Edição: {Edicao}");
-        Console.Write($"Descrição:  {Descricao}");
-        Console.Write("Plataformas Suportadas:\t");
+        Console.WriteLine($"Descrição:  {Descricao}");
+        Console.WriteLine("Plataformas Suportadas:\t");
 
         foreach(var plat in plataformas)
         {
