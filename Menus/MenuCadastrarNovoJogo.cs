@@ -17,6 +17,8 @@ class MenuCadastrarNovoJogo: Menu
         var studio = Console.ReadLine();
         Console.Write("Qual a edição do jogo? ");
         var edicao = Console.ReadLine();
+        Console.Write("Coloque uma descrição para o jogo? ");
+        var descricao = Console.ReadLine();
          if (string.IsNullOrEmpty(titulo))
         {
             titulo = "Título Desconhecido"; // Ou outro valor padrão de sua escolha.
@@ -36,7 +38,7 @@ class MenuCadastrarNovoJogo: Menu
         {
             edicao = "Edição Desconhecida"; // Valor padrão para edição.
         }
-        jogoDAO.SalvarJogo(new Jogo(titulo, genero, studio, edicao));
+        jogoDAO.SalvarJogo(new Jogo(titulo, genero, studio, edicao, descricao));
         Console.WriteLine("Jogo Adicionado com sucesso");
         return false;
     }

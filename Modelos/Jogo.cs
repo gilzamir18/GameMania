@@ -40,12 +40,27 @@ public class Jogo
         notas = new();
     }
 
+
+    public Jogo( string titulo, string genero, string studio, string edicao, string descricao, bool disponilidade = true) 
+    {
+        this.Titulo = titulo;
+        this.Genero = genero;
+        this.Studio = studio;
+        this.Edicao = edicao;
+        this.Disponibilidade = disponilidade;
+        this.Descricao = descricao;
+        plataformas = new();
+        notas = new();
+    }
+
     public void ExibirFichaTecnica()
     {
         Console.WriteLine($"Título: {Titulo}");
         Console.WriteLine($"Genero: {Genero}");
         Console.WriteLine($"Edição: {Edicao}");
+        Console.Write($"Descrição:  {Descricao}");
         Console.Write("Plataformas Suportadas:\t");
+
         foreach(var plat in plataformas)
         {
             Console.Write($"{plat} ");
