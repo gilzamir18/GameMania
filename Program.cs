@@ -3,7 +3,7 @@ using GameMania.Menus;
 using GameMania.Modelos;
 using GameMania.Dados;
 
-CancellationTokenSource cts = new CancellationTokenSource();
+
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
 opcoes["2"] = new MenuExibirJogosCadastrados();
@@ -28,9 +28,6 @@ void ExibirMensagemBoasVindas()
 
 void MenuPrincipal()
 {
-    cts.Cancel();
-    cts = new CancellationTokenSource();
-
     //MostrarRelogio();
     // Task t = MostrarAlerta();
     while (true)

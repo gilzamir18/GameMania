@@ -41,7 +41,7 @@ public class Jogo
     }
 
 
-    public Jogo( string titulo, string genero, string studio, string edicao, string descricao, bool disponilidade = true) 
+    public Jogo( string titulo, string genero, string studio, string edicao, string descricao,  bool disponilidade = true) 
     {
         this.Titulo = titulo;
         this.Genero = genero;
