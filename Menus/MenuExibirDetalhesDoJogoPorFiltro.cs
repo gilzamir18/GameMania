@@ -13,26 +13,26 @@ internal class MenuExibirDetalhesDoJogoPorFiltro: Menu
     public override bool MostrarOpcao()
     {
         Console.Write("Escolha um filtro, entre Gênero, Studio, Disponibilidade: ");
-        string filtro = Console.ReadLine();
+        string filtro = Console.ReadLine()!;
 
         List<Jogo> jogos = new List<Jogo>();
 
-        if (filtro.ToLower() == "gênero")
+        if (filtro.ToLower() == "genero")
         {
             Console.Write("Informe o valor do filtro de Gênero: ");
-            string valor = Console.ReadLine();
+            string valor = Console.ReadLine()!;
             jogos = jogoDAO.SelectJogoPorCampo("Genero", valor);
         }
         else if (filtro.ToLower() == "studio")
         {
             Console.Write("Informe o valor do filtro de Studio: ");
-            string valor = Console.ReadLine();
+            string valor = Console.ReadLine()!;
             jogos = jogoDAO.SelectJogoPorCampo("Studio",valor);
         }
         else if (filtro.ToLower() == "disponibilidade")
         {
             Console.Write("Informe o valor do filtro de Disponibilidade (1 para disponível, 0 para indisponível): ");
-            string valor = Console.ReadLine();
+            string valor = Console.ReadLine()!;
             jogos = jogoDAO.SelectJogoPorCampo("Disponilidade", valor);
         }
         else

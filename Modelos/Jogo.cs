@@ -35,6 +35,7 @@ public class Jogo
         this.Studio = studio;
         this.Edicao = edicao;
         this.Disponibilidade = disponilidade;
+        this.Descricao = "";
         plataformas = new();
         notas = new();
     }

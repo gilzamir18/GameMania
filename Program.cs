@@ -2,8 +2,8 @@
 using GameMania.Menus;
 using GameMania.Modelos;
 using GameMania.Dados;
-int tempo = 0;
-bool estaMenuPrincipal = true;
+
+CancellationTokenSource cts = new CancellationTokenSource();
 Dictionary<string, Menu> opcoes = new Dictionary<string, Menu>();
 opcoes["1"] = new MenuCadastrarNovoJogo();
 opcoes["2"] = new MenuExibirJogosCadastrados();
@@ -28,11 +28,11 @@ void ExibirMensagemBoasVindas()
 
 void MenuPrincipal()
 {
-    estaMenuPrincipal = true;
-    CancellationTokenSource cts = new CancellationTokenSource();
+    cts.Cancel();
+    cts = new CancellationTokenSource();
 
-    MostrarRelogio();
-    Task t = MostrarAlerta();
+    //MostrarRelogio();
+    // Task t = MostrarAlerta();
     while (true)
     {
         ExibirMensagemBoasVindas();
@@ -42,10 +42,10 @@ void MenuPrincipal()
         Console.WriteLine("4 - Mostrar detalhes dos jogos por filtro");
         Console.WriteLine("5 - Avaliar jogo");
         Console.WriteLine("0 - Sair");
-        string opcao = Console.ReadLine();
+        string opcao = Console.ReadLine()!;
         if (opcoes.ContainsKey(opcao))
         {   
-            estaMenuPrincipal = false;
+            
             bool sair = opcoes[opcao].Executar();
             if (sair)
             {
@@ -63,7 +63,7 @@ void MenuPrincipal()
 
 MenuPrincipal();
 
-async void MostrarRelogio()
+/*async void MostrarRelogio()
 {
     int contagem = 0;
     while (true)
@@ -81,29 +81,24 @@ async void MostrarRelogio()
 
 async Task MostrarAlerta()
 {
-    int contagem = 0;
     while (true)
     {
-        if (!estaMenuPrincipal)
+        try
         {
-            contagem = 0;
-            tempo = 0;
-            await Task.Delay(500);
-        }
-        else
-        {
-            await Task.Delay(500);
-            Console.Write("\r");
-            contagem += 500;
-            if (contagem % 8000 == 0)
+            await Task.Delay(TimeSpan.FromMinutes(1), cts.Token);
+
+            if (estaMenuPrincipal)
             {
-                tempo = 0;
-                contagem = 0;
-                Console.Write("Está demorando muito!");
+                Console.WriteLine("Alerta: Você está na tela do menu principal por mais de 1 minuto!");
             }
         }
+        catch (TaskCanceledException)
+        {
+            // O token de cancelamento foi acionado, então a contagem regressiva foi cancelada
+        }
     }
-}
+}*/
+
 
 /*
 IJogoDAO dao = SQLiteJogoDAO.GetInstance();
